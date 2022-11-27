@@ -5,18 +5,97 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>SH1MMER</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/alpinejs/3.10.5/cdn.js"
+        integrity="sha512-1fAkW3wqng/WNu86nQEgW3/RuPns2JxdC6WwCFJhqB/fL9VIWduIJmktYGrlBu99aoxwmWKCLY4AHlzDsh6LqA=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-MT82HHR67Y"></script>
-    <script>
-        window.dataLayer = window.dataLayer || [];
-        function gtag() { dataLayer.push(arguments); }
-        gtag('js', new Date());
+    <script src="bg.js"></script>
+    <link rel="stylesheet" href="base.css">
 
-        gtag('config', 'G-MT82HHR67Y');
+    <script>
+
+        let devs = [{
+            tag: "CoolElectronics#4683",
+            pfp: "https://cdn.discordapp.com/avatars/696392247205298207/40154cf9e9717bd72d3257ac202f57da.webp?size=40",
+        }, {
+            tag: "Unicar#1408",
+            pfp: "https://cdn.discordapp.com/avatars/465682780320301077/f794fdbf8f9352932d69e6726e128f2a.webp?size=40",
+        }, {
+            tag: "TheMemeSniper#6065",
+            pfp: "https://cdn.discordapp.com/avatars/391271835901362198/8fc58755580980450e965d83d2322c68.webp?size=40"
+        }, {
+            tag: "Rafflesia#8396",
+            pfp: "https://cdn.discordapp.com/avatars/247349845298249728/c37fc65834e2705bfd452d82ccfdad68.webp?size=40",
+        },
+        {
+            tag: "Bideos#1850",
+            pfp: "https://cdn.discordapp.com/avatars/904487572301021265/366e868748ba7d2e50be57cc3e45fa57.webp?size=40"
+        }]
     </script>
 </head>
 
 <body>
-    <div id="app"></div>
+    <div id="background">
+        <img id="backgroundimg" src="assets/background.png" />
+    </div>
+    <div id="app">
+        <p id="title" class="center t">SH1MMER</p>
+
+        <p class="center t explanation">
+            sh1mmer is an unpatchable recovery exploit in certain models of chromebooks allowing arbitrary code
+            execution through a modified
+            RMA shim<br>
+            <br><br>
+            <a id="install" href="tutorial.html">sh1mmer me</a>
+            <br><br><br>
+            <a href="writeup.html">writeup</a> for those interested<br><br><br><br><br><br><br><br><br><br><br><br><br>
+            this exploit was developed by Mercury Workshop
+        <div class="credits h-center t">
+            <template x-for="dev in devs">
+                <div class="credit">
+                    <p x-text="dev.tag"></p>
+                    <img x-bind:src="dev.pfp" />
+                </div>
+            </template>
+        </div>
+        </p>
+    </div>
 </body>
+
+<style>
+   
+
+    .center {
+        text-align: center;
+    }
+
+    .h-center {
+        display: flex;
+        justify-content: center;
+    }
+
+    .credit {
+        display: flex;
+
+    }
+
+    #app {
+        overflow-y: scroll;
+    }
+
+    #title {
+        margin: 3em;
+        font-size: xx-large;
+    }
+
+    #install {
+        margin: 1em;
+        font-size: x-large;
+    }
+
+    body {
+        overflow: hidden;
+    }
+</style>
 
 </html>
