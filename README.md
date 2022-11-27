@@ -14,3 +14,4 @@ in those edits are equal to the amount of characters in the original.
 * Unciuar#1408 - Finding the SHIM files
 * TheMemeSniper#6065 - Testing
 * Rafflesia#8396 - Hosting files
+* u/ijosephwalsh - Accidentally pushing us in the right direction by making a post on r/k12sysadmin about the Shimless RMA screen
