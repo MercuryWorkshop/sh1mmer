@@ -1,5 +1,5 @@
 # sh1mmer.me
-Seriously Harming One's Moment of Magnificently Exclusive Rest
+Seriously Harming IT's Moment of Magnificently Exclusive Rest
 
 Website, name and write-up for a ChromeOS firmware boot exploit
 # What is SH1MMER?
@@ -9,8 +9,8 @@ This is achieved by putting the device into Developer Mode, and then booting a m
 the ROOT-A partition is checked for signatures by the firmware. We can edit the other partitions to our will, as long as the characters contained
 in those edits are equal to the amount of characters in the original.
 # Credits
-* CoolElectronics - Pioneering this wild exploit
-* Bideos - Testing & discovering how to disable root-fs verification
-* Unicar - Testing
-* TheMemeSniper/Kaitlin - Testing
-* Rafflesia - Testing
+* CoolElectronics#4683 - Pioneering this wild exploit
+* Bideos#1850 - Testing & discovering how to disable root-fs verification
+* Unciuar#1408 - Finding the SHIM files
+* TheMemeSniper#6065 - Testing
+* Rafflesia#8396 - Hosting files
