@@ -8,8 +8,8 @@ This is achieved by putting the device into Developer Mode, and then booting a m
 the ROOT-A partition is checked for signatures by the firmware. We can edit the other partitions to our will, as long as the characters contained
 in those edits are equal to the amount of characters in the original.
 # Credits
-CoolElectronics - Pioneering this wild exploit
-Bideos - Testing & discovering ROOT-A editing
-Unicar - Testing
-TheMemeSniper/Kaitlin - Testing
-Rafflesia - Testing
+* CoolElectronics - Pioneering this wild exploit
+* Bideos - Testing & discovering ROOT-A editing
+* Unicar - Testing
+* TheMemeSniper/Kaitlin - Testing
+* Rafflesia - Testing
