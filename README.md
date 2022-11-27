@@ -1,5 +1,6 @@
 # sh1mmer.me
 Seriously Harming One's Moment of Magnificently Exclusive Rest
+
 Website, name and write-up for a ChromeOS firmware boot exploit
 # What is SH1MMER?
 SH1MMER is an exploit found in the ChromeOS firmware that utilitzes the RMA factory shims to gain code execution at firmware recovery.
@@ -9,7 +10,7 @@ the ROOT-A partition is checked for signatures by the firmware. We can edit the 
 in those edits are equal to the amount of characters in the original.
 # Credits
 * CoolElectronics - Pioneering this wild exploit
-* Bideos - Testing & discovering ROOT-A editing
+* Bideos - Testing & discovering how to disable root-fs verification
 * Unicar - Testing
 * TheMemeSniper/Kaitlin - Testing
 * Rafflesia - Testing
