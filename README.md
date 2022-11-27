@@ -11,7 +11,7 @@ in those edits are equal to the amount of characters in the original.
 # Credits
 * CoolElectronics#4683 - Pioneering this wild exploit
 * Bideos#1850 - Testing & discovering how to disable root-fs verification
-* Unciuar#1408 - Finding the SHIM files
+* Unciaur#1408 - Finding the SHIM files
 * TheMemeSniper#6065 - Testing
 * Rafflesia#8396 - Hosting files
 * u/ijosephwalsh - Accidentally pushing us in the right direction by making a post on r/k12sysadmin about the Shimless RMA screen
