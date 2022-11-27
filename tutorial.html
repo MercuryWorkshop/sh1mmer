@@ -21,8 +21,31 @@
         <img id="backgroundimg" src="assets/background.png" />
     </div>
     <div id="app" >
-
+         <div id="title" class=" center t">
+            <p id="titletext">Tutorial</p>
+        </div>
+<ul>
+  <li>Open up your Chromebook, and go to chrome://version in the browser.</li>
+  <li>Look at the line that says "Platform:". Note down the last word on there. That's your firmware.</li>
+  <li>Next, download the modified shim file that corresponds to your firmware version.</li>
+  <li>Flash the file to a USB. This can be done on Windows with Rufus, or done on Linux with DD. If you're using Rufus, make sure to use DD image mode.</li>
+  <li>Press ESCAPE, REFRESH, and POWER on your Chromebook, press CTRL + D, then enter.</li>
+  <li>Now, wait for a screen with options to pop up.</li>
+  <li>Press D. Your Chromebook will restart.</li>
+  <li>On the OS Verification screen, press ENTER or SPACE to disable developer mode.</li>
+</ul>
     </div>
 </body>
+<style>
+    #app {
+        overflow-y: scroll;
+    }
+    #titletext {
+        font-size: xx-large;
 
+    }
+    #title {
+        padding: 3em;
+    }
+</style>
 </html>
