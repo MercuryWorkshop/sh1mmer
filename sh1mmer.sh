@@ -1,9 +1,10 @@
 devmode() {
     echo "disabling block_devmode"
-    cryptohome --action=tpm_take_ownership
-    cryptohome --action=remove_firmware_management_parameters
+    vpd -i RW_VPD -s check_enrollment=0
     vpd -i RW_VPD -s block_devmode=0
     crossystem block_devmode=0
+    tpm_manager_client take_ownership >/dev/null
+    cryptohome --action=remove_firmware_management_parameters >/dev/null
 }
 deprovision() {
     echo "deprovisioning"
