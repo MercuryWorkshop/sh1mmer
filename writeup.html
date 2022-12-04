@@ -30,23 +30,12 @@
             Although this really isn't supposed to happen, signed images for the RMA shim repair tool can be found
             online.
             In order to use them with the block_devmode
-            value set in VPD, credentials are needed for a recovery technician. The major flaw here is that only the
-            kernel
-            in partition 1 is signed, not the rootfs where the scripts are loaded from. Mounting the ROOT-A partition on
-            the
-            shim image is not possible due to they way the superblock is mangled on non developer images, but with the
-            use
-            of a hex editor the scripts can be carefully modified so long as the length of the replaced text matches the
-            original text so to not corrupt the filesystem.<br><br>
+            value set in VPD, credentials are needed for a recovery technician. The major flaw here is that the verity
+            hash system was either improperly implemented or flat out missing, allowing unsigned code to be ran.
+            By using make_dev_ssd on partition 3 only, we can mount the filesystem and modify any script.
 
-            An example of such a replacement is here:
-            <code>bbe -e 's/# Include after other common include\x2C side effect on GPT variable\x2E/echo "shimmering "\;sudo vpd -i RW_VPD -s check_enrollment=0\;reboot/g' /dev/sdX3 > /dev/sdX3</code><br><br>
+            A utility allowing the creation of such a modified shim is included in the repo. (make_sh1mmer.sh)
 
-            The “bbe” utility is used here to edit the stream directly, since sed is incapable of parsing binary
-            files.<br>
-            After the patch to the partition is made, the usb can be booted from and our arbitrary code will be
-            executed, in
-            this case deprovisioning the current device from the management organization entirely
         </div>
     </div>
 </body>

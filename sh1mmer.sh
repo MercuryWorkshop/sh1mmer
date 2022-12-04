@@ -1,8 +1,13 @@
+devmode() {
+    echo "disabling block_devmode"
+    cryptohome --action=take_tpm_ownership
+    cryptohome --action=remove_firmware_management_parameters
+    vpd -i RW_VPD -s block_devmode=0
+    crossystem block_devmode=0
+}
 deprovision() {
     echo "deprovisioning"
     vpd -i RW_VPD -s check_enrollment=0
-    vpd -i RW_VPD -s block_devmode=0
-    crossystem block_devmode=0
 }
 reprovision() {
     echo "reprovisioning"
@@ -36,6 +41,7 @@ while true; do
     echo "(b) Open Bash Shell"
     echo "(d) Deprovision Device"
     echo "(r) Reprovision Device"
+    echo "(m) Disable block_devmode"
     echo "(u) Enable USB Boot"
     echo "(f) Fix GBB flags (in case of an accidental bootloop) WP MUST BE TURNED OFF"
     echo "(v) Disable RootFS verification"
@@ -46,6 +52,7 @@ while true; do
     b | B) bash ;;
     d | D) deprovision ;;
     r | R) reprovision ;;
+    m | M) devmode ;;
     u | U) usb ;;
     f | F) fix_gbb ;;
     v | V) disable_verity ;;
@@ -58,9 +65,10 @@ done
 echo "CREDITS:"
 echo "CoolElectronics - Creating this script"
 echo "Bideos - Testing & discovering how to disable root-fs verification"
+echo "Sharp_Jack - Creating the wax automation tool"
 echo "Unicar - Testing"
 echo "TheMemeSniper/Kaitlin - Testing"
-echo "Rafflesia - Testing"
+echo "Rafflesia - Hosting"
 sleep 6
 echo "rebooting"
 reboot
