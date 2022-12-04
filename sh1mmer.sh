@@ -1,6 +1,6 @@
 devmode() {
     echo "disabling block_devmode"
-    cryptohome --action=take_tpm_ownership
+    cryptohome --action=tpm_take_ownership
     cryptohome --action=remove_firmware_management_parameters
     vpd -i RW_VPD -s block_devmode=0
     crossystem block_devmode=0
