@@ -69,6 +69,7 @@ echo "Bideos - Testing & discovering how to disable root-fs verification"
 echo "Sharp_Jack - Creating the wax automation tool"
 echo "Unciaur - Testing"
 echo "TheMemeSniper/Kaitlin - Testing"
+echo "OlyB - Scraping shims from lenovo"
 echo "Rafflesia - Hosting"
 sleep 6
 echo "rebooting"
