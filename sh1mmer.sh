@@ -67,7 +67,7 @@ echo "CREDITS:"
 echo "CoolElectronics - Creating this script"
 echo "Bideos - Testing & discovering how to disable root-fs verification"
 echo "Sharp_Jack - Creating the wax automation tool"
-echo "Unicar - Testing"
+echo "Unciaur - Testing"
 echo "TheMemeSniper/Kaitlin - Testing"
 echo "Rafflesia - Hosting"
 sleep 6
