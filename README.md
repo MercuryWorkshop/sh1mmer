@@ -24,3 +24,4 @@ in those edits are equal to the amount of characters in the original.
 - SprinkzMC#8421 - Helped with the website
 - r58Playz#3467 - Helped us set parts of the shim
 - OlyB#9420 - Scraped additional shims
+- Sharp_Jack#4374 - Created wax & compiled the first shims
