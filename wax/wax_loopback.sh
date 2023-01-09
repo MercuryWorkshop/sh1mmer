@@ -15,7 +15,19 @@ bin=$1
 echo "Expanding bin for 'arch' partition"
 dd if=/dev/zero bs=1G count=6 >> $bin
 echo -ne "\a"
-fdisk $1
+# Expand Shim
+dd if=/dev/zero bs=1G count=6  >> $1
+fdisk $1 << EOF
+w
+
+EOF
+fdisk $1 << EOF
+n
+
+
+
+w
+EOF
 echo "Creating loop device"
 loop=$(losetup -f)
 losetup -P $loop $bin
