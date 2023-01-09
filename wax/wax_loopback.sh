@@ -6,34 +6,43 @@ if [ "$EUID" -ne 0 ]; then
 fi
 echo "-------------------------------------------------------------------------------------------------------------"
 echo "Welcome to wax, a shim modifying automation tool made by CoolElectronics and Sharp_Jack, improved by r58playz"
-echo "Prerequisites: cgpt must be installed, program must be ran as root"
+echo "Prerequisites: cgpt must be installed, program must be ran as root, chromebrew.tar.gz needs to exist"
 echo "-------------------------------------------------------------------------------------------------------------"
 
 
 bin=$1
 
-
-
-
-# clean up if exited abnormally
-
+echo "Expanding bin for 'arch' partition"
+dd if=/dev/zero bs=1G count=6 >> $bin
+echo -ne "\a"
+fdisk $1
 echo "Creating loop device"
 loop=$(losetup -f)
 losetup -P $loop $bin
 
+echo "Making arch partition"
+mkfs.ext4 -L arch ${loop}p3
 echo "Making ROOT mountable"
 sh make_dev_ssd_no_resign.sh --remove_rootfs_verification -i ${loop}
-sleep 2
 echo "Creating Mountpoint"
 mkdir mnt || :
+mkdir mntarch || :
 echo "Mounting ROOT-A"
 mount "${loop}p3" mnt
+echo "Mounting arch"
+mount "${loop}p13" mntarch
+echo "Extracting chromebrew"
+cd mntarch
+tar xvf ../chromebrew.tar.gz --strip-components=1
+cd ..
 echo "Injecting payload"
-sleep 5
-cp ../sh1mmer.sh mnt/usr/sbin/factory_install.sh
+cp -rv sh1mmer-assets mnt/usr/share/sh1mmer-assets
+cp -v sh1mmer-scripts/* mnt/usr/sbin/
+cp -v factory_install.sh mnt/usr/sbin/
 echo "Cleaning up..."
-sleep 5
+sync
 umount "${loop}p3"
+umount "${loop}p13"
 rm -rf mnt
 losetup -d ${loop}
 
