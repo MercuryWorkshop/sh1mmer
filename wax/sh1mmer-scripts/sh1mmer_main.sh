@@ -13,7 +13,6 @@ while true; do
 	case `readinput` in
 		'1') bash /usr/sbin/sh1mmer_payload.sh ;;
 		'2') bash /usr/sbin/sh1mmer_utilities.sh ;;
-		'kB') break ;;
 	esac
 done
 cleanup
