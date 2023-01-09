@@ -38,6 +38,7 @@ troll() {
 }
 
 echo "SH1MMER EXPLOIT"
+echo "Warning: This is a legacy version of sh1mmer"
 while true; do
     echo "(b) Open Bash Shell"
     echo "(d) Deprovision Device"

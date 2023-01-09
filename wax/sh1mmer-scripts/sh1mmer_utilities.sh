@@ -51,7 +51,7 @@ runtask() {
         echo "Task $1 succeeded."
         sleep 3
     else
-        read -p "THERE WAS AN ERROR! The utility likely did not work. Press any key to continue."
+        read "THERE WAS AN ERROR! The utility likely did not work. Press any key to continue."
     fi
     clear
 }
