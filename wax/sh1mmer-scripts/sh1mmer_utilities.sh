@@ -43,8 +43,9 @@ shell() {
 }
 runtask() {
 
-    # instead of clearing maybe we could use one of the term uis? idk how to make it properly aligned though, so a TODO for r58
-    cleanup
+    # are you happy now?!
+    showbg terminalGeneric.png
+    movecursor_generic
     echo "Starting task $1"
     sleep 2
     if $1; then
@@ -53,35 +54,6 @@ runtask() {
     else
         read "THERE WAS AN ERROR! The utility likely did not work. Press any key to continue."
     fi
-    clear
-}
-
-credits() {
-    showbg Credits.png
-    movecursor_Credits 0
-    echo -n "CoolElectronics: Finding the original vulnerability"
-    movecursor_Credits 1
-    echo -n "r58Playz: Creating the Beautiful World GUI"
-    movecursor_Credits 2
-    echo -n "rabbithawk256: Designing GUI assets"
-    movecursor_Credits 3
-    echo -n "ULTRA BLUE: Discovering how to unlock the rootfs"
-    movecursor_Credits 4
-    echo -n "Sharp_Jack: Creating the inital version of wax automation tool"
-    movecursor_Credits 5
-    echo -n "Unciaur: Finding the first shim"
-    movecursor_Credits 6
-    echo -n "TheMemeSniper: Testing"
-    movecursor_Credits 7
-    echo -n "OlyB: Scraping additional shims"
-    movecursor_Credits 8
-    echo -n "Rafflesia: Hosting"
-    printf "\033[0;0H"
-    while true; do
-        case $(readinput) in
-        'kB') break ;;
-        esac
-    done
 }
 
 while true; do
@@ -95,6 +67,5 @@ while true; do
     '5') runtask disable_verity ;;
     '6') runtask unblock_devmode ;;
     '7') shell ;;
-    '8') credits ;;
     esac
 done
