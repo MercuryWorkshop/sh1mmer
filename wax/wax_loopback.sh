@@ -33,7 +33,7 @@ loop=$(losetup -f)
 losetup -P $loop $bin
 
 echo "Making arch partition"
-mkfs.ext4 -L arch ${loop}p3
+mkfs.ext4 -L arch ${loop}p13
 echo "Making ROOT mountable"
 sh make_dev_ssd_no_resign.sh --remove_rootfs_verification -i ${loop}
 echo "Creating Mountpoint"
