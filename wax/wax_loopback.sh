@@ -35,7 +35,9 @@ echo "Extracting chromebrew"
 cd mntarch
 tar xvf ../chromebrew.tar.gz --strip-components=1
 cd ..
-echo "Injecting payload"
+echo "Injecting custom payloads"
+cp payloads/* mntarch/payloads/
+echo "Injecting GUI"
 cp -rv sh1mmer-assets mnt/usr/share/sh1mmer-assets
 cp -v sh1mmer-scripts/* mnt/usr/sbin/
 cp -v factory_install.sh mnt/usr/sbin/
