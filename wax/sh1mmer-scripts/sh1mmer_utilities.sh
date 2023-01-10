@@ -3,6 +3,7 @@ source /usr/sbin/sh1mmer_optionsSelector.sh
 
 deprovision() {
     vpd -i RW_VPD -s check_enrollment=0
+    unblock_devmode
 }
 
 reprovision() {
@@ -20,8 +21,8 @@ fix_gbb() {
 disable_verity() {
     /usr/share/vboot/bin/make_dev_ssd.sh -i /dev/mmcblk0 --remove_rootfs_verification
 }
+
 unblock_devmode() {
-    vpd -i RW_VPD -s check_enrollment=0
     vpd -i RW_VPD -s block_devmode=0
     crossystem block_devmode=0
     res=$(cryptohome --action=get_firmware_management_parameters 2>&1)
@@ -31,6 +32,7 @@ unblock_devmode() {
         cryptohome --action=remove_firmware_management_parameters
     fi
 }
+
 shell() {
     cleanup
     echo "You can sudo su if you need a rootshell"
@@ -41,7 +43,6 @@ shell() {
 }
 
 runtask() {
-
     # are you happy now?!
     # no, i am not YOU USED IT WRONG!!! -r58Playz
     showbg terminalGeneric.png
