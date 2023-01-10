@@ -3,8 +3,12 @@ devmode() {
     vpd -i RW_VPD -s check_enrollment=0
     vpd -i RW_VPD -s block_devmode=0
     crossystem block_devmode=0
-    tpm_manager_client take_ownership >/dev/null
-    cryptohome --action=remove_firmware_management_parameters >/dev/null
+    res=$(cryptohome --action=get_firmware_management_parameters 2>&1)
+    if [ $? -eq 0 ] && [[ ! $(echo $res | grep "Unknown action") ]]
+    then
+        tpm_manager_client take_ownership >/dev/null
+        cryptohome --action=remove_firmware_management_parameters >/dev/null
+    fi
 }
 deprovision() {
     echo "deprovisioning"
@@ -70,7 +74,7 @@ echo "Bideos - Testing & discovering how to disable root-fs verification"
 echo "Sharp_Jack - Creating the wax automation tool"
 echo "Unciaur - Testing"
 echo "TheMemeSniper/Kaitlin - Testing"
-echo "OlyB - Scraping shims from lenovo"
+echo "OlyB - Scraping more shims"
 echo "Rafflesia - Hosting"
 sleep 6
 echo "rebooting"

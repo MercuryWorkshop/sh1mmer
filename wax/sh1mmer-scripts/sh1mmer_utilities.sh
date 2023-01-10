@@ -3,7 +3,6 @@ source /usr/sbin/sh1mmer_optionsSelector.sh
 
 deprovision() {
     vpd -i RW_VPD -s check_enrollment=0
-    vpd -i RW_VPD -s block_devmode=0
 }
 
 reprovision() {
@@ -25,14 +24,13 @@ unblock_devmode() {
     vpd -i RW_VPD -s check_enrollment=0
     vpd -i RW_VPD -s block_devmode=0
     crossystem block_devmode=0
-
-    # the sleeps here are so cryptohome won't get pissy
-
-    tpm_manager_client take_ownership
-    sleep 2
-    cryptohome --action=tpm_take_ownership
-    sleep 2
-    cryptohome --action=remove_firmware_management_parameters
+    res=$(cryptohome --action=get_firmware_management_parameters 2>&1)
+    if [ $? -eq 0 ] && [[ ! $(echo $res | grep "Unknown action") ]]
+    then
+        tpm_manager_client take_ownership
+        # sleeps no longer needed
+        cryptohome --action=remove_firmware_management_parameters
+    fi
 }
 shell() {
     cleanup
