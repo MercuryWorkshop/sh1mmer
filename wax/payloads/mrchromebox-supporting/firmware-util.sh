@@ -35,4 +35,4 @@ cd /tmp
 prelim_setup || exit 1
 
 #show menu
-menu_fwupdate
+stock_menu
