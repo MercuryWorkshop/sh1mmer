@@ -25,8 +25,7 @@ unblock_devmode() {
     vpd -i RW_VPD -s block_devmode=0
     crossystem block_devmode=0
     res=$(cryptohome --action=get_firmware_management_parameters 2>&1)
-    if [ $? -eq 0 ] && [[ ! $(echo $res | grep "Unknown action") ]]
-    then
+    if [ $? -eq 0 ] && [[ ! $(echo $res | grep "Unknown action") ]]; then
         tpm_manager_client take_ownership
         # sleeps no longer needed
         cryptohome --action=remove_firmware_management_parameters
@@ -34,6 +33,7 @@ unblock_devmode() {
 }
 shell() {
     cleanup
+    echo "You can sudo su if you need a rootshell"
     su -c 'PATH="$PATH:/usr/local/bin" LD_LIBRARY_PATH="/lib64:/usr/lib64:/usr/local/lib64" /bin/bash' chronos # ok i didn't think of this very cool :+1: -ce
     setup
     clear
