@@ -35,8 +35,8 @@ selector() {
 	while true; do
 		input=$(readinput)
 		case $input in
-		'kB') reboot ;;
-		'kE') # again, bash return doesn't work if you have anything other than 0 or 1, so we'll just take the value of selected globally. real asm moment
+		'kB') exit ;; # rebooting here is a bad idea actually
+		'kE')         # again, bash return doesn't work if you have anything other than 0 or 1, so we'll just take the value of selected globally. real asm moment
 			return ;;
 		'kU')
 			((selected--))
