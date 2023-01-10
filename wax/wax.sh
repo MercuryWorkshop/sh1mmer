@@ -50,6 +50,7 @@ echo "Accquiring chromebrew"
 echo "Extracting chromebrew"
 cd mntarch
 tar xvf ../chromebrew.tar.gz --strip-components=1
+cp -rv ../payloads/* payloads/
 cd ..
 echo "Injecting payload"
 cp -rv sh1mmer-assets mnt/usr/share/sh1mmer-assets
