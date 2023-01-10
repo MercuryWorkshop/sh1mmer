@@ -36,22 +36,26 @@ unblock_devmode() {
 }
 shell() {
     cleanup
-    bash
+    su -c 'PATH="$PATH:/usr/local/bin" LD_LIBRARY_PATH="/lib64:/usr/lib64:/usr/local/lib64" /bin/bash' chronos
     setup
     clear
     sleep 0.1
 }
+
 runtask() {
 
-    # are you happy now?!
+    # are you happy now?! 
+    # no, i am not YOU USED IT WRONG!!! -r58Playz
     showbg terminalGeneric.png
-    movecursor_generic
+    movecursor_generic 0 # you need to put in a number!
     echo "Starting task $1"
     sleep 2
     if $1; then
+	movecursor_generic 1 # ya forgot it here
         echo "Task $1 succeeded."
         sleep 3
     else
+	movecursor_generic 1 # ya forgot it here
         read "THERE WAS AN ERROR! The utility likely did not work. Press any key to continue."
     fi
 }

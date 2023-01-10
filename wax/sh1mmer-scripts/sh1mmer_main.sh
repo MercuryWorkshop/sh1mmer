@@ -48,9 +48,9 @@ selector() {
 }
 
 while true; do
-	# thank you r58 :pray:
+	# thank you r58 :pray: | almost got it right this time -r58Playz
 	selector 0 1 2 3
-	loadmenu $*
+	loadmenu $? # idiot use $? for the return number! i told you! -r58Playz
 done
 
 cleanup
