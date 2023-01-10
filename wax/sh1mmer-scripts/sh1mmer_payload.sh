@@ -9,6 +9,9 @@ mapname() {
 	'/usr/local/payloads/wifi.sh') return 'Connect to wifi' ;;
 	'/usr/local/payloads/autoupdate.sh') return 'Fetch updated payloads. REQUIRES WIFI' ;;
 	'/usr/local/payloads/troll.sh') return "hahah wouldn't it be realllly funny if you ran this payload" ;;
+	'/usr/local/payloads/gui_lib.sh') return "GUI library for payloads. Will do nothing when run!" ;;
+	'/usr/local/payloads/movie.sh') return "HAHA WINDOWS SUX BUT THE MOVIE" ;;
+	'/usr/local/payloads/mrchromebox.sh') return "MrChromebox firmware-util.sh" ;;
 	esac
 }
 
