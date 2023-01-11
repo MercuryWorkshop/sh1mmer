@@ -2,130 +2,154 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>SH1MMER</title>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/alpinejs/3.10.5/cdn.js"
-        integrity="sha512-1fAkW3wqng/WNu86nQEgW3/RuPns2JxdC6WwCFJhqB/fL9VIWduIJmktYGrlBu99aoxwmWKCLY4AHlzDsh6LqA=="
-        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-MT82HHR67Y"></script>
-    <script src="bg.js"></script>
-    <link rel="stylesheet" href="base.css">
-
-    <script>
-
-        let devs = [{
-            tag: "CoolElectronics#4683",
-            pfp: "https://cdn.discordapp.com/avatars/696392247205298207/40154cf9e9717bd72d3257ac202f57da.webp?size=40",
-        }, {
-            tag: "Unciaur#1408",
-            pfp: "https://cdn.discordapp.com/avatars/465682780320301077/f794fdbf8f9352932d69e6726e128f2a.webp?size=40",
-        }, {
-            tag: "TheMemeSniper#6065",
-            pfp: "https://cdn.discordapp.com/avatars/391271835901362198/8fc58755580980450e965d83d2322c68.webp?size=40"
-        }, {
-            tag: "Rafflesia#8396",
-            pfp: "https://cdn.discordapp.com/avatars/247349845298249728/c37fc65834e2705bfd452d82ccfdad68.webp?size=40",
-        },
-        {
-            tag: "Bideos#1850",
-            pfp: "https://cdn.discordapp.com/avatars/904487572301021265/366e868748ba7d2e50be57cc3e45fa57.webp?size=40"
-        },
-        {
-            tag: "SprinkzMC#8421",
-            pfp: "https://cdn.discordapp.com/avatars/824066884231495709/6d66d97d0e874a65e8240134fd48ea83.webp?size=40"
-        },
-        {
-            tag: "r58Playz#3467",
-            pfp: "https://cdn.discordapp.com/avatars/803355425835188224/59096175f6add3bb28d9f465d9129590.webp?size=40"
-        }, {
-            tag: "OlyB#9420",
-            pfp: "https://cdn.discordapp.com/avatars/476169716998733834/b81090b1228facc23c85ccfc96f0ca5c.webp?size=40",
-        }]
-    </script>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <!--   Put meta tags here if you want search engines to index I guess   -->
+    <meta name="robots" content="noindex, follow">
+    <!-- which i don't know if is a good idea, so  -ce -->
+    <title>SH1MMER.me</title>
+    <link rel="icon" href="/icon.png" />
+    <link rel="stylesheet" href="/main.css" />
+    <script src="/index.js" defer></script>
+    <script src="/bg.js"></script>
+    <base target="_blank" />
 </head>
 
 <body>
-    <div id="background">
-        <img id="backgroundimg" src="assets/background.png" />
-    </div>
-    <div id="app">
-        <div id="title" class=" center t">
-            <p id="titletext">SH1MMER</p>
-            <p class="small">(Seriously Harming One's Moment of Magnificently Exclusive Rest)</p>
-            <p class="small">https://crbug.com/1394226</p>
-        </div>
-        <p class="center t explanation">
-            sh1mmer is an unpatchable recovery exploit in certain models of chromebooks allowing unsigned code
-            execution through a modified
-            RMA shim<br>
-            <br><br>
-            <a id="install" href="tutorial.html">sh1mmer me</a>
-            <br><br><br>
-            <a href="writeup.html">writeup</a> for those interested<br><br><br>
-            this exploit was developed by the Mercury Workshop team
-        <div id="credits" class="h-center t">
-            <template x-for="dev in devs">
-                <div class="credit">
-                    <img x-bind:src="dev.pfp" width="40" height="40" />
-                    <p x-text="dev.tag"></p>
-                </div>
-            </template>
-        </div>
+    <div class="header">
+        <h1>SH1MMER</h1>
+        <p class="acronym">
+            Shady Hacking 1nstrument Makes Machine Enrollment Retreat
         </p>
     </div>
+    <div class="section blue">
+        <h3>What is SH1MMER?</h3>
+        <p>
+            SH1MMER is an exploit capable of completely unenrolling
+            enterprise-managed Chromebooks. It was found by
+            <u>the Mercury Workshop team</u> and was released on
+            January, <u>Monday the 16th</u>, 2023.
+        </p>
+    </div>
+    <div class="section green">
+        <h3>What you will need</h3>
+        <li>A USB with at least 8 GBs of storage</li>
+        <li>
+            <u>A personal computer;</u> note that you need admin perms on
+            Windows/MacOS
+        </li>
+        <hr />
+        <h3>Writing to USB</h3>
+        <p>
+            First, you'll need to find your school Chromebook's board name. This can
+            be done by going to <kbd>chrome://version</kbd> on your Chromebook and
+            copying the word after "stable-channel", or with
+            <u>a variety of other methods</u>.
+        </p>
+        <p>
+            If your board name is in the list below, you can continue on with the
+            instructions:
+        </p>
+        brask, brya, clapper, coral, dedede, enguarde, glimmer, grunt, hana, hatch,
+        jacuzzi, kukui, nami, octopus, orco, pyro, reks, sentry, stout, strongbad,
+        tidus, ultima, volteer, zork
+        <p>
+            On your personal computer, download the corresponding shim from the
+            <a href="https://downloads.sh1mmer.me/Beautiful%20World%20GUI%20Shims">
+                SH1MMER file mirror
+            </a>
+        </p>
+        <p>
+            Download the
+            <a href="https://chrome.google.com/webstore/detail/pocpnlppkickgojjlmhdmidojbmbodfm">
+                Chromebook Recovery Utility extension
+            </a>
+            <spc></spc>
+            on your personal computer as well.
+        </p>
+        <p>
+            Once the downloads are complete, <u>launch the recovery utility</u>
+            and plug your USB into your personal computer. Note that your USB will
+            be completely cleared and partitioned.
+        </p>
+        <p>
+            In the recovery utility window, click the settings icon and press "use
+            local image".
+        </p>
+        <img src="/assets/recovery_utility.png" />
+        <p>
+            Select your shim file, identify your USB, and start the writing process.
+            This will take about 10 minutes.
+        </p>
+        <hr />
+        <h3>Executing on Chromebook</h3>
+        <p>
+            Once writing is complete, enter recovery mode on your Chromebook. This
+            is done by pressing the power button, reload key (↻), and esc key at the
+            same time. Your screen should look one of the images below:
+        </p>
+        <img src="/assets/recover_black.png" />
+        <img src="/assets/recover_white.png" />
+        <p>Press <kbd>ctrl+d</kbd> on this screen, then press enter.</p>
+        <p>
+            It will now say something about "returning to secure mode" or that "OS
+            verification is off". You will most likely not actually be in dev mode,
+            but the exploit will work regardless. Your screen should look like one
+            of the images below:
+        </p>
+        <img src="/assets/confirm_black.png" />
+        <img src="/assets/confirm_white.png" />
+        <p>
+            Once you have gotten to that screen, plug your shimmed USB into your
+            Chromebook. After a brief black-and-white loading screen, you should be
+            in the SH1MMER menu.
+        </p>
+        <h3>WE NEED SHIMMER MENU IMAGE HERE</h3>
+        <hr />
+        <h3>What now?</h3>
+        <p>
+            You will now be able to, among other things, unenroll your Chromebook.
+            It will now behave entirely as if it is a personal computer and no
+            longer contain spyware or blocker extensions. After you do this and get
+            past the "determining device configuration" screen, you will be able to
+            actually turn dev mode on.
+        </p>
+        <p>
+            Note that while unenrolled, it is recommended to add your personal
+            account first, then add your school account, then switch between the two
+            as needed. Mercury Workshop does not condone the use of SH1MMER or
+            unenrolling to cheat in school.
+        </p>
+        <p>
+            The biggest challenges with unenrolling are connecting to the school
+            network and taking state or national exams (since there are no kiosk
+            apps anymore).
+        </p>
+        <p>
+            There are many methods to get a school Wi-Fi password while enrolled,
+            including
+            <a href="https://luphoria.com/netlog-policy-password-tool">the policy netlog trick</a>. While on a school
+            account and unenrolled, you can bypass Wi-Fi blocks
+            by using a secure DNS such as Cloudflare 1.1.1.1 from
+            <kbd>chrome://os-settings/osPrivacy</kbd>. It is also recommended to
+            enable "MAC Address Randomization" in <kbd>chrome://flags</kbd> to stay
+            hidden.
+        </p>
+        <img src="/assets/secure_dns.png" />
+        <img src="/assets/mac_randomization.png" />
+        <p>
+            To take a kiosk exam, the safest option is to re-enroll temporarily.
+            Instructions for doing that are hosted
+            <a href="/kiosks.txt">at this TXT file</a>. Saving a copy of this file
+            for future reference is probably a smart move.
+        </p>
+    </div>
+    <div class="section blue">
+        <h3>
+            <a href="/faq.html" target="_self">FAQ</a>
+            <a href="/credits.html" target="_self">Credits</a>
+        </h3>
+    </div>
 </body>
-
-<style>
-    .center {
-        text-align: center;
-    }
-
-    .h-center {
-        display: flex;
-        justify-content: center;
-    }
-
-    .credit {
-        display: flex;
-        /* background-color: black; */
-        border-radius: 10px;
-        align-items: center;
-    }
-
-    .credit>img {
-        border-radius: 50%;
-        margin: 0.5em;
-    }
-
-    #credits {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-    }
-
-    #app {
-        overflow-y: scroll;
-    }
-
-    #title {
-        padding: 3em;
-    }
-
-    #titletext {
-        font-size: xx-large;
-
-    }
-
-    #install {
-        margin: 1em;
-        font-size: x-large;
-    }
-
-    body {
-        overflow: hidden;
-    }
-</style>
 
 </html>
