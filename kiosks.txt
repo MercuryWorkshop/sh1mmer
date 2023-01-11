@@ -1,0 +1,37 @@
+How to re-enroll temporarily (for kiosk exams) if you unenrolled:
+
+- Do some unenrolling Chromebook exploit such as SH1MMER (duh)
+
+- Turn on dev mode: (if you aren't already)
+     - Do powerbutton+esc+reload
+     - Do ctrl+d and press enter
+     - It will take like six minutes to load dev mode
+     - It will then give you a screen that says "You are in dev mode"
+     **do ctrl+d to get past this screen whenever you get it! THIS IS VERY IMPORTANT KNOWLEDGE**
+     - You are now in dev mode!
+
+- Powerwash:
+     - If you just turned on dev mode, your Chromebook should already be powerwashed
+     - If dev mode was already on, sign out if necessary and do ctrl+alt+shift+r
+
+- Once you've put in your Wi-Fi password and passed the "Determining device configuration" screen **after a powerwash**, there will be a button in the bottom left that says "Enterprise Enrollment"; click this button
+- It'll bring up a login page; sign in with your normal school account
+
+- **DO NOT CLOSE YOUR CHROMEBOOK until the next step and DO NOT SKIP the next step**
+- **SERIOUSLY!**
+- **DO NOT CLOSE YOUR CHROMEBOOK until the next step and DO NOT SKIP the next step**
+
+- Safe re-unenrolling
+     - Once you are on the normal district login screen, do ctrl+alt+forwardsarrow (this is F2, or the key above numbers 2 and 3 on the keyboard
+     - You should now be in a super hacky-looking black screen asking for username and password
+     - Type "root" as the login and some red thing should show up ("test0000" is the password if it needs one)
+     - Type in the following command and press enter:
+     vpd -i RW_VPD -s check_enrollment=0
+     - Now your device has been unenrolled again but you are still in the enrolled session
+     - Do ctrl+alt+backwardsarrow (the one next to forwardsarrow duh) to exit the hacky black screen
+
+- Take the kiosk test normally
+- **Try not to close your Chromebook lid until you are ACTUALLY IN THE KIOSK APP**, if you shut down your Chromebook in any way before that it'll force you to powerwash/turn on dev mode again and will be majorly inconvenient
+
+- Once you are done with the kiosk test, reboot your computer with powerbutton+refresh, and follow the instructions to return to secure mode powerwash
+- Your device is unenrolled again and you have successfully taken a kiosk test!

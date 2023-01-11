@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>SH1MMER</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/alpinejs/3.10.5/cdn.js"
+        integrity="sha512-1fAkW3wqng/WNu86nQEgW3/RuPns2JxdC6WwCFJhqB/fL9VIWduIJmktYGrlBu99aoxwmWKCLY4AHlzDsh6LqA=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-MT82HHR67Y"></script>
+    <script src="bg.js"></script>
+    <link rel="stylesheet" href="base.css">
+
+    <script>
+
+        let devs = [{
+            tag: "CoolElectronics#4683",
+            pfp: "https://cdn.discordapp.com/avatars/696392247205298207/40154cf9e9717bd72d3257ac202f57da.webp?size=40",
+        }, {
+            tag: "Unciaur#1408",
+            pfp: "https://cdn.discordapp.com/avatars/465682780320301077/f794fdbf8f9352932d69e6726e128f2a.webp?size=40",
+        }, {
+            tag: "TheMemeSniper#6065",
+            pfp: "https://cdn.discordapp.com/avatars/391271835901362198/8fc58755580980450e965d83d2322c68.webp?size=40"
+        }, {
+            tag: "Rafflesia#8396",
+            pfp: "https://cdn.discordapp.com/avatars/247349845298249728/c37fc65834e2705bfd452d82ccfdad68.webp?size=40",
+        },
+        {
+            tag: "Bideos#1850",
+            pfp: "https://cdn.discordapp.com/avatars/904487572301021265/366e868748ba7d2e50be57cc3e45fa57.webp?size=40"
+        },
+        {
+            tag: "SprinkzMC#8421",
+            pfp: "https://cdn.discordapp.com/avatars/824066884231495709/6d66d97d0e874a65e8240134fd48ea83.webp?size=40"
+        },
+        {
+            tag: "r58Playz#3467",
+            pfp: "https://cdn.discordapp.com/avatars/803355425835188224/59096175f6add3bb28d9f465d9129590.webp?size=40"
+        }, {
+            tag: "OlyB#9420",
+            pfp: "https://cdn.discordapp.com/avatars/476169716998733834/b81090b1228facc23c85ccfc96f0ca5c.webp?size=40",
+        }]
+    </script>
+</head>
+
+<body>
+    <div id="background">
+        <img id="backgroundimg" src="assets/background.png" />
+    </div>
+    <div id="app">
+        <div id="title" class=" center t">
+            <p id="titletext">SH1MMER</p>
+            <p class="small">(Seriously Harming One's Moment of Magnificently Exclusive Rest)</p>
+            <p class="small">https://crbug.com/1394226</p>
+        </div>
+        <p class="center t explanation">
+            sh1mmer is an unpatchable recovery exploit in certain models of chromebooks allowing unsigned code
+            execution through a modified
+            RMA shim<br>
+            <br><br>
+            <a id="install" href="tutorial.html">sh1mmer me</a>
+            <br><br><br>
+            <a href="writeup.html">writeup</a> for those interested<br><br><br>
+            this exploit was developed by the Mercury Workshop team
+        <div id="credits" class="h-center t">
+            <template x-for="dev in devs">
+                <div class="credit">
+                    <img x-bind:src="dev.pfp" width="40" height="40" />
+                    <p x-text="dev.tag"></p>
+                </div>
+            </template>
+        </div>
+        </p>
+    </div>
+</body>
+
+<style>
+    .center {
+        text-align: center;
+    }
+
+    .h-center {
+        display: flex;
+        justify-content: center;
+    }
+
+    .credit {
+        display: flex;
+        /* background-color: black; */
+        border-radius: 10px;
+        align-items: center;
+    }
+
+    .credit>img {
+        border-radius: 50%;
+        margin: 0.5em;
+    }
+
+    #credits {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+    }
+
+    #app {
+        overflow-y: scroll;
+    }
+
+    #title {
+        padding: 3em;
+    }
+
+    #titletext {
+        font-size: xx-large;
+
+    }
+
+    #install {
+        margin: 1em;
+        font-size: x-large;
+    }
+
+    body {
+        overflow: hidden;
+    }
+</style>
+
+</html>
