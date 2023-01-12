@@ -4,6 +4,7 @@ if [ "$EUID" -ne 0 ]; then
     echo "Please run as root"
     exit
 fi
+
 echo "-------------------------------------------------------------------------------------------------------------"
 echo "Welcome to wax, a shim modifying automation tool made by CoolElectronics and Sharp_Jack, greatly improved by r58playz and Rafflesia"
 echo "Prerequisites: cgpt must be installed, program must be ran as root, chromebrew.tar.gz needs to exist"
@@ -71,7 +72,7 @@ cp -v factory_install.sh mnt/usr/sbin/
 # if you're reading this, you aren't a skid. run sh make_dev_ssd_no_resign.sh --remove_rootfs_verification --unlock_arch -i /dev/sdX on the flashed usb to undo this
 if [[ $* == *--antiskid* ]]; then
     echo "relocking rootfs..."
-    sh make_dev_ssd_no_resign.sh --lock_root --lock_arch -i ${loop}
+    sh make_dev_ssd_no_resign.sh --lock_root -i ${loop}
 fi
 
 echo "Cleaning up..."

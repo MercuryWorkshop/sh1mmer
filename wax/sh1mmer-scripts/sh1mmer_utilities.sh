@@ -63,8 +63,8 @@ selector() {
     clear # FOR TESTING! REMOVE THIS ONCE ASSETS ARE FIXED -ce
 
     selected=0
-    showbg "utils/utils-select0${selected}.png" # or something
     while true; do
+        showbg "utils/utils-select0${selected}.png" # or something
         input=$(readinput)
         case $input in
         'kB') exit ;;
@@ -90,7 +90,7 @@ while true; do
     '2') runtask reprovision ;;
     '3') runtask usb ;;
     '4') runtask disable_verity ;;
-    '5') runtask unblock_devmode ;;
-    '6') shell ;;
+    '5') shell ;;
+    '6') runtask unblock_devmode ;;
     esac
 done

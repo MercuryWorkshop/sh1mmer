@@ -5,9 +5,9 @@ mount /dev/disk/by-label/arch /usr/local
 
 setup
 showbg Disclaimer.png
-sleep 3
+sleep 7
 showbg startingUp.png
-sleep 3
+sleep 2
 
 loadmenu() {
 	case $selected in
@@ -30,12 +30,12 @@ credits() {
 
 selector() {
 	selected=0
-	showbg "qsm/$selected.png" # or something
 	while true; do
+		showbg "qsm/qsm-select0$selected.png"
 		input=$(readinput)
 		case $input in
-		'kB') exit ;; # rebooting here is a bad idea actually
-		'kE')         # again, bash return doesn't work if you have anything other than 0 or 1, so we'll just take the value of selected globally. real asm moment
+		'kB') return ;;
+		'kE') # again, bash return doesn't work if you have anything other than 0 or 1, so we'll just take the value of selected globally. real asm moment
 			# i have been informed i was wrong with this comment.
 			return ;;
 		'kU')
