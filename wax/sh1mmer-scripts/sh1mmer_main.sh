@@ -4,8 +4,9 @@ source /usr/sbin/sh1mmer_optionsSelector.sh
 mount /dev/disk/by-label/arch /usr/local
 
 setup
-showbg Splash.png
-echo -n "If you paid for this, demand your money back."
+showbg Disclaimer.png
+sleep 3
+showbg startingUp.png
 sleep 3
 
 loadmenu() {
@@ -28,15 +29,14 @@ credits() {
 }
 
 selector() {
-	clear # FOR TESTING! REMOVE THIS ONCE ASSETS ARE FIXED -ce
-
 	selected=0
-	showbg "Main_$selected.png" # or something
+	showbg "qsm/$selected.png" # or something
 	while true; do
 		input=$(readinput)
 		case $input in
 		'kB') exit ;; # rebooting here is a bad idea actually
 		'kE')         # again, bash return doesn't work if you have anything other than 0 or 1, so we'll just take the value of selected globally. real asm moment
+			# i have been informed i was wrong with this comment.
 			return ;;
 		'kU')
 			((selected--))

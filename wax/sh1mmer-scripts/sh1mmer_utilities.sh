@@ -59,16 +59,38 @@ runtask() {
     fi
 }
 
+selector() {
+    clear # FOR TESTING! REMOVE THIS ONCE ASSETS ARE FIXED -ce
+
+    selected=0
+    showbg "utils/utils-select0${selected}.png" # or something
+    while true; do
+        input=$(readinput)
+        case $input in
+        'kB') exit ;;
+        'kE') return ;;
+        'kU')
+            ((selected--))
+            if [ $selected -lt 0 ]; then selected=0; fi
+            ;;
+        'kD')
+            ((selected++))
+            if [ $selected -ge $# ]; then selected=$(($# - 1)); fi
+            ;;
+        esac
+    done
+}
+
 while true; do
     showbg Utilities.png
-    case $(readinput) in
-    'kB') break ;;
-    '1') runtask fix_gbb ;;
-    '2') runtask deprovision ;;
-    '3') runtask reprovision ;;
-    '4') runtask usb ;;
-    '5') runtask disable_verity ;;
-    '6') runtask unblock_devmode ;;
-    '7') shell ;;
+    selector 0 1 2 3 4 5 6
+    case $selected in
+    '0') runtask fix_gbb ;;
+    '1') runtask deprovision ;;
+    '2') runtask reprovision ;;
+    '3') runtask usb ;;
+    '4') runtask disable_verity ;;
+    '5') runtask unblock_devmode ;;
+    '6') shell ;;
     esac
 done

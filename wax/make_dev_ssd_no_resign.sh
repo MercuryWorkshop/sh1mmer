@@ -4,8 +4,8 @@
 # Use of this source code is governed by a BSD-style license that can be
 # found in the LICENSE file.
 #
-# This script can change key (usually developer keys) and kernel config
-# of kernels on an disk image (usually for SSD but also works for USB).
+
+# This script was modified by r58 and coolelectronics. it contains utilites to mess with shims without breaking the kernel seal
 
 SCRIPT_BASE="$(dirname "$0")"
 . "$SCRIPT_BASE/common_minimal.sh"
@@ -35,8 +35,13 @@ ROOTDEV_KERNEL="$((ROOTDEV_PARTITION - 1))"
 DEFINE_string image "$ROOTDEV_DISK" "Path to device or image file" "i"
 DEFINE_string keys "$DEFAULT_KEYS_FOLDER" "Path to folder of dev keys" "k"
 DEFINE_boolean remove_rootfs_verification \
-  "${FLAGS_FALSE}" "Modify kernel boot config to disable rootfs verification" \
-  "r"
+  "${FLAGS_FALSE}" "Unlock rootfs"
+DEFINE_boolean unlock_arch \
+  "${FLAGS_FALSE}" "Unlock arch"
+DEFINE_boolean lock_root \
+  "${FLAGS_FALSE}" "lock rootfs"
+DEFINE_boolean lock_arch \
+  "${FLAGS_FALSE}" "lock arch"
 DEFINE_boolean enable_earlycon "${FLAGS_FALSE}" \
   "Enable earlycon from stdout-path (ARM/ARM64) or SPCR (x86)." ""
 DEFINE_boolean disable_earlycon "${FLAGS_FALSE}" \
@@ -360,15 +365,56 @@ resign_ssd_kernel() {
     # (1) change kernel config to ro
     # (2) check if we can enable rw mount
     # (3) change kernel config to rw
+
+    if [ ${FLAGS_lock_root} = $FLAGS_TRUE ]; then
+      local root_offset_sector=$(partoffset "$ssd_device" $rootfs_index)
+      local root_offset_bytes=$((root_offset_sector * bs))
+      # enable the RO ext2 hack
+      if ! is_ext2 "$ssd_device" "$root_offset_bytes"; then
+        debug_msg "Non-ext2 partition: $ssd_device$rootfs_index, skip."
+      else
+        echo "REnabling the ext2 hack :trolley:"
+        disable_rw_mount "$ssd_device" "$root_offset_bytes" >"$EXEC_LOG" 2>&1 ||
+          die "Failed turning off rootfs RO bit. OS may be corrupted. " \
+            "Message: $(cat "${EXEC_LOG}")"
+      fi
+    fi
+    if [ ${FLAGS_lock_arch} = $FLAGS_TRUE ]; then
+      local root_offset_sector=$(partoffset "$ssd_device" 13)
+      local root_offset_bytes=$((root_offset_sector * bs))
+      # enable the RO ext2 hack
+      if ! is_ext2 "$ssd_device" "$root_offset_bytes"; then
+        debug_msg "Non-ext2 partition: $ssd_device$rootfs_index, skip."
+      else
+        echo "Locking arch partition"
+        disable_rw_mount "$ssd_device" "$root_offset_bytes" >"$EXEC_LOG" 2>&1 ||
+          die "Failed turning off rootfs RO bit. OS may be corrupted. " \
+            "Message: $(cat "${EXEC_LOG}")"
+      fi
+    fi
+    if [ ${FLAGS_unlock_arch} = $FLAGS_TRUE ]; then
+      local root_offset_sector=$(partoffset "$ssd_device" 13)
+      local root_offset_bytes=$((root_offset_sector * bs))
+      # enable the RO ext2 hack
+      if ! is_ext2 "$ssd_device" "$root_offset_bytes"; then
+        echo "Non-ext2 partition: $ssd_device$rootfs_index, skip."
+      else
+        echo "unlocking arch partition"
+        enable_rw_mount "$ssd_device" "$root_offset_bytes" >"$EXEC_LOG" 2>&1 ||
+          die "Failed turning off rootfs RO bit. OS may be corrupted. " \
+            "Message: $(cat "${EXEC_LOG}")"
+      fi
+    fi
     if [ ${FLAGS_remove_rootfs_verification} = $FLAGS_TRUE ]; then
       local root_offset_sector=$(partoffset "$ssd_device" $rootfs_index)
       local root_offset_bytes=$((root_offset_sector * bs))
+      echo "unlocking rootfs"
+      # disable the RO ext2 hack
       if ! is_ext2 "$ssd_device" "$root_offset_bytes"; then
         debug_msg "Non-ext2 partition: $ssd_device$rootfs_index, skip."
       elif ! rw_mount_disabled "$ssd_device" "$root_offset_bytes"; then
         debug_msg "Root file system is writable. No need to modify."
       else
-        # disable the RO ext2 hack
         debug_msg "Disabling rootfs ext2 RO bit hack"
         enable_rw_mount "$ssd_device" "$root_offset_bytes" >"$EXEC_LOG" 2>&1 ||
           die "Failed turning off rootfs RO bit. OS may be corrupted. " \
