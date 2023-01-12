@@ -65,9 +65,8 @@ img {
 
 }
 
-a {
+u {
   cursor: pointer;
-  text-decoration: underline;
 }
 
 kbd {
@@ -115,6 +114,6 @@ a[href] {
   transition: filter 250ms;
 }
 
-a[href]:hover {
+a:hover {
   filter: brightness(80%);
 }
