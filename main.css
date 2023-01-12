@@ -1,10 +1,9 @@
 @import url("https://fonts.googleapis.com/css2?family=Space+Grotesk&family=Sofia+Sans&family=Exo:wght@500&display=swap");
 
 /* use vars bypassi! */
-:root{
+:root {
   --white: #e6d8ff;
   --font: #e6d8ff;
-
 
   --light:#a791e8;
   --dark2:#59498a;
@@ -43,15 +42,13 @@
 .section.blue {
   background-color: var(--light);
 }
-
 .section.green {
   background-color: var(--dark1);
 }
-*::selection{
+*::selection {
   background-color: var(--dark2);
-
-
 }
+
 h3 {
   font-family: "Space Grotesk", monospace;
   font-size: 50px;
@@ -94,14 +91,14 @@ img {
   max-width: 100%;
   border: 3px solid var(--white);
   vertical-align: top;
-
   border-radius: 10px;
 }
 
-spc{
+spc {
   margin-right: 10px;
 }
-a[href] {
+
+a {
   background-color: var(--white);
   color: black;
   border: none;
@@ -111,6 +108,7 @@ a[href] {
   border-radius: 10px;
   font-family: "Sofia Sans", sans-serif;
   padding: 5px 10px;
+  max-width: 100%;
   transition: filter 250ms;
 }
 
