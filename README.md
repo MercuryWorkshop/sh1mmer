@@ -23,7 +23,7 @@ in those edits are equal to the amount of characters in the original.
 - Unciaur#1408 - Found the inital RMA shim
 - TheMemeSniper#6065 - Testing
 - Rafflesia#8396 - Hosting files
-- SprinkzMC#8421 - Helped with the website
+- Bypassi#7037 - Helped with the website
 - r58Playz#3467 - Helped us set parts of the shim
 - OlyB#9420 - Scraped additional shims
 - Sharp_Jack#4374 - Created wax & compiled the first shims
