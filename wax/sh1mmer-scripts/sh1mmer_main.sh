@@ -1,13 +1,12 @@
 source /usr/sbin/sh1mmer_gui.sh
 source /usr/sbin/sh1mmer_optionsSelector.sh
 
-mount /dev/disk/by-label/arch /usr/local
-
 setup
 showbg Disclaimer.png
-sleep 7
+read -n 1
 showbg startingUp.png
-sleep 2
+mount /dev/disk/by-label/arch /usr/local
+sleep 4
 
 loadmenu() {
 	case $selected in

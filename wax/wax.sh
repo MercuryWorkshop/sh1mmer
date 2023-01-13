@@ -18,7 +18,7 @@ if [[ $* == *--dev* ]]; then
     CHROMEBREW=chromebrew-dev.tar.gz
     CHROMEBREW_SIZE=7
 else
-    CHROMEBREW_SIZE=3 # or whatever it is
+    CHROMEBREW_SIZE=4 # or whatever it is
     CHROMEBREW=chromebrew.tar.gz
 fi
 
@@ -68,13 +68,20 @@ echo "Injecting payload"
 cp -rv sh1mmer-assets mnt/usr/share/sh1mmer-assets
 cp -v sh1mmer-scripts/* mnt/usr/sbin/
 cp -v factory_install.sh mnt/usr/sbin/
+echo "Inserting firmware"
+curl "https://github.com/Netronome/linux-firmware/raw/master/iwlwifi-9000-pu-b0-jf-b0-41.ucode" >mnt/lib/firmware/iwlwifi-9000-pu-b0-jf-b0-41.ucode
+echo "Brewwing /etc/environment"
 
+echo 'PATH="$PATH:/usr/local/bin"' >>mnt/etc/environment
+echo 'LD_LIBRARY_PATH="/lib64:/usr/lib64:/usr/local/lib64"' >>mnt/etc/environment
+sync # this sync should hopefully stop make_dev_ssd from messing up, as it does raw byte manip stuff
+sleep 4
 # if you're reading this, you aren't a skid. run sh make_dev_ssd_no_resign.sh --remove_rootfs_verification --unlock_arch -i /dev/sdX on the flashed usb to undo this
 if [[ $* == *--antiskid* ]]; then
     echo "relocking rootfs..."
     sh make_dev_ssd_no_resign.sh --lock_root -i ${loop}
 fi
-
+sleep 2
 echo "Cleaning up..."
 sync
 if umount "${loop}p3" && umount "${loop}p13"; then

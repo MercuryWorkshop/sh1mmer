@@ -19,6 +19,10 @@ fix_gbb() {
 }
 
 disable_verity() {
+    movecursor_generic 2
+    echo "READ THIS!!!!!! DON'T BE STUPID"
+    movecursor_generic 3
+    echo "This script will disable rootfs verification. What does this mean? You'll be able to edit any file on the chromebook, useful for development, messing around, etc"
     /usr/share/vboot/bin/make_dev_ssd.sh -i /dev/mmcblk0 --remove_rootfs_verification
 }
 
@@ -35,8 +39,8 @@ unblock_devmode() {
 
 shell() {
     cleanup
-    echo "You can sudo su if you need a rootshell"
-    su -c 'PATH="$PATH:/usr/local/bin" LD_LIBRARY_PATH="/lib64:/usr/lib64:/usr/local/lib64" /bin/bash' chronos # ok i didn't think of this very cool :+1: -ce
+    echo "You can su chronos if you need to use chromebrew"
+    su -c 'PATH="$PATH:/usr/local/bin" LD_LIBRARY_PATH="/lib64:/usr/lib64:/usr/local/lib64" /bin/bash' # ok i didn't think of this very cool :+1: -ce
     setup
     clear
     sleep 0.1
@@ -46,21 +50,25 @@ runtask() {
     # are you happy now?!
     # no, i am not YOU USED IT WRONG!!! -r58Playz
     showbg terminalGeneric.png
-    movecursor_generic 0 # you need to put in a number!
+
+    curidx=0
+    movecursor_generic $curidx # you need to put in a number!
     echo "Starting task $1"
     sleep 2
+    curidx=1
     if $1; then
-        movecursor_generic 1 # ya forgot it here
+        movecursor_generic $curidx # ya forgot it here
         echo "Task $1 succeeded."
         sleep 3
     else
-        movecursor_generic 1 # ya forgot it here
-        read "THERE WAS AN ERROR! The utility likely did not work. Press any key to continue."
+        # movecursor_generic $curidx # ya forgot it here
+        # NO I DIDN'T! i wasn't skidding, the issue i told you would happen did happen! -ce
+        read "THERE WAS AN ERROR! The utility likely did not work. Press return to continue."
     fi
 }
 
 selector() {
-    clear # FOR TESTING! REMOVE THIS ONCE ASSETS ARE FIXED -ce
+    #clear # FOR TESTING! REMOVE THIS ONCE ASSETS ARE FIXED -ce
 
     selected=0
     while true; do
