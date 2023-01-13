@@ -12,7 +12,7 @@
 # Determine script directory
 SCRIPT_DIR=$(dirname "$0")
 PROG=$(basename "$0")
-: "${GPT:=./bin/cgpt}"
+: "${GPT:=cgpt}"
 : "${FUTILITY:=futility}"
 
 # The tag when the rootfs is changed.
