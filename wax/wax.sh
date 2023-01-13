@@ -10,7 +10,7 @@ echo "Welcome to wax, a shim modifying automation tool made by CoolElectronics a
 echo "Prerequisites: cgpt must be installed, program must be ran as root, chromebrew.tar.gz needs to exist"
 echo "-------------------------------------------------------------------------------------------------------------"
 echo "Launch flags you should know about: --antiskid will relock the rootfs"
-echo "THIS IS THE MINIMAL SHIM, PAYLOADS FEATURE **WILL NOT** WORK"
+echo "THIS IS THE MINIMAL SHIM, CHOMEBREW PAYLOADS **WILL NOT** WORK"
 # ORDER MATTERS! bin name before flags
 
 bin=$1
@@ -40,6 +40,7 @@ mount "${loop}p3" mnt
 echo "Injecting payload"
 cp -rv sh1mmer-assets mnt/usr/share/sh1mmer-assets
 cp -v sh1mmer-scripts/* mnt/usr/sbin/
+cp -rv payloads/* mnt/usr/local/payloads/
 cp -v factory_install.sh mnt/usr/sbin/
 
 echo "Inserting wifi firmware"

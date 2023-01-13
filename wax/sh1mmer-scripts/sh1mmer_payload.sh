@@ -6,12 +6,12 @@ showbg terminalGeneric.png
 
 mapname() {
 	case $1 in # you can't use return because bash sux
-	'/usr/local/payloads/wifi.sh') printf 'Connect to wifi' ;;
-	'/usr/local/payloads/autoupdate.sh') printf 'Fetch updated payloads. REQUIRES WIFI' ;;
+	'echo "This payload is not available in the minimal version"') printf 'Connect to wifi (unavailable)' ;;
+	'echo "This payload is not available in the minimal version"') printf 'Fetch updated payloads. REQUIRES WIFI (unavailable)' ;;
 	'/usr/local/payloads/stopupdates.sh') printf 'IMPORTANT! UPDATE DISABLER FOR CHROMEOS. RUN THIS IF YOU DONT WANT THIS TO GET PATCHED FOR YOU' ;;
 	'/usr/local/payloads/troll.sh') printf "hahah wouldn't it be realllly funny if you ran this payload trust me nothing bad will happen" ;;
-	'/usr/local/payloads/weston.sh') printf 'Launch the weston Desktop Environment. REQUIRES A DEVSHIM (wax.sh ran with the --dev argument)' ;;
-	'/usr/local/payloads/movie.sh') printf "HAHA WINDOWS SUX BUT THE MOVIE" ;;
+	'echo "This payload is not available in the minimal version"') printf 'Launch the weston Desktop Environment. REQUIRES A DEVSHIM (wax.sh ran with the --dev argument) (unavailable)' ;;
+	'echo "This payload is not available in the minimal version"') printf "HAHA WINDOWS SUX BUT THE MOVIE (unavailable)" ;;
 	'/usr/local/payloads/mrchromebox.sh') printf "MrChromebox firmware-util.sh" ;;
 	*) printf $1 ;;
 	esac

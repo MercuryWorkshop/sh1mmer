@@ -10,7 +10,7 @@ sleep 4
 
 loadmenu() {
 	case $selected in
-	0) echo You are running SH1mmer minimal edition, this version does not support payloads ;;
+	0) bash /usr/sbin/sh1mmer_payload.sh ;;
 	1) bash /usr/sbin/sh1mmer_utilities.sh ;;
 	2) credits ;;
 	3) reboot ;;
