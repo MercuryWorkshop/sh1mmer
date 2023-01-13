@@ -8,10 +8,21 @@
     <link rel="icon" href="/icon.png" />
     <link rel="stylesheet" href="/main.css" />
     <script src="/index.js" defer></script>
-    <script src="/bg.js"></script>
+    <script>
+      var messages = {
+        mercury:
+          "Check the credits button at the bottom of the page for more info.",
+        monday:
+          "We wanted it to be Friday the 13th for the funnies but it didn't end up happening...",
+        pc: "Or if you can download the recovery utility extension on your school computer, but that's exceedingly rare.",
+        board:
+          "It's somewhere in the firmware log/debug info on the recovery screen. It is also shown at the bottom of the Android Preferences app. You can also go to a connected WiFi network in settings, click the Learn More link next to the message about syncing, and your board name will be somewhere in the URL of the newly-opened help tab.",
+        launch:
+          "Click the extensions icon in Chrome, then click Chromebook Recovery Utility.",
+      };
+    </script>
     <base target="_blank" />
   </head>
-
   <body>
     <div class="header">
       <h1>SH1MMER</h1>
@@ -24,16 +35,17 @@
       <p>
         SH1MMER is an exploit capable of completely unenrolling
         enterprise-managed Chromebooks. It was found by
-        <u onclick="alert(messsages.mercury)">the Mercury Workshop team</u> and was released on
-        January, <u onclick="alert(messsages.monday)">Monday the 16th</u>, 2023.
+        <u onclick="alert(messages.mercury)">the Mercury Workshop team</u> and
+        was released on January,
+        <u onclick="alert(messages.monday)">Monday the 16th</u>, 2023.
       </p>
     </div>
     <div class="section green">
       <h3>What you will need</h3>
       <li>A USB with at least 8 GBs of storage</li>
       <li>
-        <u onclick="alert(messsages.pc)">A personal computer;</u> note that you need admin perms
-        on Windows/MacOS
+        <u onclick="alert(messages.pc)">A personal computer;</u> note that you
+        need admin perms on Windows/MacOS
       </li>
       <hr />
       <h3>Writing to USB</h3>
@@ -41,7 +53,7 @@
         First, you'll need to find your school Chromebook's board name. This can
         be done by going to <kbd>chrome://version</kbd> on your Chromebook and
         copying the word after "stable-channel", or with
-        <u onclick="alert(messsages.board)">a variety of other methods</u>.
+        <u onclick="alert(messages.board)">a variety of other methods</u>.
       </p>
       <p>
         If your board name is in the list below, you can continue on with the
@@ -68,7 +80,7 @@
       </p>
       <p>
         Once the downloads are complete,
-        <u onclick="alert(messsages.launch)">launch the recovery utility</u>
+        <u onclick="alert(messages.launch)">launch the recovery utility</u>
         and plug your USB into your personal computer. Note that your USB will
         be completely cleared and partitioned.
       </p>
