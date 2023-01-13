@@ -1,4 +1,4 @@
-let strings = {
+var messages = {
 mercury:"Check the credits button at the bottom of the page for more info.",
 monday:"We wanted it to be Friday the 13th for the funnies but it didn't end up happening...",
 pc:"Or if you can download the recovery utility extension on your school computer, but that's exceedingly rare.",
