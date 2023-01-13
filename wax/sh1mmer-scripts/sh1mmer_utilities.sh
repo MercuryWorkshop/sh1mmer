@@ -23,7 +23,13 @@ disable_verity() {
     echo "READ THIS!!!!!! DON'T BE STUPID"
     movecursor_generic 3
     echo "This script will disable rootfs verification. What does this mean? You'll be able to edit any file on the chromebook, useful for development, messing around, etc"
-    /usr/share/vboot/bin/make_dev_ssd.sh -i /dev/mmcblk0 --remove_rootfs_verification
+    echo "IF YOU DO THIS AND GO BACK INTO VERIFIED MODE (press the space key when it asks you to on the boot screen) YOUR CHROMEBOOK WILL STOP WORKING AND YOU WILL HAVE TO RECOVER"
+    read -p "Do you still want to do this? [Y/N]" confirm
+    case $confirm in
+    'Y' | 'y') /usr/share/vboot/bin/make_dev_ssd.sh -i /dev/mmcblk0 --remove_rootfs_verification ;;
+    *) return ;;
+    esac
+
 }
 
 unblock_devmode() {

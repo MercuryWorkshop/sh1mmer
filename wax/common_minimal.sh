@@ -13,7 +13,7 @@
 SCRIPT_DIR=$(dirname "$0")
 if [$(uname -s) -ne "Darwin"]; then
 PROG=$(basename "$0")
-: "${GPT:=./bin/cgpt}"
+: "${GPT:=cgpt}"
 : "${FUTILITY:=futility}"
 else
 PROG=$(basename "$0")
