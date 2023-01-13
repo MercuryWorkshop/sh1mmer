@@ -40,6 +40,7 @@ mount "${loop}p3" mnt
 echo "Injecting payload"
 cp -rv sh1mmer-assets mnt/usr/share/sh1mmer-assets
 cp -v sh1mmer-scripts/* mnt/usr/sbin/
+mkdir mnt/usr/local/payloads/
 cp -rv payloads/* mnt/usr/local/payloads/
 cp -v factory_install.sh mnt/usr/sbin/
 
