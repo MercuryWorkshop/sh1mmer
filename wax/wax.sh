@@ -70,10 +70,10 @@ cp -v sh1mmer-scripts/* mnt/usr/sbin/
 cp -v factory_install.sh mnt/usr/sbin/
 echo "Inserting firmware"
 curl "https://github.com/Netronome/linux-firmware/raw/master/iwlwifi-9000-pu-b0-jf-b0-41.ucode" >mnt/lib/firmware/iwlwifi-9000-pu-b0-jf-b0-41.ucode
-echo "Brewwing /etc/environment"
+echo "Brewing /etc/profile"
 
-echo 'PATH="$PATH:/usr/local/bin"' >>mnt/etc/environment
-echo 'LD_LIBRARY_PATH="/lib64:/usr/lib64:/usr/local/lib64"' >>mnt/etc/environment
+echo 'PATH="$PATH:/usr/local/bin"' >>mnt/etc/profile
+echo 'LD_LIBRARY_PATH="/lib64:/usr/lib64:/usr/local/lib64"' >>mnt/etc/profile
 sync # this sync should hopefully stop make_dev_ssd from messing up, as it does raw byte manip stuff
 sleep 4
 # if you're reading this, you aren't a skid. run sh make_dev_ssd_no_resign.sh --remove_rootfs_verification --unlock_arch -i /dev/sdX on the flashed usb to undo this

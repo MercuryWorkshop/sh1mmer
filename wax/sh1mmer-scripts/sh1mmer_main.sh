@@ -3,6 +3,7 @@ source /usr/sbin/sh1mmer_optionsSelector.sh
 
 setup
 showbg Disclaimer.png
+sleep 1
 read -n 1
 showbg startingUp.png
 mount /dev/disk/by-label/arch /usr/local
