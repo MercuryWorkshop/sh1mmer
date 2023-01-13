@@ -18,7 +18,7 @@ if [[ $* == *--dev* ]]; then
     CHROMEBREW=chromebrew-dev.tar.gz
     CHROMEBREW_SIZE=7
 else
-    CHROMEBREW_SIZE=4 # or whatever it is
+    CHROMEBREW_SIZE=3 # or whatever it is
     CHROMEBREW=chromebrew.tar.gz
 fi
 
