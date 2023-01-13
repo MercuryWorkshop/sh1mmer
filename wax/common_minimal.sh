@@ -11,7 +11,7 @@
 
 # Determine script directory
 SCRIPT_DIR=$(dirname "$0")
-if [$(uname -s) -ne "Darwin"]; then
+if [ $(uname -s) -ne "Darwin" ]; then
   PROG=$(basename "$0")
   : "${GPT:=cgpt}"
   : "${FUTILITY:=futility}"
