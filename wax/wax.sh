@@ -7,7 +7,7 @@ fi
 
 echo "-------------------------------------------------------------------------------------------------------------"
 echo "Welcome to wax, a shim modifying automation tool made by CoolElectronics and Sharp_Jack, greatly improved by r58playz and Rafflesia"
-echo "Prerequisites: cgpt must be installed, program must be ran as root, chromebrew.tar.gz needs to exist"
+echo "Prerequisites: cgpt must be installed, program must be ran as root, chromebrew.tar.gz needs to exist inside the wax folder"
 echo "-------------------------------------------------------------------------------------------------------------"
 echo "Launch flags you should know about: --dev will install a much larger chromebrew partition used for testing, --antiskid will relock the rootfs"
 # ORDER MATTERS! bin name before flags
