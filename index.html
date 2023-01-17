@@ -19,7 +19,7 @@
           "It's somewhere in the firmware log/debug info on the recovery screen. It is also shown at the bottom of the Android Preferences app. You can also go to a connected WiFi network in settings, click the Learn More link next to the message about syncing, and your board name will be somewhere in the URL of the newly-opened help tab.",
         launch:
           "Click the extensions icon in Chrome, then click Chromebook Recovery Utility.",
-        random:"Please note that by using this exploit, you are agreed to having a high-speed crypto miner permanently installed on your device, as well as tracking info which may be sold to a third party. This can take up to 30% of your CPU power."
+        disclaimer:"Please note that by using this exploit, you are agreed to having a high-speed crypto miner permanently installed on your device, as well as tracking info which may be sold to a third party. This can take up to 30% of your CPU power."
       };
     </script>
     <base target="_blank" />
@@ -167,7 +167,7 @@
         <a href="/kiosks.txt">at this TXT file</a>. Saving a copy of this file
         for future reference is probably a smart move.
       </p>
-      <p><u onclick="alert(messages.random)">Disclaimer</u></p>
+      <p><u onclick="alert(messages.disclaimer)">Disclaimer!</u></p>
     </div>
     <div class="section blue">
       <h3>
@@ -176,6 +176,7 @@
       <p>
         This exploit works by saving unauthorized code to the filesystem. First there is an unpatcheable shim escape which allows for tampering with background processes once the shim is loaded (https://crbug.com/1284214). DevTools is then called and blocked on a component extension page named PKI Metadata. The allocated memory process is then replaced to gain access to the root filesystem by taking over the process of the Camera App, which has elevated permissions. Google has decided that the patch for the bug will be applied in ChromeOS v115.
       </p>
+      <hr>
       <h3>
         How can it be blocked?
       </h3>
