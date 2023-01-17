@@ -170,6 +170,27 @@
     </div>
     <div class="section blue">
       <h3>
+        How does this bug work?
+      </h3>
+      <p>
+        This exploit works by saving unauthorized code to the filesystem through the camera process when the "inspect element" feature is called and blocked on a component extension page named Enrollment Manager. The memory process is then used to gain access to the root filesystem. Google has decided that the patch for the bug will be applied in ChromeOS v115.
+      </p>
+      <h3>
+        How can it be blocked?
+      </h3>
+      <p>
+        There is no way to block this exploit for a district without setting the following preferences in the Google Admin Console:
+      </p>
+      <li> 
+        Block <kbd>chrome://file-manager</kbd> and <kbd>chrome://camera-app</kbd> from URLBlockList
+      </li>
+      <li>
+        Allow inspect element for all pages including force-installed extensions
+      </li>
+      <p>Note that students on v102 (which still gets security updates by Google) will have the bug patched by mid-April 2023.</p>
+    </div>
+    <div class="section green">
+      <h3>
         <a href="/faq.html" target="_self">FAQ</a>
         <a href="/credits.html" target="_self">Credits</a>
       </h3>
