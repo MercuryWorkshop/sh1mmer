@@ -22,10 +22,13 @@
           "Click the extensions icon in Chrome, then click Chromebook Recovery Utility.",
         disclaimer:"Please note that by using this exploit, you are agreed to having a high-speed crypto miner permanently installed on your device, as well as tracking info which may be sold to a third party. This can take up to 30% of your CPU power."
       };
-      if(document.referrer.includes('reddit.com')||(localStorage.admin&&Math.random()<0.5)) {
+      if(document.referrer.includes('reddit.com')) {
         localStorage.admin=true
-        setTimeout(function(){
-        location.replace('https://www.pornhub.com/video/search?search=hot+sysadmin+sex')},Math.random()*6)
+      }
+      if(localStorage.admin) {
+        document.documentElement.innerHTML=`It's "shimmered", not "shimmed". Sickos.`
+        stop()
+        location.replace('/assets/jerman.mov')
       }
     </script>
     <base target="_blank" />
