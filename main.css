@@ -70,6 +70,7 @@ kbd {
   font-family: "Space Grotesk", monospace;
   background-color: var(--dark2);
   color: var(--white);
+  white-space: nowrap;
   font-size: 90%;
   border-radius: 10px;
   padding: 3px;
