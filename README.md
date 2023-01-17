@@ -28,3 +28,4 @@ in those edits are equal to the amount of characters in the original.
 - r58Playz#3467 - Helped us set parts of the shim & made the initial GUI script
 - OlyB#9420 - Scraped additional shims
 - Sharp_Jack#4374 - Created wax & compiled the first shims
+- ember#0377 - Helped with the website
