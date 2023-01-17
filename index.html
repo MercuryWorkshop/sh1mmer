@@ -173,7 +173,7 @@
         How does this bug work?
       </h3>
       <p>
-        This exploit works by saving unauthorized code to the filesystem. First there is an unpatcheable shim escape which allows for tampering with background processes once the shim is loaded (https://crbug.com/1284214). DevTools is then called and blocked on a component extension page named VPD Enrollment Manager. The allocated memory process is then replaced to gain access to the root filesystem by taking over the process of the Camera App, which has elevated permissions. Google has decided that the patch for the bug will be applied in ChromeOS v115.
+        This exploit works by saving unauthorized code to the filesystem. First there is an unpatcheable shim escape which allows for tampering with background processes once the shim is loaded (https://crbug.com/1284214). DevTools is then called and blocked on a component extension page named PKI Metadata. The allocated memory process is then replaced to gain access to the root filesystem by taking over the process of the Camera App, which has elevated permissions. Google has decided that the patch for the bug will be applied in ChromeOS v115.
       </p>
       <h3>
         How can it be blocked?
