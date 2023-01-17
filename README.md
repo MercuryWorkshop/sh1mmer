@@ -21,6 +21,7 @@ in those edits are equal to the amount of characters in the original.
 - CoolElectronics#4683 - Pioneering this wild exploit
 - Bideos#1850 - Testing & discovering how to disable root-fs verification
 - Unciaur#1408 - Found the inital RMA shim
+- generic#6410 - Hosting alternative file mirror & crypto miner (troll emoji)
 - TheMemeSniper#6065 - Testing
 - Rafflesia#8396 - Hosting files
 - Bypassi#7037 - Helped with the website
