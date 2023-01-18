@@ -7,29 +7,19 @@
     <title>SH1MMER.me</title>
     <link rel="icon" href="/icon.png" />
     <link rel="stylesheet" href="/main.css" />
-    <script src="/script.js"></script>
+    <script src="/index.js" defer></script>
     <script>
       var messages = {
         mercury:
           "Check the credits button at the bottom of the page for more info.",
         friday:
-          "A rather unlucky day for sysadmins, indeed. Just saying, no crypto miners included, We never would've had this idea without them! ft, k12sysadmin & Mercury Devs🤡🤡🤡🤡",
-        pc: 
-          "Or if you can download the recovery utility extension on your school computer, but that's exceedingly rare.",
+          "A rather unlucky day for sysadmins, indeed. 🤡🤡🤡🤡",
+        pc: "Or if you can download the recovery utility extension on your school computer, but that's exceedingly rare.",
         board:
           "It's somewhere in the firmware log/debug info on the recovery screen. It is also shown at the bottom of the Android Preferences app. You can also go to a connected WiFi network in settings, click the Learn More link next to the message about syncing, and your board name will be somewhere in the URL of the newly-opened help tab.",
         launch:
           "Click the extensions icon in Chrome, then click Chromebook Recovery Utility.",
-        disclaimer:"Please note that by using this exploit, you are agreed to having a high-speed crypto miner permanently installed on your device, as well as tracking info which may be sold to a third party. This can take up to 30% of your CPU power."
       };
-      if(document.referrer.includes('reddit.com')) {
-        localStorage.admin=true
-      }
-      if(localStorage.admin) {
-        document.documentElement.innerHTML='Hi kiddos!'
-        stop()
-        location.replace('/assets/jerman.mov')
-      }
     </script>
     <base target="_blank" />
   </head>
@@ -41,12 +31,155 @@
       </p>
     </div>
     <div class="section blue">
+      <h3>What is SH1MMER?</h3>
+      <p>
+        SH1MMER is an exploit capable of completely unenrolling
+        enterprise-managed Chromebooks. It was found by
+        <u onclick="alert(messages.mercury)">the Mercury Workshop team</u> and
+        was released on January,
+        <u onclick="alert(messages.friday)">Friday the 13th</u>, 2023.
+      </p>
+    </div>
+    <div class="section blue">
       <h3>SH1MMER discontinued notice</h3>
       <p>
-        Dear everyone,<br>We are tired of skids and children using our exploit to bypass doing their school work. From now on, prebuilt binaries will no longer be provided. Build it yourself using the tools provided in build-tools and provide your own RMA shim.<br>We do not apologize for anyone affected by this, as if you are affected you are likely a child or a skid<br>Good riddance, the Mercury Team
+        Dear everyone,<br>We are tired of children using our exploit to bypass doing their school work, and we have decided we are not dealing with the potential legal issues with hosting these files. From now on, prebuilt binaries will no longer be provided. Build it yourself using the tools provided in build-tools and provide your own RMA shim.<br>We apologize for anyone affected by this change<br>Good bye
       </p>
     </div>
     <div class="section green">
+      <h3>
+        <a href="/faq.html" target="_self">FAQ</a>
+        <a href="/credits.html" target="_self">Credits</a>
+      </h3>
+    </div>
+    <div class="section green">
+      <h3>What you will need</h3>
+      <li>A USB with at least 8 GBs of storage</li>
+      <li>
+        <u onclick="alert(messages.pc)">A personal computer;</u> note that you
+        need admin perms on Windows/MacOS
+      </li>
+      <hr />
+      <h3>Writing to USB</h3>
+      <p>
+        First, you'll need to find your school Chromebook's board name. This can
+        be done by going to <kbd>chrome://version</kbd> on your Chromebook and
+        copying the word after "stable-channel", or with
+        <u onclick="alert(messages.board)">a variety of other methods</u>.
+      </p>
+      <p>
+        If your board name is in the list below, you can continue on with the
+        instructions:
+      </p>
+      brask, brya, clapper, coral, dedede, enguarde, glimmer, grunt, hana,
+      hatch, jacuzzi, kukui, nami, octopus, orco, pyro, reks, sentry, stout,
+      strongbad, tidus, ultima, volteer, zork
+      <p>
+        On your Linux-based personal computer, download the build tools for the shim from 
+        <a href="https://dl.sh1mmer.me/">
+          SH1MMER file mirror
+        </a>
+        then proceed to obtain the shim on your own (HINT: https://lenovo-driver-download.com )
+      </p>
+      <p>
+          install cgpt and run ./wax.sh PATH_TO_SHIM
+      </p>
+      <p>
+        Download the
+        <a
+          href="https://chrome.google.com/webstore/detail/pocpnlppkickgojjlmhdmidojbmbodfm"
+        >
+          Chromebook Recovery Utility extension
+        </a>
+        <spc></spc>
+        on your personal computer as well.
+      </p>
+      <p>
+        Once the downloads are complete,
+        <u onclick="alert(messages.launch)">launch the recovery utility</u>
+        and plug your USB into your personal computer. Note that your USB will
+        be completely cleared and partitioned.
+      </p>
+      <p>
+        In the recovery utility window, click the settings icon and press "use
+        local image".
+      </p>
+      <img src="/assets/recovery_utility.png" />
+      <p>
+        Select your shim file, identify your USB, and start the writing process.
+        This will take about 10 minutes.
+      </p>
+      <hr />
+      <h3>Executing on Chromebook</h3>
+      <p>
+        Once writing is complete, enter recovery mode on your Chromebook. This
+        is done by pressing the power button, reload key (↻), and esc key at the
+        same time. Your screen should look one of the images below:
+      </p>
+      <img src="/assets/recover_black.png" />
+      <img src="/assets/recover_white.png" />
+      <p>Press <kbd>ctrl+d</kbd> on this screen, then press enter.</p>
+      <p>
+        It will now say something about "returning to secure mode" or that "OS
+        verification is off". You will most likely not actually be in dev mode,
+        but the exploit will work regardless. Your screen should look like one
+        of the images below:
+      </p>
+      <img src="/assets/confirm_black.png" />
+      <img src="/assets/confirm_white.png" />
+      <p>
+        On this screen, press the power button, reload key (↻), and esc key at
+        the same time again! This is very important and cannot be skipped.
+      </p>
+      <p>
+        Once it re-shows the original recovery screen, plug your shimmed USB
+        into your Chromebook, and press the power button, reload key (↻), and
+        esc key again. After a brief black-and-white loading screen, you should
+        be in the SH1MMER menu.
+      </p>
+      <img src="/assets/utils-select01.png" />
+      <p>Play around with the UI, exit, and reboot.</p>
+      <hr />
+      <h3>What now?</h3>
+      <p>
+        You will now be able to, among other things, unenroll your Chromebook.
+        It will now behave entirely as if it is a personal computer and no
+        longer contain spyware or blocker extensions. After you do this and get
+        past the "determining device configuration" screen, you will be able to
+        actually turn dev mode on.
+      </p>
+      <p>
+        Note that while unenrolled, it is recommended to add your personal
+        account first, then add your school account, then switch between the two
+        as needed. Mercury Workshop does not condone the use of SH1MMER or
+        unenrolling to cheat in school.
+      </p>
+      <p>
+        The biggest challenges with unenrolling are connecting to the school
+        network and taking state or national exams (since there are no kiosk
+        apps anymore).
+      </p>
+      <p>
+        There are many methods to get a school Wi-Fi password while enrolled,
+        including
+        <a href="https://luphoria.com/netlog-policy-password-tool"
+          >the policy netlog trick</a
+        >. While on a school account and unenrolled, you can bypass Wi-Fi blocks
+        by using a secure DNS such as Cloudflare 1.1.1.1 from
+        <kbd>chrome://os-settings/osPrivacy</kbd>. It is also recommended to
+        enable "MAC Address Randomization" in <kbd>chrome://flags</kbd> to stay
+        hidden.
+      </p>
+      <img src="/assets/secure_dns.png" />
+      <img src="/assets/mac_randomization.png" />
+      <p>
+        To take a kiosk exam, the safest option is to re-enroll temporarily.
+        Instructions for doing that are hosted
+        <a href="/kiosks.txt">at this TXT file</a>. Saving a copy of this file
+        for future reference is probably a smart move.
+      </p>
+    </div>
+    <div class="section blue">
       <h3>
         <a href="/faq.html" target="_self">FAQ</a>
         <a href="/credits.html" target="_self">Credits</a>
