@@ -15,7 +15,7 @@ Shimmer is an exploit found in the ChromeOS shim kernel that utilitzes modified 
 The prebuilt binaries have been taken off of the official mirror (dl.sh1mmer.me), partially due to copyright concerns but also we're honestly tired of all the harassment and toxicity from the community, and from now on you'll have to build it from source.
 
 Here's how you do that.
-First, get a raw shim. There are several ways you can do this, from "borrowing" them from repair centers, accquiring a certified repair account, or in our case, [finding them online](https://lenovo-driver-download.com/cat/LAPTOPS-AND-NETBOOKS). Go on chrome100.dev and search for your chromebook's model. It will be in a box with other chromebook models. If one of those models corresponds with one on the lenovo website, download it.
+First, get a raw shim. There are several ways you can do this, from "borrowing" them from repair centers, accquiring a certified repair account, or in our case, [finding them online](https://lenovo-driver-download.com/cat/LAPTOPS-AND-NETBOOKS/LENOVO-CHROMEBOOKS-SERIES). Go on chrome100.dev and search for your chromebook's model. It will be in a box with other chromebook models. If one of those models corresponds with one on the lenovo website, download it.
 
 Now we can start building. Type out all of these commands in the terminal. You need to be on linux/wsl and have the following packages installed: cgpt, git, wget
 ```
