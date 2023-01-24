@@ -48,3 +48,4 @@ the KERNEL partitions are checked for signatures by the firmware. We can edit th
 - OlyB#9420 - Scraped additional shims
 - Sharp_Jack#4374 - Created wax & compiled the first shims
 - ember#0377 - Helped with the website
+- Mark - Technical Understanding and Advisory into the ChromeOS ecosystem
