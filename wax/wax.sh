@@ -56,9 +56,6 @@ mount "${loop}p3" mnt
 echo "Mounting arch"
 mount "${loop}p13" mntarch
 
-echo "Accquiring chromebrew"
-# wget "https://files.alicesworld.tech/${CHROMEBREW}"
-# uncomment this line when file servers go public or add the creds yourself
 echo "Extracting chromebrew"
 cd mntarch
 tar xvf ../${CHROMEBREW} --strip-components=1
