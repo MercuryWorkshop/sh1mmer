@@ -58,9 +58,9 @@ fuse-ext2 "${loop}s3" mnt -o rw+
 echo "Mounting arch"
 fuse-ext2 "${loop}s13" mntarch -o rw+
 
-echo "Accquiring chromebrew"
+# echo "Accquiring chromebrew"
 # wget "https://files.alicesworld.tech/${CHROMEBREW}"
-# uncomment this line when file servers go public or add the creds yourself
+# uncomment the two lines above when file servers go public or add the creds yourself
 echo "Extracting chromebrew"
 cd mntarch
 tar xvf ../${CHROMEBREW} --strip-components=1
