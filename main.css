@@ -16,13 +16,24 @@
   font-family: "Exo", sans-serif;
 }
 
+@keyframes scroll {
+  0% {
+    background-position: 0px 0px;
+  }
+  100% {
+    background-position: -1359px 0px;
+  }
+}
+
 .header {
   background-repeat: no-repeat;
-  background-size: cover;
-  background-image: url("/assets/background.png");
+  background-image: url("/assets/background_min.png");
+  background-size: 540px 100%;
+  background-repeat: repeat-x;
   text-align: center;
   padding: 50px 5vw;
   color: var(--font);
+  animation: scroll 60s linear infinite;
 }
 
 .header h1 {
