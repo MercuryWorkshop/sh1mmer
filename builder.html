@@ -23,6 +23,12 @@
                 }
             });
         });
+        window.addEventListener("beforeunload", (event) => {
+            if (building) {
+                event.preventDefault();
+                event.returnValue = "";
+            }
+        }, { capture: true });
         function start() {
             $("#injector_output").value = "";
             $("#hd_image").click();
@@ -54,13 +60,16 @@
                     generateURL();
                 }
             });
+            building = true;
         }
         function generateURL() {
+            building = false
             document.all.downloadURL.href = window.URL.createObjectURL(emulator.disk_images.hda.get_as_file());
             document.all.downloadURL.click()
 
         }
         var data = ""
+        var building = false
 
     </script>
 </head>
