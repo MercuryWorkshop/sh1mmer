@@ -1,4 +1,3 @@
-
 <div align="center">
     <h1>SH1MMER</h1>
 </div>
@@ -12,24 +11,40 @@ Website, source tree, and write-up for a ChromeOS enrollment jailbreak
 Shimmer is an exploit found in the ChromeOS shim kernel that utilitzes modified RMA factory shims to gain code execution at recovery.<br>
 
 ## How do I use it?
-The prebuilt binaries have been taken off of the official mirror (dl.sh1mmer.me), partially due to copyright concerns but also we're honestly tired of all the harassment and toxicity from the community, and from now on you'll have to build it from source.
+
+The prebuilt binaries have been taken off of the official mirror (dl.sh1mmer.me), so you'll have to build it from source
 
 Here's how you do that.
-First, get a raw shim. There are several ways you can do this, from "borrowing" them from repair centers, accquiring a certified repair account, or in our case, [finding them online](https://lenovo-driver-download.com/cat/LAPTOPS-AND-NETBOOKS/LENOVO-CHROMEBOOKS-SERIES). Go on chrome100.dev and search for your chromebook's model. It will be in a box with other chromebook models. If one of those models corresponds with one on the lenovo website, download it.
+First, you need to know your chromebook's board. Go to chrome://version on your chromebook and copy the word after "stable-chnanel". If chrome://version is blocked, you can search up your chromebook's model name on chrome100.dev and see what board it corresponds to. DO NOT DOWNLOAD ANYTHING FROM CHROME100.DEV AND USE IT WITH THE BUILDER, IT WILL NOT WORK.
+
+If your board name is in the list below, great! Download the RAW shim corresponding to your board from [here](https://files.ultimatesrv.com).
+
+- brask, brya, clapper, coral, dedede, enguarde, glimmer, grunt, hana, hatch, jacuzzi, kukui, nami, octopus, orco, pyro, reks, sentry, stout, strongbad, tidus, ultima, volteer, zork
+
+If it's not, good luck. You'll have to try and call up your OEM and demand the files from them, which they are unlikely to give to you.
 
 Now we can start building. Type out all of these commands in the terminal. You need to be on linux/wsl2 and have the following packages installed: cgpt, git, wget
+
+### Building a Beautiful World shim
+
+IMPORTANT!!!! IF YOU HAVE EITHER THE `coral` OR `hana` BOARDS, DO NOT FOLLOW THESE INSTRUCTIONS, INSTEAD SKIP TO THE "Building a legacy shim" SECTION
+
 ```
 git clone https://github.com/CoolElectronics/sh1mmer
 cd sh1mmer/wax
 wget https://dl.sh1mmer.me/build-tools/chromebrew/chromebrew.tar.gz
 sudo sh wax.sh /path/to/the/shim/you/downloaded.bin
 ```
+
 When this finishes, the bin file in the path you provided will have been converted into a sh1mmer image. Note that this is a destructive operation, you will need to redownload a fresh shim to try again if it fails.
 
-If you want to build a devshim (higher file size but more features), replace `chromebrew.tar.gz` with `chromebrew-dev.tar.gz` and add `--dev` to the end of `sudo sh wax.sh /path/to/the/shim/you/downloaded.bin`
+If you want to build a devshim (higher file size but more features, such as a desktop environment and a web browser included in the shim), replace `chromebrew.tar.gz` with `chromebrew-dev.tar.gz` and add `--dev` to the end of `sudo sh wax.sh /path/to/the/shim/you/downloaded.bin`
 The chromebrew tarballs are NOT COPYRIGHTED MATERIAL and can be distributed freely.
 
+### Building a legacy shim
+
 To install the built .bin file onto a usb, use the chrome recovery tool, rufus, or any other flasher.
+
 ## How does it work?
 
 RMA shims are a factory tool allowing certain authorization functions to be is signed, but only

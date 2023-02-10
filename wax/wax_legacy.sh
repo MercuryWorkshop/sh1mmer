@@ -33,7 +33,7 @@ echo "Mounting ROOT-A"
 mount "${usb}3" mnt
 echo "Injecting payload"
 sleep 5
-cp ../sh1mmer.sh mnt/usr/sbin/factory_install.sh
+cp wax_legacy.sh mnt/usr/sbin/factory_install.sh
 echo "Cleaning up..."
 sleep 5
 umount "${usb}3"
