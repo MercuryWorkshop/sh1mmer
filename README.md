@@ -23,11 +23,12 @@ If your board name is in the list below, great! Download the RAW shim correspond
 
 If it's not, good luck. You'll have to try and call up your OEM and demand the files from them, which they are unlikely to give to you.
 
-Now we can start building. Type out all of these commands in the terminal. You need to be on linux/wsl2 and have the following packages installed: cgpt, git, wget
-
 ### Building a Beautiful World shim
 
 IMPORTANT!!!! IF YOU HAVE EITHER THE `coral` OR `hana` BOARDS, DO NOT FOLLOW THESE INSTRUCTIONS, INSTEAD SKIP TO THE "Building a legacy shim" SECTION
+
+Now we can start building. Type out all of these commands in the terminal. You need to be on linux/wsl2 and have the following packages installed: cgpt, git, wget.
+Note that WSL doesn't work for some people, and if you have trouble building it it's recommended to just use a VM or the [web builder](https://sh1mmer.me/builder.html)
 
 ```
 git clone https://github.com/CoolElectronics/sh1mmer
@@ -38,12 +39,24 @@ sudo sh wax.sh /path/to/the/shim/you/downloaded.bin
 
 When this finishes, the bin file in the path you provided will have been converted into a sh1mmer image. Note that this is a destructive operation, you will need to redownload a fresh shim to try again if it fails.
 
-If you want to build a devshim (higher file size but more features, such as a desktop environment and a web browser included in the shim), replace `chromebrew.tar.gz` with `chromebrew-dev.tar.gz` and add `--dev` to the end of `sudo sh wax.sh /path/to/the/shim/you/downloaded.bin`
-The chromebrew tarballs are NOT COPYRIGHTED MATERIAL and can be distributed freely.
+If you want to build a devshim, replace `chromebrew.tar.gz` with `chromebrew-dev.tar.gz` and add `--dev` to the end of `sudo sh wax.sh /path/to/the/shim/you/downloaded.bin`
+Devshim builds will mount a much larger chromebrew partition over /usr/local, allowing you to access a desktop environment and even firefox from within sh1mmer. It's what allowed us to [run doom on a shim](https://coolelectronics.me/blog/static/breaking/doom.jpg).
 
-### Building a legacy shim
+To install the built .bin file onto a usb, use the chrome recovery tool, balenaetcher, rufus, or any other flasher.
 
-To install the built .bin file onto a usb, use the chrome recovery tool, rufus, or any other flasher.
+### Building a legacy shim (hana/coral)
+
+The raw shim files for the hana and coral boards were built before graphics support was added into the tty. This makes it impossible for the Beautiful World GUI to work and thus a legacy CLI-only shim must be built.
+
+Type out all of these commands in the terminal. You need to be on linux (legacy CANNOT BE BUILT on WSL) and have the following packages installed: cgpt, git, wget.
+
+```
+git clone https://github.com/CoolElectronics/sh1mmer
+cd sh1mmer/wax
+sudo sh wax_legacy.sh
+```
+
+Make sure you have your usb plugged in, this version writes directly to it instead of modifying an image file
 
 ## How does it work?
 
