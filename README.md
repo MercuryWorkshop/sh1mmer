@@ -10,6 +10,8 @@ Website, source tree, and write-up for a ChromeOS enrollment jailbreak
 
 Shimmer is an exploit found in the ChromeOS shim kernel that utilitzes modified RMA factory shims to gain code execution at recovery.<br>
 
+For more info, check out the blog post/writeup [here](https://coolelectronics.me/blog/breaking-cros-2)
+
 ## How do I use it?
 
 The prebuilt binaries have been taken off of the official mirror (dl.sh1mmer.me), so you'll have to build it from source
