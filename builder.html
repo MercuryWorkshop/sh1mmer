@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="/main.css" />
     <script src="/script.js" defer></script>
 
-    <script src="https://copy.sh/v86/build/libv86.js"></script>
+    <script src="/wax4web/libv86.js"></script>
     <script>
         const $ = _ => document.querySelector(_);
 
@@ -35,15 +35,15 @@
         }
         function startVM() {
             var emulator = window.emulator = new V86Starter({
-                wasm_path: "https://copy.sh/v86/build/v86.wasm",
+                wasm_path: "/wax4web/v86.wasm",
                 memory_size: 512 * 1024 * 1024,
                 vga_memory_size: 2 * 1024 * 1024,
                 screen_container: $("#screen_container"),
                 bios: {
-                    url: "https://copy.sh/v86/build/seabios.bin",
+                    url: "/wax4web/seabios.bin",
                 },
                 vga_bios: {
-                    url: "https://copy.sh/v86/build/vgabios.bin",
+                    url: "/wax4web/vgabios.bin",
                 },
                 cdrom: {
                     url: "https://dl.sh1mmer.me/build-tools/wax%20for%20qemu/wax4qemui386.iso?raw=true",
