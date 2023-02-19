@@ -36,7 +36,7 @@ Note that WSL doesn't work for some people, and if you have trouble building it 
 git clone https://github.com/CoolElectronics/sh1mmer
 cd sh1mmer/wax
 wget https://dl.sh1mmer.me/build-tools/chromebrew/chromebrew.tar.gz
-sudo sh wax.sh /path/to/the/shim/you/downloaded.bin
+sudo bash wax.sh /path/to/the/shim/you/downloaded.bin
 ```
 
 When this finishes, the bin file in the path you provided will have been converted into a sh1mmer image. Note that this is a destructive operation, you will need to redownload a fresh shim to try again if it fails.
@@ -55,7 +55,7 @@ Type out all of these commands in the terminal. You need to be on linux (legacy 
 ```
 git clone https://github.com/CoolElectronics/sh1mmer
 cd sh1mmer/wax
-sudo sh wax_legacy.sh
+sudo bash wax_legacy.sh
 ```
 
 Make sure you have your usb plugged in, this version writes directly to it instead of modifying an image file
