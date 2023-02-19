@@ -20,10 +20,13 @@ echo ""
 read -p "ARE YOU SURE YOU WANT TO DO THIS? [y/n]" input
 
 if [ "$input" = "y" ]; then
-    fix_gbb
     crossystem dev_boot_usb=0
     reprovision
-    vpd -i RW_VPD -s block_devmode=0
+    crossystem block_devmode=1
+    vpd -i RW_VPD -s block_devmode=1
+    cryptohome --action=tpm_take_ownership
+    cryptohome --action=set_firmware_management_parameters --flags=0x01
+    fix_gbb
     echo "rebooting"
     reboot
     exit
