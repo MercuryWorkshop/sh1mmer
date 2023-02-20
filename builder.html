@@ -45,8 +45,11 @@
                 vga_bios: {
                     url: "/wax4web/vgabios.bin",
                 },
-                cdrom: {
-                    url: "/mirror/wax4qemui386.iso?raw=true",
+                bzimage: {
+                    url: "/wax4web/bzImage"
+                },
+                initrd: {
+                    url: "/wax4web/bw"
                 },
                 hda: {
                     buffer: document.all.hd_image.files[0]
