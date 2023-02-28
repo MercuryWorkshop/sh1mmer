@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="/main.css" />
     <script src="/script.js" defer></script>
 
-    <script src="wax4web/build/libv86.js"></script>
+    <script src="/wax4web/libv86.js"></script>
     <script>
         const $ = _ => document.querySelector(_);
 
@@ -35,18 +35,21 @@
         }
         function startVM() {
             var emulator = window.emulator = new V86Starter({
-                wasm_path: "wax4web/build/v86.wasm",
+                wasm_path: "/wax4web/v86.wasm",
                 memory_size: 512 * 1024 * 1024,
                 vga_memory_size: 2 * 1024 * 1024,
                 screen_container: $("#screen_container"),
                 bios: {
-                    url: "wax4web/bios/seabios.bin",
+                    url: "/wax4web/seabios.bin",
                 },
                 vga_bios: {
-                    url: "wax4web/bios/vgabios.bin",
+                    url: "/wax4web/vgabios.bin",
                 },
-                cdrom: {
-                    url: "wax4web/images/wax4qemui386.iso",
+                bzimage: {
+                    url: "/wax4web/bzImage"
+                },
+                initrd: {
+                    url: "/wax4web/bw"
                 },
                 hda: {
                     buffer: document.all.hd_image.files[0]
@@ -89,9 +92,8 @@
             copying the word after "stable-channel", or by looking up the chromebook's model.
         </p>
         <p>
-            IMPORTANT!!!! IF YOUR BOARD IS HANA OR CORAL, THIS WILL NOT WORK! Instead, you'll have to build a legacy
-            shim from source. Instructions on how to do that are on <a
-                href="https://github.com/CoolElectronics/sh1mmer">the sh1mmer repo</a><br><br>
+            IMPORTANT!!!! IF YOUR BOARD IS HANA OR CORAL OR ANYOTHER PRE-FRECON BOARD, THIS WILL NOT WORK! Instead, you'll have to build a legacy
+            shim from <a href="https://sh1mmer.me/buildlegacy">the legacy builder</a>
 
             Next you need a raw RMA shim for that board name. There should be one corresponding to your board <a
                 href="https://files.ultimatesrv.com">here</a> but if not you'll have to source them on your own..

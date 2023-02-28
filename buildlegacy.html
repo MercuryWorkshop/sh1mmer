@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Wax4Web</title>
+    <link rel="icon" href="/icon.png" />
+    <link rel="stylesheet" href="/main.css" />
+    <script src="/script.js" defer></script>
+
+    <script src="/wax4web/libv86.js"></script>
+    <script>
+        const $ = _ => document.querySelector(_);
+
+        window.addEventListener("load", () => {
+            $("#injector_output").value = "";
+            $("#hd_image").addEventListener("change", e => {
+                if ($("#hd_image").files.length < 0) {
+                    alert("Please select a file!");
+                } else {
+                    startVM();
+                }
+            });
+        });
+        window.addEventListener("beforeunload", (event) => {
+            if (building) {
+                event.preventDefault();
+                event.returnValue = "";
+            }
+        }, { capture: true });
+        function start() {
+            $("#injector_output").value = "";
+            $("#hd_image").click();
+        }
+        function startVM() {
+            var emulator = window.emulator = new V86Starter({
+                wasm_path: "/wax4web/v86.wasm",
+                memory_size: 512 * 1024 * 1024,
+                vga_memory_size: 2 * 1024 * 1024,
+                screen_container: $("#screen_container"),
+                bios: {
+                    url: "/wax4web/seabios.bin",
+                },
+                vga_bios: {
+                    url: "/wax4web/vgabios.bin",
+                },
+                bzimage: {
+                    url: "/wax4web/bzImage"
+                },
+                initrd: {
+                    url: "/wax4web/legacy"
+                },
+                hda: {
+                    buffer: document.all.hd_image.files[0]
+                },
+                serial_container: $("#injector_output"),
+                autostart: true,
+            });
+            emulator.add_listener("serial0-output-char", function (char) {
+                data += char;
+                if (data.endsWith("Your shim has finished building")) {
+                    generateURL();
+                }
+            });
+            building = true;
+        }
+        function generateURL() {
+            building = false
+            document.all.downloadURL.href = window.URL.createObjectURL(emulator.disk_images.hda.get_as_file());
+            document.all.downloadURL.click()
+
+        }
+        var data = ""
+        var building = false
+
+    </script>
+</head>
+
+<body>
+    <div class="header">
+        <h1>Wax4Web</h1>
+        <h3>
+            a simple and easy to use SH1MMER builder for legacy devices
+        </h3>
+    </div>
+    <div class="section blue">
+        <h1> THIS IS THE LEGACY VERSION </h1>
+        <h3>How to use</h3>
+        <p>
+            First, you'll need to find your school Chromebook's board name. This can
+            be done by going to <kbd>chrome://version</kbd> on your Chromebook and
+            copying the word after "stable-channel", or by looking up the chromebook's model.
+        </p>
+        <p>
+            Next you need a raw RMA shim for that board name. There should be one corresponding to your board <a
+                href="https://files.ultimatesrv.com">here</a> but if not you'll have to source them on your own..
+            somehow.
+        </p>
+        <p>
+            Once you've found your raw shim, make sure to extract it if it's in a .zip file. If it has some kind of
+            other compression format (.xz, .xf, .gz, etc) make sure you uncompress it first.
+        </p>
+        <p>
+            Next, hit the big start button and select your raw .bin file. The VM will start up. This will use a
+            considerable amount of memory on your system and take a while. If it freezes, that's normal. Once it
+            finishes, it will automatically download the patched version.
+        </p>
+    </div>
+    <div class="section green">
+
+        <h1 class="center"><a style="user-select: none; cursor:pointer;" onclick="start()">Start</a></h1>
+        <div class="flex evenly" id="displaycontainer">
+            <div>
+                <div class="label">Linux Emulator Output: </div>
+                <div id="screen_container">
+
+                    <div class="linux_output">
+                    </div>
+                    <canvas></canvas>
+                </div>
+
+            </div>
+            <div>
+                <div class="label">Wax Injector Output: </div>
+
+                <textarea readonly id="injector_output" rows="17" cols="60"> </textarea>
+            </div>
+        </div>
+        <br>
+        <input id="hd_image" class="invisible" type=file></input>
+
+
+        <a id="downloadURL" class="invisible" download="injected_shim.bin"></a>
+        <li>Wax4Web is powered by <a href="https://github.com/buildroot/buildroot">Buildroot</a> and <a
+                href="https://github.com/copy/v86">v86</a>
+        </li>
+    </div>
+
+</body>
+<style>
+    #displaycontainer {
+        /* background-color: var(--light); */
+        padding: 3em;
+        border-radius: 1em;
+    }
+
+    .center {
+        text-align: center;
+        margin: 1em;
+    }
+
+    #injector_output {
+        resize: none;
+        width: max-content;
+        outline: none;
+        color: whitesmoke;
+        border: 5px solid black;
+        border-radius: 1em;
+        font: 10px monospace;
+    }
+
+    canvas,
+    #injector_output,
+    #screen_container,
+    .linux_output,
+    #screen_container {
+        width: 40vw;
+        height: 40vh;
+    }
+
+    .invisible {
+        display: none;
+    }
+
+    #screen_container {
+        background-color: black;
+        border: 5px solid black;
+        border-radius: 1em;
+
+        overflow: hidden;
+    }
+
+    .linux_output {
+        outline: none;
+        white-space: pre;
+        font: 10px monospace;
+        line-height: 10px;
+        user-select: none;
+        color: whitesmoke;
+
+    }
+
+    .evenly {
+        justify-content: space-evenly;
+    }
+
+    .flex {
+        display: flex;
+    }
+
+    html {
+        background-color: black;
+        color: white;
+        font-family: monospace;
+    }
+
+    textarea {
+        /* no clue why but it wont work if its mixed with other elements */
+        background-color: black;
+    }
+
+    canvas textarea #screen_container .linux_output {
+        color: whitesmoke;
+        font: 10px monospace;
+
+    }
+
+    .label {
+        font: 18px monospace;
+    }
+</style>
+
+</html>
