@@ -18,8 +18,23 @@ fix_gbb() {
     /usr/share/vboot/bin/set_gbb_flags.sh 0x0
 }
 
-disable_verity() {
+get_largest_nvme_namespace() {
+    local largest size tmp_size dev
+    size=0
+    dev=$(basename "$1")
 
+    for nvme in /sys/block/"${dev%n*}"*; do
+        tmp_size=$(cat "${nvme}"/size)
+        if [ "${tmp_size}" -gt "${size}" ]; then
+            largest="${nvme##*/}"
+            size="${tmp_size}"
+        fi
+    done
+    echo "${largest}"
+}
+
+disable_verity() {
+    DST=$(get_largest_nvme_namespace)
     movecursor_generic 2
     echo "READ THIS!!!!!! DON'T BE STUPID"
     movecursor_generic 3
@@ -28,7 +43,7 @@ disable_verity() {
     sleep 4
     read -p "Do you still want to do this? [Y/N]" confirm
     case $confirm in
-    'Y' | 'y') /usr/share/vboot/bin/make_dev_ssd.sh -i $DST --remove_rootfs_verification ;;
+    'Y' | 'y') /usr/share/vboot/bin/make_dev_ssd.sh -i "$DST" --remove_rootfs_verification ;;
     *) return ;;
     esac
 

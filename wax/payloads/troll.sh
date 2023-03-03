@@ -1,4 +1,20 @@
 . /usr/share/misc/chromeos-common.sh
+
+get_largest_nvme_namespace() {
+    local largest size tmp_size dev
+    size=0
+    dev=$(basename "$1")
+
+    for nvme in /sys/block/"${dev%n*}"*; do
+        tmp_size=$(cat "${nvme}"/size)
+        if [ "${tmp_size}" -gt "${size}" ]; then
+            largest="${nvme##*/}"
+            size="${tmp_size}"
+        fi
+    done
+    echo "${largest}"
+}
+
 DST=/dev/$(get_largest_nvme_namespace)
 if [ -z $DST ]; then
     DST=/dev/mmcblk0
