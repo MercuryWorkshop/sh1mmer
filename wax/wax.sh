@@ -19,6 +19,7 @@ if [ ! -x "$-(uname -a | grep '[Ww]indows')" ]; then
     echo "DO NOT MAKE ISSUES ON THE GITHUB"
     echo "WSL IS NOT SUPPORTED"
     echo -e "\n\n\n\n"
+fi
 
 bin=$1
 
