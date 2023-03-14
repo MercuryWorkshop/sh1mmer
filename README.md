@@ -17,7 +17,7 @@ For more info, check out the blog post/writeup [here](https://coolelectronics.me
 The prebuilt binaries have been taken off of the official mirror (dl.sh1mmer.me), so you'll have to build it from source
 
 Here's how you do that.
-First, you need to know your chromebook's board. Go to chrome://version on your chromebook and copy the word after "stable-chnanel". If chrome://version is blocked, you can search up your chromebook's model name on chrome100.dev and see what board it corresponds to. DO NOT DOWNLOAD ANYTHING FROM CHROME100.DEV AND USE IT WITH THE BUILDER, IT WILL NOT WORK.
+First, you need to know your chromebook's board. Go to chrome://version on your chromebook and copy the word after "stable-channel". If chrome://version is blocked, you can search up your chromebook's model name on chrome100.dev and see what board it corresponds to. DO NOT DOWNLOAD ANYTHING FROM CHROME100.DEV AND USE IT WITH THE BUILDER, IT WILL NOT WORK.
 
 If your board name is in the list below, great! Download the RAW shim corresponding to your board from [here](https://files.ultimatesrv.com).
 
