@@ -86,7 +86,8 @@ runtask() {
         sleep 3
     else
         # movecursor_generic $curidx # ya forgot it here
-        # NO I DIDN'T! i wasn't skidding, the issue i told you would happen did happen! -ce
+        # NO I DIDNT! i wasnt skidding, the issue i told you would happen did happen! -ce
+        # tutorial how to make more problems than you solve
         read "THERE WAS AN ERROR! The utility likely did not work. Press return to continue."
     fi
 }
