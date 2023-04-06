@@ -31,6 +31,7 @@ IMPORTANT!!!! IF YOU HAVE EITHER THE `coral` OR `hana` BOARDS, DO NOT FOLLOW THE
 
 Now we can start building. Type out all of these commands in the terminal. You need to be on linux/wsl2 and have the following packages installed: cgpt, git, wget.
 Note that WSL doesn't work for some people, and if you have trouble building it it's recommended to just use a VM or the [web builder](https://sh1mmer.me/builder.html)
+**WEB BUILDER DOES NOT INCLUDE PAYLOADS!! YOU MUST BUILD IT MANUALLY FROM SOURCE FOR PAYLOADS**
 
 ```
 git clone https://github.com/CoolElectronics/sh1mmer
