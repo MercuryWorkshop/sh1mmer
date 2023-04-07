@@ -2,7 +2,7 @@
     <h1>SH1MMER</h1>
 </div>
 
-Shady Hacking 1nstrument Makes Machine Enrollment Retreat
+Shady Hardware 1nstrument Makes Machine Enrollment Retreat
 
 Website, source tree, and write-up for a ChromeOS enrollment jailbreak
 
