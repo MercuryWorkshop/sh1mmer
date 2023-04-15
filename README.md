@@ -6,7 +6,7 @@ Shady Hardware 1nstrument Makes Machine Enrollment Retreat
 
 Website, source tree, and write-up for a ChromeOS enrollment jailbreak
 
-## What is Shimmer?
+## What is Sh1mmer?
 
 Shimmer is an exploit found in the ChromeOS shim kernel that utilitzes modified RMA factory shims to gain code execution at recovery.<br>
 
