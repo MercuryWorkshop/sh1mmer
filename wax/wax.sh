@@ -12,7 +12,7 @@ echo "--------------------------------------------------------------------------
 echo "Launch flags you should know about: --dev will install a much larger chromebrew partition used for testing, --antiskid will relock the rootfs"
 # ORDER MATTERS! bin name before flags
 
-if [ ! -x "$-(uname -a | grep '[Ww]indows')" ]; then
+if grep -qEi "(Microsoft|WSL)" /proc/version &> /dev/null; then
     echo -e "\n\n\n\n"
     echo "==========[!]=========="
     echo "WAX HAS DETECTED THAT YOU ARE USING WSL"
