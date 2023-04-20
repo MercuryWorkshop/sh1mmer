@@ -69,7 +69,7 @@ the KERNEL partitions are checked for signatures by the firmware. We can edit th
 ## Credits
 
 - CoolElectronics#4683 - Pioneering this wild exploit
-- ULTRA BLUE#1850 - Testing & discovering how to disable root-fs verification
+- ULTRA BLUE#1850 - Testing & discovering how to disable rootfs verification
 - Unciaur#1408 - Found the inital RMA shim
 - TheMemeSniper#6065 - Testing
 - Rafflesia#8396 - Hosting files
