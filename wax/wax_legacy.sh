@@ -27,6 +27,7 @@ mount "${loop}p3" mnt
 echo "Injecting payload"
 mv mnt/usr/sbin/factory_install.sh mnt/usr/sbin/factory_install_backup.sh
 cp sh1mmer_legacy.sh mnt/usr/sbin/factory_install.sh
+chmod +x mnt/usr/sbin/factory_install.sh
 # fix issues with ctrl+u boot
 sed -i "s/exec/pre-start script\nvpd -i RW_VPD -s block_devmode=0\ncrossystem block_devmode=0\nsleep 1\nend script\n\nexec/" mnt/etc/init/startup.conf
 
