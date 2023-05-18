@@ -14,6 +14,8 @@ mapname() {
 	'/usr/local/payloads/movie.sh') printf "HAHA WINDOWS SUX BUT THE MOVIE" ;;
 	'/usr/local/payloads/mrchromebox.sh') printf "MrChromebox firmware-util.sh" ;;
 	'/usr/local/payloads/caliginosity.sh') printf "Revert all changes made by sh1mmer (reenroll + more)" ;;
+	'/usr/local/payloads/defog.sh') printf "Set GBB flags to allow devmode and unenrollment POST-112. WRITE PROTECTION MUST BE DISABLED" ;;
+
 	*) printf $1 ;;
 	esac
 }
