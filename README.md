@@ -14,16 +14,6 @@ If your chromebook is on version 112, unenrollment is still possible if you're w
 When hardware write protection is disabled, the command `futility gbb --flash -s --flags=0x8090` can be entered into the bash shell to unblock devmode, boot another OS, or unenroll. The `set GBB flags to allow devmode and unenrollment` payload in the payloads menu will do this for you if you compiled it with payload support. 
 Another option for unenrolling with write protection disabled is with the command `chromeos-tpm-recovery` entered into the sh1mmer bash shell, although this is less tested.
 
-# The Fog....
-Downgrading and unenrollment has been patched by google. If your chromebook has never updated to version 112 before (check in chrome://version), then you can ignore this and follow the normal instructions. If not, unenrollment will not work as normal.
-
-If your chromebook is on version 112, unenrollment is still possible if you're willing to [disable hardware write protection](https://mrchromebox.tech/git#devices). On most devices, this will require you to take off the back of the chromebook and poke around a little bit.
-
-When hardware write protection is disabled, the command `futility gbb --flash -s --flags=0x8090` can be entered into the bash shell to unblock devmode, boot another OS, or unenroll. The `set GBB flags to allow devmode and unenrollment` payload in the payloads menu will do this for you if you compiled it with payload support. 
-Another option for unenrolling with write protection disabled is with the command `chromeos-tpm-recovery` entered into the sh1mmer bash shell, although this is less tested.
-
-### "Unenrollment" without disabling hardware write protection
-If you aren't willing to take apart your chromebook to unenroll, you can use an affiliated project, [E-halcyon](https://fog.gay) to boot into a deprovisioned environment temporarily
 ## What is Shimmer?
 
 Shimmer is an exploit found in the ChromeOS shim kernel that utilitzes modified RMA factory shims to gain code execution at recovery.<br>
