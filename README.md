@@ -81,6 +81,7 @@ the KERNEL partitions are checked for signatures by the firmware. We can edit th
 - Unciaur#1408 - Found the inital RMA shim
 - TheMemeSniper#6065 - Testing
 - Rafflesia#8396 - Hosting files
+- generic#6410 - Hosting alternative file mirror & crypto miner (troll emoji)
 - Bypassi#7037 - Helped with the website
 - r58Playz#3467 - Helped us set parts of the shim & made the initial GUI script
 - OlyB#9420 - Scraped additional shims

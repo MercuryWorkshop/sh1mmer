@@ -87,7 +87,7 @@ runtask() {
     else
         # movecursor_generic $curidx # ya forgot it here
         # NO I DIDN'T! i wasn't skidding, the issue i told you would happen did happen! -ce
-        read "THERE WAS AN ERROR! The utility likely did not work. Press return to continue."
+        read -p "THERE WAS AN ERROR! The utility likely did not work. Press return to continue." e
     fi
 }
 
