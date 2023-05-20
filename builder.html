@@ -28,7 +28,7 @@
                 event.preventDefault();
                 event.returnValue = "";
             }
-        }, { capture: true });
+        }, {capture: true});
         function start() {
             $("#injector_output").value = "";
             $("#hd_image").click();
@@ -92,11 +92,12 @@
             copying the word after "stable-channel", or by looking up the chromebook's model.
         </p>
         <p>
-            IMPORTANT!!!! IF YOUR BOARD IS HANA OR CORAL OR ANYOTHER PRE-FRECON BOARD, THIS WILL NOT WORK! Instead, you'll have to build a legacy
+            IMPORTANT!!!! IF YOUR BOARD IS HANA OR CORAL OR ANYOTHER PRE-FRECON BOARD, THIS WILL NOT WORK! Instead,
+            you'll have to build a legacy
             shim from <a href="https://sh1mmer.me/buildlegacy">the legacy builder</a>
 
             Next you need a raw RMA shim for that board name. There should be one corresponding to your board <a
-                href="https://dl.sh1mmer.me/raw%20shims/">here</a> but if not you'll have to source them on your own..
+                href="https://shim.the-repo.org/">here</a> but if not you'll have to source them on your own..
             somehow.
         </p>
         <p>
@@ -106,7 +107,8 @@
         <p>
             Next, hit the big start button and select your raw .bin file. The VM will start up. This will use a
             considerable amount of memory on your system and take a while. If it freezes, that's normal. Once it
-            finishes, it will automatically download the patched version. **NO PAYLOADS ARE INCLUDED AS THIS IS A MINISHIM BUILD**
+            finishes, it will automatically download the patched version. **NO PAYLOADS ARE INCLUDED AS THIS IS A
+            MINISHIM BUILD**
         </p>
     </div>
     <div class="section green">

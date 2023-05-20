@@ -25,7 +25,7 @@ The prebuilt binaries have been taken off of the official mirror (dl.sh1mmer.me)
 Here's how you do that.
 First, you need to know your chromebook's board. Go to chrome://version on your chromebook and copy the word after "stable-channel". If chrome://version is blocked, you can search up your chromebook's model name on chrome100.dev and see what board it corresponds to. DO NOT DOWNLOAD ANYTHING FROM CHROME100.DEV AND USE IT WITH THE BUILDER, IT WILL NOT WORK.
 
-If your board name is in the list below, great! Download the RAW shim corresponding to your board from [here](https://files.ultimatesrv.com).
+If your board name is in the list below, great! Download the RAW shim corresponding to your board from [here](https://shim.the-repo.org/).
 
 - brask, brya, clapper, coral, dedede, enguarde, glimmer, grunt, hana, hatch, jacuzzi, kukui, nami, octopus, orco, pyro, reks, sentry, stout, strongbad, tidus, ultima, volteer, zork
 
