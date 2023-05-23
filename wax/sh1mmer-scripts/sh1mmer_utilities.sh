@@ -33,7 +33,7 @@ get_largest_nvme_namespace() {
     echo "${largest}"
 }
 
-disable_verity() {
+disable_verify() {
     DST=$(get_largest_nvme_namespace)
     movecursor_generic 2
     echo "READ THIS!!!!!! DON'T BE STUPID"
@@ -121,7 +121,7 @@ while true; do
     '1') runtask deprovision ;;
     '2') runtask reprovision ;;
     '3') runtask usb ;;
-    '4') runtask disable_verity ;;
+    '4') runtask disable_verify ;;
     '5') shell ;;
     '6') runtask unblock_devmode ;;
     esac
