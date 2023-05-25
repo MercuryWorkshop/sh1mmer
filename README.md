@@ -10,6 +10,8 @@ Website, source tree, and write-up for a ChromeOS enrollment jailbreak
 Downgrading and unenrollment has been patched by google. If your chromebook has never updated to version 112 before (check in chrome://version), then you can ignore this and follow the normal instructions. If not, unenrollment will not work as normal.
 
 If your chromebook is on version 112, unenrollment is still possible if you're willing to [disable hardware write protection](https://mrchromebox.tech/#devices). On most devices, this will require you to take off the back of the chromebook and poke around a little bit. Further instructions are on [the website](https://sh1mmer.me)
+### "Unenrollment" without disabling hardware write protection
+If you aren't willing to take apart your chromebook to unenroll, you can use an affiliated project, [E-halcyon](https://fog.gay) to boot into a deprovisioned environment temporarily
 ## What is Shimmer?
 
 Shimmer is an exploit found in the ChromeOS shim kernel that utilitzes modified RMA factory shims to gain code execution at recovery.<br>
