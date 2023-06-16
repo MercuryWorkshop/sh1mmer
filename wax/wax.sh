@@ -36,6 +36,7 @@ echo "Expanding bin for 'arch' partition. this will take a while"
 dd if=/dev/zero bs=1G status=progress count=${CHROMEBREW_SIZE} >>$bin
 echo -ne "\a"
 # Fix corrupt gpt
+echo "fdisk will run. Don't type any commands into fdisk."
 fdisk $bin <<EOF
 w
 
