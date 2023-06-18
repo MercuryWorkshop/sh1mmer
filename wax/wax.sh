@@ -36,13 +36,13 @@ echo "Expanding bin for 'arch' partition. this will take a while"
 dd if=/dev/zero bs=1G status=progress count=${CHROMEBREW_SIZE} >>$bin
 echo -ne "\a"
 # Fix corrupt gpt
-fdisk $bin <<EOF
+fdisk $bin <<EOF | echo -n #sometimes /dev/null doesn't work
 w
 
 EOF
 echo "Partitioning"
 # create new partition filling rest of disk
-fdisk $1 <<EOF
+fdisk $1 <<EOF | echo -n
 n
 
 
