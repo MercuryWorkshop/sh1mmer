@@ -19,7 +19,6 @@ How to re-enroll temporarily (for kiosk exams) if you unenrolled:
 
 - **DO NOT CLOSE YOUR CHROMEBOOK until the next step and DO NOT SKIP the next step**
 - **SERIOUSLY!**
-- **DO NOT CLOSE YOUR CHROMEBOOK until the next step and DO NOT SKIP the next step**
 
 - Safe re-unenrolling
      - Once you are on the normal district login screen, do ctrl+alt+forwardsarrow (this is F2, or the key above numbers 2 and 3 on the keyboard
