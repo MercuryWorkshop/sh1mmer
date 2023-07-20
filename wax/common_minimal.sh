@@ -11,7 +11,8 @@
 
 # Determine script directory
 SCRIPT_DIR=$(dirname "$0")
-if [$(uname -s) -ne "Darwin"]; then
+# quotes and the spaces fixes ./common_minimal.sh: line 14: [Linux: command not found
+if [ "$(uname -s)" -ne "Darwin" ]; then
   PROG=$(basename "$0")
   : "${GPT:=cgpt}"
   : "${FUTILITY:=futility}"
