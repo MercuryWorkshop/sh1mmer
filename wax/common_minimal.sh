@@ -11,14 +11,14 @@
 
 # Determine script directory
 SCRIPT_DIR=$(dirname "$0")
-if [$(uname -s) -ne "Darwin"]; then
+if [[ $(uname -s) != "Darwin" ]]; then
   PROG=$(basename "$0")
-  : "${GPT:=cgpt}"
-  : "${FUTILITY:=futility}"
+  : "${GPT:=bin/cgpt}"
+  : "${FUTILITY:=bin/futility}"
 else
   PROG=$(basename "$0")
-  : "${GPT:=cgpt}"
-  : "${FUTILITY:=futility}"
+  : "${GPT:=bin/cgpt_macos}"
+  : "${FUTILITY:=bin/futility}"
 fi
 # The tag when the rootfs is changed.
 TAG_NEEDS_TO_BE_SIGNED="/root/.need_to_be_signed"
