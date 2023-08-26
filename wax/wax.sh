@@ -33,25 +33,27 @@ fi
 
 echo "Expanding bin for 'arch' partition. this will take a while"
 
-dd if=/dev/zero bs=1G status=progress count=${CHROMEBREW_SIZE} >>$bin
+dd if=/dev/zero bs=1G status=progress count=${CHROMEBREW_SIZE} >>${bin}
 echo -ne "\a"
 # Fix corrupt gpt
-fdisk $bin <<EOF
+fdisk ${bin} <<EOF
 w
 
 EOF
 echo "Partitioning"
 # create new partition filling rest of disk
-fdisk $1 <<EOF
+fdisk ${1} <<EOF
 n
-
+13
 
 
 w
 EOF
 echo "Creating loop device"
 loop=$(losetup -f)
-losetup -P $loop $bin
+losetup -P ${loop} ${bin}
+
+lsblk
 
 echo "Making arch partition"
 mkfs.ext2 -L arch ${loop}p13 # ext2 so we can use skid protection features
@@ -75,7 +77,7 @@ cp -rv sh1mmer-assets mnt/usr/share/sh1mmer-assets
 cp -v sh1mmer-scripts/* mnt/usr/sbin/
 cp -v factory_install.sh mnt/usr/sbin/
 echo "Inserting firmware"
-curl "https://github.com/Netronome/linux-firmware/raw/master/iwlwifi-9000-pu-b0-jf-b0-41.ucode" >mnt/lib/firmware/iwlwifi-9000-pu-b0-jf-b0-41.ucode
+wget "https://github.com/Netronome/linux-firmware/raw/master/iwlwifi-9000-pu-b0-jf-b0-41.ucode" >mnt/lib/firmware/iwlwifi-9000-pu-b0-jf-b0-41.ucode
 echo "Brewing /etc/profile"
 
 echo 'PATH="$PATH:/usr/local/bin"' >>mnt/etc/profile
