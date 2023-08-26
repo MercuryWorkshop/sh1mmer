@@ -53,8 +53,6 @@ echo "Creating loop device"
 loop=$(losetup -f)
 losetup -P ${loop} ${bin}
 
-lsblk
-
 echo "Making arch partition"
 mkfs.ext2 -L arch ${loop}p13 # ext2 so we can use skid protection features
 echo "Making ROOT mountable"
