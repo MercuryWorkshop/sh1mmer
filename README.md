@@ -57,7 +57,7 @@ To install the built .bin file onto a usb, use the chrome recovery tool, balenae
 
 The raw shim files for the hana and coral boards were built before graphics support was added into the tty. This makes it impossible for the Beautiful World GUI to work and thus a legacy CLI-only shim must be built.
 
-Type out all of these commands in the terminal. You need to be on linux (legacy CANNOT BE BUILT on WSL) and have the following packages installed: cgpt, git, wget.
+Type out all of these commands in the terminal. You need to be on linux and have the following packages installed: cgpt, git, wget.
 
 ```
 git clone https://github.com/CoolElectronics/sh1mmer
@@ -71,6 +71,10 @@ Make sure you have your usb plugged in, this version writes directly to it inste
 
 RMA shims are a factory tool allowing certain authorization functions to be is signed, but only
 the KERNEL partitions are checked for signatures by the firmware. We can edit the other partitions to our will as long as we remove the forced readonly bit on them.
+
+## CrBug Link
+
+[crbug.com/1394226](https://crbug.com/1394226)
 
 ## Credits
 

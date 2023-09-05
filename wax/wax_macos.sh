@@ -47,7 +47,7 @@ echo "Making arch partition"
 mkfs.ext2 -L arch ${loop}s13 # ext2 so we can use skid protection features
 
 echo "Making ROOT mountable"
-sh make_dev_ssd_no_resign.sh --remove_rootfs_verification -i ${loop}
+sh lib/ssd_util.sh --no_resign_kernel --remove_rootfs_verification -i ${loop}
 
 echo "Creating Mountpoint"
 mkdir mnt || :
@@ -82,10 +82,10 @@ echo 'LD_LIBRARY_PATH="/lib64:/usr/lib64:/usr/local/lib64"' >>mnt/etc/profile
 sync # this sync should hopefully stop make_dev_ssd from messing up, as it does raw byte manip stuff
 sleep 4
 
-# if you're reading this, you aren't a skid. run sh make_dev_ssd_no_resign.sh --remove_rootfs_verification --unlock_arch -i /dev/sdX on the flashed usb to undo this
+# if you're reading this, you aren't a skid. run sh lib/ssd_util.sh --no_resign_kernel --remove_rootfs_verification --unlock_arch -i /dev/sdX on the flashed usb to undo this
 if [[ $* == *--antiskid* ]]; then
     echo "relocking rootfs..."
-    sh make_dev_ssd_no_resign.sh --lock_root -i ${loop}
+    sh lib/ssd_util.sh --no_resign_kernel --lock_root -i ${loop}
 fi
 
 sleep 2

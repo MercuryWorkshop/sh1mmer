@@ -16,7 +16,7 @@ loop=$(losetup -f)
 losetup -P "$loop" "$1"
 
 echo "Making ROOT mountable"
-sh make_dev_ssd_no_resign.sh --remove_rootfs_verification -i "${loop}"
+sh lib/ssd_util.sh --no_resign_kernel --remove_rootfs_verification -i "${loop}"
 
 echo "Creating Mountpoint"
 mkdir mnt || :
@@ -28,8 +28,8 @@ echo "Injecting payload"
 mv mnt/usr/sbin/factory_install.sh mnt/usr/sbin/factory_install_backup.sh
 cp sh1mmer_legacy.sh mnt/usr/sbin/factory_install.sh
 chmod +x mnt/usr/sbin/factory_install.sh
-# fix issues with ctrl+u boot
-sed -i "s/exec/pre-start script\nvpd -i RW_VPD -s block_devmode=0\ncrossystem block_devmode=0\nsleep 1\nend script\n\nexec/" mnt/etc/init/startup.conf
+# ctrl+u boot unlock
+sed -i "s/exec/pre-start script\nvpd -i RW_VPD -s block_devmode=0\ncrossystem block_devmode=0\nend script\n\nexec/" mnt/etc/init/startup.conf
 
 echo "Cleaning up..."
 sync
