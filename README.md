@@ -40,7 +40,7 @@ Note that WSL doesn't work for some people, and if you have trouble building it 
 **WEB BUILDER DOES NOT INCLUDE PAYLOADS!! YOU MUST BUILD IT MANUALLY FROM SOURCE FOR PAYLOADS**
 
 ```
-git clone https://github.com/CoolElectronics/sh1mmer
+git clone https://github.com/MercuryWorkshop/sh1mmer
 cd sh1mmer/wax
 wget https://dl.sh1mmer.me/build-tools/chromebrew/chromebrew.tar.gz
 sudo bash wax.sh /path/to/the/shim/you/downloaded.bin
@@ -60,7 +60,7 @@ The raw shim files for the hana and coral boards were built before graphics supp
 Type out all of these commands in the terminal. You need to be on linux and have the following packages installed: cgpt, git, wget.
 
 ```
-git clone https://github.com/CoolElectronics/sh1mmer
+git clone https://github.com/MercuryWorkshop/sh1mmer
 cd sh1mmer/wax
 sudo bash wax_legacy.sh
 ```
