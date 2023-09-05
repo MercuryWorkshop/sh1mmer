@@ -26,8 +26,9 @@ mount "${loop}p3" mnt
 
 echo "Injecting payload"
 mv mnt/usr/sbin/factory_install.sh mnt/usr/sbin/factory_install_backup.sh
+cp factory_bootstrap.sh mnt/usr/sbin
 cp sh1mmer_legacy.sh mnt/usr/sbin/factory_install.sh
-chmod +x mnt/usr/sbin/factory_install.sh
+chmod +x mnt/usr/sbin/factory_bootstrap.sh mnt/usr/sbin/factory_install.sh
 # ctrl+u boot unlock
 sed -i "s/exec/pre-start script\nvpd -i RW_VPD -s block_devmode=0\ncrossystem block_devmode=0\nend script\n\nexec/" mnt/etc/init/startup.conf
 
