@@ -3,3 +3,4 @@ chromebrew-dev.tar.gz
 .DS_Store
 wax4web
 __pycache__
+./log

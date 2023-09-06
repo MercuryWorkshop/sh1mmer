@@ -1,5 +1,7 @@
 How to re-enroll temporarily (for kiosk exams) if you unenrolled:
 
+**NOTE: [fakemurk](https://github.com/MercuryWorkshop/fakemurk) is HIGHLY recommended**
+
 - Do some unenrolling Chromebook exploit such as SH1MMER (duh)
 
 - Turn on dev mode: (if you aren't already)
