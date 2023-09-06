@@ -72,6 +72,11 @@ factory() {
 	bash /usr/sbin/factory_install_backup.sh
 }
 
+tetris() {
+	clear
+	vitetris
+}
+
 splash() {
 	printf "\033[1;92m"
 	echo "ICBfX18gXyAgXyBfIF9fICBfXyBfXyAgX18gX19fIF9fXyAKIC8gX198IHx8IC8gfCAgXC8gIHwgIFwvICB8IF9ffCBfIFwKIFxfXyBcIF9fIHwgfCB8XC98IHwgfFwvfCB8IF98fCAgIC8KIHxfX18vX3x8X3xffF98ICB8X3xffCAgfF98X19ffF98X1wKCg==" | base64 -d
@@ -109,6 +114,7 @@ while true; do
 	echo "(v) Remove rootfs verification"
 	echo "(t) Call chromeos-tpm-recovery"
 	echo "(f) Continue to factory installer"
+	echo "(i) Tetris"
 	echo "(c) Credits"
 	echo "(e) Exit and reboot"
 	read -p "> " choice
@@ -122,6 +128,7 @@ while true; do
 	v | V) disable_verity ;;
 	t | T) chromeos-tpm-recovery ;;
 	f | F) factory ;;
+	i | I) tetris ;;
 	c | C) credits ;;
 	e | E) break ;;
 	*) echo "Invalid option" ;;
