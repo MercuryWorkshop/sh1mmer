@@ -2169,24 +2169,20 @@ class ChromeOSFactoryBundle:
   def _RecreateRMAImage(cls, output, images, select_func):
     """Recreate RMA (USB installation) disk images using existing ones.
 
-    A (universal) RMA image should have factory_install kernel_a, rootfs_a,
-    kernal_b, rootfs_b in partition (4n+2, 4n+3, 4n+4, 4n+5) for n>=0, and
+    A (universal) RMA image should have factory_install kernel_a, rootfs_a
+    in partition (2n+2, 2n+3) for n>=0, and
     resources in stateful partition (partition 1) DIR_CROS_PAYLOADS directory.
     This function extracts some stateful partitions using a user defined
     function `select_func` and then generates the output image by merging the
-    resource files to partition 1 and cloning kernel_a, rootfs_a, kernel_b,
-    rootfs_b partitions of each selected boards.
+    resource files to partition 1 and cloning kernel_a, rootfs_a
+    partitions of each selected boards.
 
     The layout of the merged output image:
-       1 stateful  [cros_payloads from all rmaimgX]
+       1 stateful  [sh1mmer, root from rmaimg1]
        2 kernel_a  [install-rmaimg1]
        3 rootfs_a  [install-rmaimg1]
-       4 kernel_b  [install-rmaimg1] (might be empty)
-       5 rootfs_b  [install-rmaimg1] (empty)
        6 kernel_a  [install-rmaimg2]
        7 rootfs_a  [install-rmaimg2]
-       6 kernel_b  [install-rmaimg2] (might be empty)
-       7 rootfs_b  [install-rmaimg2] (empty)
       ...
 
     Args:
@@ -2196,10 +2192,6 @@ class ChromeOSFactoryBundle:
                    a reduced list with same or less elements. The remaining
                    board entries will be merged into a single RMA shim.
     """
-    # A list of entries in every images.
-    entries = []
-    # A dict that maps an image to a list of entries that belongs to the image.
-    image_entries_map = {}
     kern_rootfs_parts = []
     block_size = 0
     # Currently we only support merging images in same block size.
@@ -2210,40 +2202,8 @@ class ChromeOSFactoryBundle:
       assert gpt.block_size == block_size, (
           f'Cannot merge image {image} due to different block size ('
           f'{block_size}, {gpt.block_size})')
-      # A list of entries in `image`.
-      image_entries = []
-      with gpt.GetPartition(PART_CROS_STATEFUL).Mount() as stateful:
-        src_metadata = _ReadRMAMetadata(stateful)
-        for board_info in src_metadata:
-          with gpt.GetPartition(
-              board_info.rootfs_a).MountAsCrOSRootfs() as rootfs:
-            versions = _ReadBoardResourceVersions(rootfs, stateful, board_info)
-          entry = ChromeOSFactoryBundle.RMABoardEntry(
-              board_info.board, image, versions,
-              gpt.GetPartition(board_info.kernel_a),
-              gpt.GetPartition(board_info.rootfs_a),
-              gpt.GetPartition(board_info.kernel_b),
-              gpt.GetPartition(board_info.rootfs_b))
-          # Legacy RMA shims contain only one kernel, and we use the same kernel
-          # partition for kernel_a and kernel_b. In this case we can zero
-          # kernel_b partition to save space.
-          if board_info.kernel_a == board_info.kernel_b:
-            entry.kernel_b = entry.kernel_b.CloneAsZeroedPartition()
-          # Always zero rootfs_b partition to save space. The RMA shim should
-          # use rootfs_a even when booting from kernel_b.
-          entry.rootfs_b = entry.rootfs_b.CloneAsZeroedPartition()
-          image_entries.append(entry)
-
-      entries += image_entries
-      image_entries_map[image] = image_entries
-
-    entries = select_func(entries)
-
-    for entry in entries:
-      kern_rootfs_parts.append(entry.kernel_a)
-      kern_rootfs_parts.append(entry.rootfs_a)
-      kern_rootfs_parts.append(entry.kernel_b)
-      kern_rootfs_parts.append(entry.rootfs_b)
+      kern_rootfs_parts.append(gpt.GetPartition(2))
+      kern_rootfs_parts.append(gpt.GetPartition(3))
 
     # Build a new image based on first image's layout.
     gpt = pygpt.GPT.LoadFromFile(images[0])
@@ -2299,55 +2259,8 @@ class ChromeOSFactoryBundle:
     # TODO(chenghan): Find a way to copy stateful without cros_payloads/
     old_state.Copy(new_state, check_equal=False)
 
-    with CrosPayloadUtils.TempPayloadsDir() as temp_payloads_dir:
-      with Partition(output, PART_CROS_STATEFUL).Mount(rw=True) as stateful:
-        DIR_CROS_PAYLOADS = CrosPayloadUtils.GetCrosPayloadsDir()
-        payloads_dir = os.path.join(stateful, DIR_CROS_PAYLOADS)
-        Sudo(f'rm -rf "{payloads_dir}"/*')
-        board_info_list = []
-        for index, entry in enumerate(entries):
-          # Copy payloads in stateful partition
-          print(f'Copying {entry.board} board payload ...')
-          with Partition(entry.image, PART_CROS_STATEFUL).Mount() as src_dir:
-            src_payloads_dir = os.path.join(src_dir, DIR_CROS_PAYLOADS)
-            src_metadata_path = CrosPayloadUtils.GetJSONPath(
-                src_payloads_dir, entry.board)
-            ChromeOSFactoryBundle.CopyPayloads(
-                src_payloads_dir, temp_payloads_dir, src_metadata_path)
-            # Check if the board has lsb_factory payload.
-            temp_metadata_path = CrosPayloadUtils.GetJSONPath(
-                temp_payloads_dir, entry.board)
-            with open(temp_metadata_path, encoding='utf8') as f:
-              temp_metadata = json.load(f)
-            if PAYLOAD_TYPE_LSB_FACTORY not in temp_metadata:
-              lsb_path = os.path.join(src_dir, PATH_LSB_FACTORY)
-              CrosPayloadUtils.AddComponent(temp_metadata_path,
-                                            PAYLOAD_TYPE_LSB_FACTORY, lsb_path)
-          # Copy kernel_a, rootfs_a, kernel_b and rootfs_b partitions.
-          print(f'Copying {entry.board} board kernel/rootfs ...')
-          new_kernel_a = index * 4 + PART_CROS_KERNEL_A
-          new_rootfs_a = index * 4 + PART_CROS_ROOTFS_A
-          new_kernel_b = index * 4 + PART_CROS_KERNEL_B
-          new_rootfs_b = index * 4 + PART_CROS_ROOTFS_B
-          entry.kernel_a.Copy(Partition(output, new_kernel_a))
-          entry.rootfs_a.Copy(Partition(output, new_rootfs_a))
-          entry.kernel_b.Copy(Partition(output, new_kernel_b))
-          entry.rootfs_b.Copy(Partition(output, new_rootfs_b))
-
-          board_info_list.append(
-              RMAImageBoardInfo(entry.board, new_kernel_a, new_rootfs_a,
-                                new_kernel_b, new_rootfs_b))
-
-        # Write rma_metadata.json and initialize <board>.json.
-        _WriteRMAMetadata(stateful, board_info_list)
-        for info in board_info_list:
-          CrosPayloadUtils.InitMetaData(payloads_dir, info.board, mounted=True)
-        # Clear lsb-factory in output image.
-        SysUtils.WriteFileToMountedDir(stateful, PATH_LSB_FACTORY,
-                                       LSB_FACTORY_WARNING_MESSAGE)
-
-      CrosPayloadUtils.ReplaceComponentsInImage(
-          output, [entry.board for entry in entries], temp_payloads_dir)
+    for index, entry in enumerate(kern_rootfs_parts, 2):
+      entry.Copy(Partition(output, index), check_equal=False)
 
     with Partition(output, PART_CROS_STATEFUL).Mount() as stateful:
       Sudo(['df', '-h', stateful])
@@ -3258,7 +3171,7 @@ class MergeRMAImageCommand(SubCommand):
     print(f'Scanning {len(self.args.images)} input image files...')
     ChromeOSFactoryBundle.MergeRMAImage(self.args.output, self.args.images,
                                         self.args.auto_select)
-    ChromeOSFactoryBundle.ShowRMAImage(output)
+    #ChromeOSFactoryBundle.ShowRMAImage(output)
     print(f'OK: Merged successfully in new image: {output}')
 
 

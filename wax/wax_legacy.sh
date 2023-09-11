@@ -10,33 +10,110 @@ if [ "$EUID" -ne 0 ]; then
 fi
 
 echo "-------------------------------------------------------------------------------------------------------------"
-echo "Welcome to wax, a shim modifying automation tool made by CoolElectronics and Sharp_Jack, greatly improved by r58playz and Rafflesia and olyb"
+echo "Welcome to wax, a shim modifying automation tool"
+echo "Credits: CoolElectronics, Sharp_Jack, r58playz, Rafflesia, OlyB"
 echo "Prerequisites: cgpt must be installed, program must be ran as root"
 echo "-------------------------------------------------------------------------------------------------------------"
 echo "Warning: this is a legacy version of wax. There may be unresolved issues"
 
+PAYLOAD_DIR="sh1mmer_legacy"
+
 SFDISK="lib/sfdisk"
+CGPT="cgpt"
 
-sync
-sleep 0.2
-lib/sfdisk --delete "$1" 1 4 5 6 7 8 9 10 11 12
+debug() {
+	echo -e "\x1B[33mDebug: $*\x1b[39;49m" >&2
+}
 
-echo "Creating loop device"
-loopdev=$(losetup -f)
-losetup -P "$loopdev" "$1"
+info() {
+	echo -e "\x1B[32mInfo: $*\x1b[39;49m"
+}
+
+patch_root() {
+	info "Making ROOT mountable"
+	sh lib/ssd_util.sh --no_resign_kernel --remove_rootfs_verification -i "${loopdev}"
+
+	sync
+	sleep 0.2
+
+	info "Mounting ROOT"
+	MNT_ROOT=$(mktemp -d)
+	mount "${loopdev}p3" "$MNT_ROOT"
+
+	info "Injecting payload (1/2)"
+	mv "$MNT_ROOT/usr/sbin/factory_install.sh" "$MNT_ROOT/usr/sbin/factory_install_backup.sh"
+	cp "$PAYLOAD_DIR/factory_bootstrap.sh" "$MNT_ROOT/usr/sbin"
+	chmod +x "$MNT_ROOT/usr/sbin/factory_bootstrap.sh"
+	# ctrl+u boot unlock
+	sed -i "s/exec/pre-start script\nvpd -i RW_VPD -s block_devmode=0\ncrossystem block_devmode=0\nend script\n\nexec/" "$MNT_ROOT/etc/init/startup.conf"
+
+	umount "${loopdev}p3"
+	rm -rf "$MNT_ROOT"
+}
+
+patch_sh1mmer() {
+	info "Creating SH1MMER partition"
+	local final_sector
+	final_sector=$(fdisk -l "${loopdev}" | grep "${loopdev}p3[[:space:]]" | awk '{print $3}')
+	"$SFDISK" -N 1 -a "${loopdev}" <<<"$((final_sector + 1)),32M"
+	# label partition "SH1MMER"
+	"$CGPT" add -i 1 -l SH1MMER "${loopdev}"
+	mkfs.ext4 -L SH1MMER "${loopdev}p1" # maybe ext2?
+
+	sync
+	sleep 0.2
+
+	info "Mounting SH1MMER"
+	MNT_SH1MMER=$(mktemp -d)
+	mount "${loopdev}p1" "$MNT_SH1MMER"
+
+	info "Injecting payload (2/2)"
+	mkdir -p "$MNT_SH1MMER/dev_image/etc"
+	touch "$MNT_SH1MMER/dev_image/etc/lsb-factory"
+	cp -r "$PAYLOAD_DIR/root" "$MNT_SH1MMER"
+	chmod -R +x "$MNT_SH1MMER/root"
+
+	umount "${loopdev}p1"
+	rm -rf "$MNT_SH1MMER"
+}
 
 shrink_table() {
+	local buffer=$((1024 * 1024)) # 1 MiB buffer. keeps things from breaking too much
+
+	info "Shrinking RootFS"
+	e2fsck -fy "${loopdev}p3"
+	resize2fs -M "${loopdev}p3"
+	local block_size
+	block_size=$(tune2fs -l "${loopdev}p3" | grep -i "block size" | awk '{print $3}')
+	local sector_size
+	sector_size=$(fdisk -l "${loopdev}" | grep "Sector size" | awk '{print $4}')
+
+	local block_count
+	block_count=$(tune2fs -l "${loopdev}p3" | grep -i "block count" | awk '{print $3}')
+	block_count=${block_count%%[[:space:]]*}
+
+	debug "bs: $block_size, blocks: $block_count"
+
+	local original_sectors=$("$CGPT" show -i 3 -s "${loopdev}")
+	local original_bytes=$((original_sectors * sector_size))
+
+	local raw_bytes=$((block_count * block_size))
+	local resized_size=$((raw_bytes + buffer))
+	local resized_sectors=$((resized_size / sector_size))
+
+	info "Resizing ROOT from $(numfmt --to=iec-i --suffix=B ${original_bytes}) to $(numfmt --to=iec-i --suffix=B ${resized_size})"
+	"$CGPT" add -i 3 -s "${resized_sectors}" "${loopdev}"
+
+	info "Squashing partitions"
+
 	local numparts=3
 	local numtries=1
 
 	i=0
 	while [ $i -le $numtries ]; do
-		#j=1
 		j=2
 		while [ $j -le $numparts ]; do
-			printf "\033[1;92m"
-			echo "$SFDISK" -N $j --move-data "${loopdev}"
-			printf "\033[0m"
+			debug "$SFDISK" -N $j --move-data "${loopdev}" '<<<"+,-"'
 			"$SFDISK" -N $j --move-data "${loopdev}" <<<"+,-" || :
 			j=$((j+1))
 		done
@@ -47,52 +124,40 @@ shrink_table() {
 truncate_image() {
 	local buffer=35 # magic number to ward off evil gpt corruption spirits
 	local img=$1
-	local fdisk_stateful_entry
-	#fdisk_stateful_entry=$(fdisk -l "$img" | grep "${img}1[[:space:]]")
-	fdisk_stateful_entry=$(fdisk -l "$img" | grep "${img}3[[:space:]]")
 	local sector_size
 	sector_size=$(fdisk -l "$img" | grep "Sector size" | awk '{print $4}')
-	local end_sector
-	end_sector=$(awk '{print $3}' <<<"$fdisk_stateful_entry")
-	local end_bytes=$(((end_sector + buffer) * sector_size))
+	local final_sector
+	final_sector=$(fdisk -l "$img" | grep "${img}1[[:space:]]" | awk '{print $3}')
+	local end_bytes=$(((final_sector + buffer) * sector_size))
 
-	info "truncating image to $end_bytes bytes"
+	info "Truncating image to $(numfmt --to=iec-i --suffix=B ${end_bytes})"
 
-	truncate -s $end_bytes "$img"
+	truncate -s "$end_bytes" "$img"
 	gdisk "$img" << EOF
 w
 y
 EOF
 }
 
+info "Deleting useless partitions"
+"$SFDISK" --delete "$1" 1 4 5 6 7 8 9 10 11 12
 
+info "Creating loop device"
+loopdev=$(losetup -f)
+losetup -P "$loopdev" "$1"
 
-echo "Making ROOT mountable"
-sh lib/ssd_util.sh --no_resign_kernel --remove_rootfs_verification -i "${loopdev}"
-
-echo "Creating Mountpoint"
-mkdir mnt || :
-
-echo "Mounting ROOT-A"
-mount "${loopdev}p3" mnt
-
-echo "Injecting payload"
-mv mnt/usr/sbin/factory_install.sh mnt/usr/sbin/factory_install_backup.sh
-cp factory_bootstrap.sh mnt/usr/sbin
-cp sh1mmer_legacy.sh mnt/usr/sbin/factory_install.sh
-cp vitetris mnt/usr/bin
-chmod +x mnt/usr/sbin/factory_bootstrap.sh mnt/usr/sbin/factory_install.sh mnt/usr/bin/vitetris
-# ctrl+u boot unlock
-sed -i "s/exec/pre-start script\nvpd -i RW_VPD -s block_devmode=0\ncrossystem block_devmode=0\nend script\n\nexec/" mnt/etc/init/startup.conf
-
-df "${loopdev}p3"
-
-
+patch_root
 
 sync
 sleep 0.2
-umount "${loopdev}p3"
+
 shrink_table
+
+sync
+sleep 0.2
+
+patch_sh1mmer
+
 losetup -d "$loopdev"
 sync
 sleep 0.2
@@ -100,6 +165,4 @@ truncate_image "$1"
 sync
 sleep 0.2
 
-rmdir mnt
-
-echo "Done. Have fun!"
+info "Done. Have fun!"
