@@ -33,7 +33,7 @@ If it's not, good luck. You'll have to try and call up your OEM and demand the f
 
 ### Building a Beautiful World shim
 
-IMPORTANT!!!! IF YOU HAVE EITHER THE `coral` OR `hana` BOARDS, DO NOT FOLLOW THESE INSTRUCTIONS, INSTEAD SKIP TO THE "Building a legacy shim" SECTION
+IMPORTANT!!!! IF YOU HAVE EITHER THE `coral` OR `hana` BOARDS, OR SOME OTHER OLDER BOARDS (which?), DO NOT FOLLOW THESE INSTRUCTIONS, INSTEAD SKIP TO THE "Building a legacy shim" SECTION
 
 Now we can start building. Type out all of these commands in the terminal. You need to be on linux/wsl2 and have the following packages installed: cgpt, git, wget.
 Note that WSL doesn't work for some people, and if you have trouble building it it's recommended to just use a VM or the [web builder](https://sh1mmer.me/builder.html)
@@ -53,19 +53,19 @@ Devshim builds will mount a much larger chromebrew partition over /usr/local, al
 
 To install the built .bin file onto a usb, use the chrome recovery tool, balenaetcher, rufus, or any other flasher.
 
-### Building a legacy shim (hana/coral)
+### Building a legacy shim (hana, coral, ...)
 
 The raw shim files for the hana and coral boards were built before graphics support was added into the tty. This makes it impossible for the Beautiful World GUI to work and thus a legacy CLI-only shim must be built.
 
 Type out all of these commands in the terminal. You need to be on linux and have the following packages installed: cgpt, git, wget.
+
+Note that the legacy shim **will work on all boards**. The legacy version of wax now supports nano (shrunken) shims!
 
 ```
 git clone https://github.com/MercuryWorkshop/sh1mmer
 cd sh1mmer/wax
 sudo bash wax_legacy.sh
 ```
-
-Make sure you have your usb plugged in, this version writes directly to it instead of modifying an image file
 
 ## How does it work?
 
