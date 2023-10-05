@@ -8,13 +8,26 @@
   <link rel="icon" href="/icon.png" />
   <link rel="stylesheet" href="/main.css" />
   <script src="/script.js" defer></script>
+  <script is:inline>
+    $(document).ready(function () {
+      $("#fogbutton").click(function () {
+        $("html, body").animate(
+          {
+            scrollTop: $("#fog").offset().top,
+          },
+          1000,
+        );
+      });
+    });
+  </script>
   <script>
     var messages = {
       mercury:
         "Check the credits button at the bottom of the page for more info.",
       friday:
         "A rather unlucky day for sysadmins, indeed. 🤡🤡🤡🤡",
-      pc: "Or if you can download the recovery utility extension on your school computer, but that's exceedingly rare.",
+      pc: 
+        "Or if you can download the recovery utility extension on your school computer, but that's exceedingly rare.",
       board:
         "It's somewhere in the firmware log/debug info on the recovery screen. It is also shown at the bottom of the Android Preferences app. You can also go to a connected WiFi network in settings, click the Learn More link next to the message about syncing, and your board name will be somewhere in the URL of the newly-opened help tab.",
       launch:
@@ -42,7 +55,11 @@
 
       For more info, check out the <a href="https://coolelectronics.me/blog/breaking-cros-2">Writeup</a>
     </p>
-    <h3>If this isn't working for you, check the "Fog" section below</h3>
+    <h4>
+      If this isn't working for you, check
+      <button id="fogbutton" style="cursor: pointer">"The Fog"</button>
+      section below.
+    </h4>
 
   </div>
   <div class="section green">
@@ -128,7 +145,9 @@
     <img src="/assets/utils-select01.png" />
     <p>Play around with the UI, exit, and reboot.</p>
     <hr />
-    <h3> The Fog... (google's response, and why this might not be working for you)</h3>
+    <div id="fog">
+    <h3> The Fog...</h3>
+    <h4>(Google's response, and why this might not be working for you)</h4>
     <p>
 
       Downgrading and unenrollment has been patched by google. If your chromebook has never updated to version 112
@@ -138,7 +157,9 @@
       If you aren't willing to take apart your chromebook to unenroll, you can use an affiliated project,
       <a href="https://fog.gay">E-HALCYON</a> to boot into a deprovisioned environment temporarily
     </p>
-    <h3>How to use sh1mmer after the patch, if you're willing to take the back cover off your chromebook</h4>
+    <hr />
+    <h3>How to use sh1mmer on v111 → v113 </h3>
+    <h4>(if you're willing to take the back cover off your chromebook)</h4>
 
       <p>you'll only need to do this once, and it will let you use sh1mmer even after it's been completely patched</p>
       <pre>
@@ -217,10 +238,10 @@
       <spc></spc>
       Join if you're interested or want a chill instance.<br>
 
-      For actual support, there begrudgingly is a <a href="https://discord.gg/bAgNyGpXSx">
-        discord
+      For actual support, there (begrudgingly) is a <a href="https://discord.gg/bAgNyGpXSx"
+      >Discord
       </a>
-      <spc></spc>also
+      <spc></spc>also.
     </p>
   </div>
 </body>
