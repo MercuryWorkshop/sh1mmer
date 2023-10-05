@@ -110,7 +110,8 @@ spc {
   margin-right: 10px;
 }
 
-a {
+a,
+button {
   background-color: var(--white);
   color: black;
   border: none;
@@ -124,6 +125,7 @@ a {
   transition: filter 250ms;
 }
 
-a:hover {
+a:hover,
+button:hover {
   filter: brightness(80%);
 }
