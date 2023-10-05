@@ -29,9 +29,11 @@
                 event.returnValue = "";
             }
         }, {capture: true});
-        function start() {
-            $("#injector_output").value = "";
-            $("#hd_image").click();
+            function start() {
+                $("#injector_output").value = "";
+                const hdImageInput = $("#hd_image");
+                hdImageInput.setAttribute("accept", ".bin");
+                hdImageInput.click();
         }
         function startVM() {
             var emulator = window.emulator = new V86Starter({
