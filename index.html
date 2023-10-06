@@ -46,7 +46,7 @@
     <br />
     <h4>
       If this isn't working for you, check
-      <a href="https://sh1mmer.me/#:~:text=The%20Fog..." target="_self">"The Fog"</a>
+      <a href="#fog" target="_self">"The Fog"</a>
       section below.
     </h4>
 
@@ -55,7 +55,7 @@
     <h3>What you will need</h3>
     <li>A USB with at least 8 GBs of storage</li>
     <li>
-      <u onclick="alert(messages.pc)">A personal computer or chromebook;</u> note that you
+      <u onclick="alert(messages.pc)">A personal computer or Chromebook;</u> note that you
       need admin perms on Windows/MacOS
     </li>
     <hr />
@@ -75,18 +75,18 @@
     hana, hatch, jacuzzi, kukui, nami, octopus, orco, pyro, reks, sentry, 
     stout, strongbad, tidus, ultima, volteer, zork
     <p>
-      First you need to download a SH1MMER bin. Download a shim at <a
-        href="https://dl.sh1mmer.me/">dl.sh1mmer.me</a><br> , and build it with the <a
+      First you need to download a RAW Shim at <a
+        href="https://dl.sh1mmer.me/">dl.sh1mmer.me</a><br> Then build it with the <a
         href="/builder" target="_self">SH1MMER web builder</a><br>
       Once you've obtained a MODIFIED SHIM (NOT A RAW SHIM), you can continue.
     </p>
     <p>
       Download the
-      <a href="https://chrome.google.com/webstore/detail/pocpnlppkickgojjlmhdmidojbmbodfm">
-        Chromebook Recovery Utility extension
+      <a href="https://chrome.google.com/webstore/detail/pocpnlppkickgojjlmhdmidojbmbodfm"
+      >Chromebook Recovery Utility 
       </a>
       <spc></spc>
-      on your personal computer as well.
+      extension on your personal computer as well.
     </p>
     <p>
       Once the downloads are complete,
@@ -139,11 +139,11 @@
     <h4>(Google's response, and why this might not be working for you)</h4>
     <p>
 
-      Downgrading and unenrollment has been patched by google. If your chromebook has never updated to version 112
+      Downgrading and unenrollment has been patched by google. If your Chromebook has never updated to version 112
       before (check in <kbd>chrome://version</kbd>), then you can ignore this and follow the normal instructions. If not,
       unenrollment will not work as normal.
 
-      If you aren't willing to take apart your chromebook to unenroll, you can use an affiliated project,
+      If you aren't willing to take apart your Chromebook to unenroll, you can use an affiliated project,
       <a href="https://fog.gay">E-HALCYON</a> to boot into a deprovisioned environment temporarily
     </p>
     </div>
@@ -155,7 +155,7 @@
       <pre>
 
 
-        1. Unplug everything, open the back panel, disconnect the battery to disable WP, plug in the charger
+        1. unplug everything, open the back panel, disconnect the battery to disable WP, plug in the charger
         2. boot into SH1MMER and use "Un-Enroll / Deprovision" (yes I know it will show an error, but that doesn't
         matter)
         (you will also need to run "Disable block_devmode" if you're using the old legacy version)
@@ -170,10 +170,11 @@
         <kbd>tpm_manager_client take_ownership</kbd>
         <kbd>cryptohome --action=remove_firmware_management_parameters</kbd>
         <i>if it fails, try downgrading to v110 if possible. if you can't, use E-Halycon instead.</i>
+
         8. press <kbd>CTRL + ALT + F1 (←)</kbd>, use <kbd>CTRL + ALT + SHIFT + R</kbd> to powerwash again
         9. profit
 
-        NOTE: if you're on dedede, your WP method is probably different. look your model up online to find the WP
+        NOTE: if you're on <kbd>dedede</kbd>, your WP method is probably different. look your model up online to find the WP
         method.
       </pre>
       <hr />
