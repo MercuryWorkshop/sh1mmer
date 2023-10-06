@@ -16,21 +16,6 @@
   font-family: "Exo", sans-serif;
 }
 
-body {
-  scroll-behavior: smooth;
-}
-
-#mainbutton {
-  margin-top: 2em;
-  font-size: max-width;
-  width: 100%;
-  text-decoration: unset;
-}
-#mainbutton * {
-  font-size: 1.3em;
-  width: 50%;
-}
-
 @keyframes scroll {
   0% {
     background-position: 0px 0px;
