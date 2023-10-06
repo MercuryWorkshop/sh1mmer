@@ -16,6 +16,10 @@
   font-family: "Exo", sans-serif;
 }
 
+body {
+  scroll-behavior: smooth;
+}
+
 @keyframes scroll {
   0% {
     background-position: 0px 0px;
