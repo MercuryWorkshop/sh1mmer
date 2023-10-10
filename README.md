@@ -49,7 +49,9 @@ sudo bash wax.sh /path/to/the/shim/you/downloaded.bin
 When this finishes, the bin file in the path you provided will have been converted into a sh1mmer image. Note that this is a destructive operation, you will need to redownload a fresh shim to try again if it fails.
 
 If you want to build a devshim, replace `chromebrew.tar.gz` with `chromebrew-dev.tar.gz` and add `--dev` to the end of `sudo sh wax.sh /path/to/the/shim/you/downloaded.bin`
-Devshim builds will mount a much larger chromebrew partition over /usr/local, allowing you to access a desktop environment and even firefox from within sh1mmer. It's what allowed us to [run doom on a shim](https://blog.coolelectronics.me/_astro/doom.82b5613a_Z1LR94C.webp).
+Devshim builds will mount a much larger chromebrew partition over /usr/local, allowing you to access a desktop environment and even firefox from within sh1mmer. It's what allowed us to [run doom on a shim](https://raw.githubusercontent.com/huaraina/fixing-a-small-thing-that-is-bugging-me/beautifulworld/assets/whyisthisawebp.webp).
+
+<!---I used the huaraina/fixing...me repo one, you can change it to mercuryworkshop/sh1mmer in the repo link if you want idrc also remove this comment if this gets pushed--->
 
 To install the built .bin file onto a usb, use the chrome recovery tool, balenaetcher, rufus, or any other flasher.
 
