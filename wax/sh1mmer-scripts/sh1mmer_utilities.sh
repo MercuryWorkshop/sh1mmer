@@ -64,7 +64,7 @@ shell() {
     cleanup
     echo "You can su chronos if you need to use chromebrew"
 
-    su -c 'PATH="$PATH:/usr/local/bin" LD_LIBRARY_PATH="/lib64:/usr/lib64:/usr/local/lib64" /bin/bash' # ok i didn't think of this very cool :+1: -ce
+    su -c 'PATH="$PATH:/usr/local/bin" LD_LIBRARY_PATH="/lib64:/usr/lib64:/usr/local/lib64" /bin/bash -i' # ok i didn't think of this very cool :+1: -ce
     setup
     clear
     sleep 0.1
