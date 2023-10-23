@@ -69,7 +69,7 @@ sudo bash wax_legacy.sh
 
 ## How does it work?
 
-RMA shims are a factory tool allowing certain authorization functions to be is signed, but only
+RMA shims are a factory tool allowing certain authorization functions to be signed, but only
 the KERNEL partitions are checked for signatures by the firmware. We can edit the other partitions to our will as long as we remove the forced readonly bit on them.
 
 ## CrBug Link
