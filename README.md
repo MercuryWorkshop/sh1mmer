@@ -1,12 +1,14 @@
 <div align="center">
-    <h1>SH1MMER</h1>
+<h1>
+    SH1MMER
+</h1>
     
 <h3>
     Shady Hacking 1nstrument Makes Machine Enrollment Retreat
 </h3>
 
 <i>
-    Website, source tree, and write-up for a ChromeOS enrollment jailbreak
+    Website, source tree, and write-up for a ChromeOS:tm: enrollment jailbreak
 </i>
 </div>
 
@@ -53,12 +55,14 @@ If your board name is in the list below, great! Download the RAW shim correspond
 
 If it's not, good luck. You'll have to try and call up your OEM and demand the files from them, which they are most definitely unlikely to give to you.
 
-### Building a Beautiful World Shim
+***
+
+### Building A Beautiful World Shim
 
 **IMPORTANT!!!!** IF YOU HAVE EITHER THE `coral` OR `hana` BOARDS, OR SOME OTHER OLDER BOARDS (which?), DO NOT FOLLOW THESE INSTRUCTIONS, INSTEAD SKIP TO THE "[Building A Legacy Shim](#building-a-legacy-shim)" SECTION
 
 Now we can start building. Type out all of these commands in the terminal. You need to be on Linux or WSL2 and have the following packages installed: `cgpt`, `git`, `wget`.
-Note that WSL doesn't work for some people, and if you have trouble building it it's recommended to just use a VM or the [web builder](https://sh1mmer.me/builder.html)
+Note that WSL doesn't work for some people, and if you have trouble building it it's recommended to just use a VM or the [web builder](https://sh1mmer.me/builder.html).
 **WEB BUILDER DOES NOT INCLUDE PAYLOADS!! YOU MUST BUILD IT MANUALLY FROM SOURCE FOR PAYLOADS**
 
 ```
@@ -70,12 +74,12 @@ sudo bash wax.sh /path/to/the/shim/you/downloaded.bin
 
 When this finishes, the bin file in the path you provided will have been converted into a **SH1MMER** image. Note that this is a destructive operation, you will need to redownload a fresh shim to try again if it fails.
 
-If you want to build a devshim, replace `chromebrew.tar.gz` with `chromebrew-dev.tar.gz` and add `--dev` to the end of `sudo sh wax.sh /path/to/the/shim/you/downloaded.bin`
-Devshim builds will mount a much larger chromebrew partition over `/usr/local`, allowing you to access a desktop environment and even firefox from within sh1mmer. It's what allowed us to [run doom on a shim](https://blog.coolelectronics.me/_astro/doom.82b5613a_Z1LR94C.webp).
+> *If you want to build a devshim, replace `chromebrew.tar.gz` with `chromebrew-dev.tar.gz` and add `--dev` to the end of `sudo sh wax.sh /path/to/the/shim/you/downloaded.bin`
+Devshim builds will mount a much larger Chromebrew partition over `/usr/local`, allowing you to access a desktop environment and even FireFox from within SH1MMER. It's what allowed us to [run doom on a shim](https://blog.coolelectronics.me/_astro/doom.82b5613a_Z1LR94C.webp).*
 
-To install the built `.bin` file onto an external drive, use the Chromebook Recovery Utility, BalenaEtcher, Rufus, or any other flasher.
+***
 
-### Building a Legacy Shim
+### Building A Legacy Shim
 
 The raw shim files for boards such as `HANA` or `CORAL` were built before graphics support was added into the tty. This makes it impossible for the Beautiful World GUI to work and thus a legacy CLI-only shim must be built.
 
@@ -86,8 +90,19 @@ Note that the legacy shim **will work on all boards**. The legacy version of wax
 ```
 git clone https://github.com/MercuryWorkshop/sh1mmer
 cd sh1mmer/wax
-sudo bash wax_legacy.sh
+chmod +x lib/sfdisk
+sudo bash wax_legacy.sh /path/to/the/shim/you/downloaded.bin
 ```
+
+***
+
+### Booting Into A Shim
+
+Once you have injected your raw shim with SH1MMER, go into the Chromebook Recovery Utility, select the settings icon (⚙️), select `Use local image`, and then select your injected shim. Alternatively, you can also use other flashers such as BalenaEtcher, Rufus, UNetbootin, and etc. *This may take up to 10 minutes, depending on the size of your shim.*
+
+On the Chromebook, press `ESC + Refresh (↻) + Power (⏻)` at the same time to enter the recovery screen, then press `CTRL + D` at the same time and press Enter. This should enable Developer Mode or turn off OS Verification. *This may be blocked by system policy, but that doesn't matter.*
+
+Press `ESC + Refresh (↻) + Power (⏻)` at the same time again, then plug in your USB with SH1MMER and you should be booting into the Beautiful World GUI or a CLI screen. From here, you can play around with the options and do what you want.
 
 ## CrBug Link
 
