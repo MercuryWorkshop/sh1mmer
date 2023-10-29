@@ -16,7 +16,7 @@ If you aren't willing to take apart your chromebook to unenroll, you can use an 
 
 Shimmer is an exploit found in the ChromeOS shim kernel that utilitzes modified RMA factory shims to gain code execution at recovery.<br>
 
-For more info, check out the blog post/writeup [here](https://coolelectronics.me/blog/breaking-cros-2)
+For more info, check out the blog post/writeup [here](https://blog.coolelectronics.me/breaking-cros-2/)
 
 ## How do I use it?
 
@@ -49,7 +49,7 @@ sudo bash wax.sh /path/to/the/shim/you/downloaded.bin
 When this finishes, the bin file in the path you provided will have been converted into a sh1mmer image. Note that this is a destructive operation, you will need to redownload a fresh shim to try again if it fails.
 
 If you want to build a devshim, replace `chromebrew.tar.gz` with `chromebrew-dev.tar.gz` and add `--dev` to the end of `sudo sh wax.sh /path/to/the/shim/you/downloaded.bin`
-Devshim builds will mount a much larger chromebrew partition over /usr/local, allowing you to access a desktop environment and even firefox from within sh1mmer. It's what allowed us to [run doom on a shim](https://coolelectronics.me/blog/static/breaking/doom.jpg).
+Devshim builds will mount a much larger chromebrew partition over /usr/local, allowing you to access a desktop environment and even firefox from within sh1mmer. It's what allowed us to [run doom on a shim](https://blog.coolelectronics.me/_astro/doom.82b5613a_Z1LR94C.webp).
 
 To install the built .bin file onto a usb, use the chrome recovery tool, balenaetcher, rufus, or any other flasher.
 
@@ -69,7 +69,7 @@ sudo bash wax_legacy.sh
 
 ## How does it work?
 
-RMA shims are a factory tool allowing certain authorization functions to be is signed, but only
+RMA shims are a factory tool allowing certain authorization functions to be signed, but only
 the KERNEL partitions are checked for signatures by the firmware. We can edit the other partitions to our will as long as we remove the forced readonly bit on them.
 
 ## CrBug Link

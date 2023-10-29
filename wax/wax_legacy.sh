@@ -5,8 +5,8 @@ SCRIPT_DIR=${SCRIPT_DIR:-"."}
 
 set -e
 if [ "$EUID" -ne 0 ]; then
-		echo "Please run as root"
-		exit
+	echo "Please run as root"
+	exit
 fi
 
 echo "-------------------------------------------------------------------------------------------------------------"
@@ -17,6 +17,7 @@ echo "--------------------------------------------------------------------------
 echo "Warning: this is a legacy version of wax. There may be unresolved issues"
 
 PAYLOAD_DIR="sh1mmer_legacy"
+SH1MMER_PART_SIZE="32M"
 
 SFDISK="lib/sfdisk"
 CGPT="cgpt"
@@ -27,6 +28,10 @@ debug() {
 
 info() {
 	echo -e "\x1B[32mInfo: $*\x1b[39;49m"
+}
+
+format_bytes() {
+	numfmt --to=iec-i --suffix=B "$@"
 }
 
 patch_root() {
@@ -47,18 +52,18 @@ patch_root() {
 	# ctrl+u boot unlock
 	sed -i "s/exec/pre-start script\nvpd -i RW_VPD -s block_devmode=0\ncrossystem block_devmode=0\nend script\n\nexec/" "$MNT_ROOT/etc/init/startup.conf"
 
-	umount "${loopdev}p3"
+	umount "$MNT_ROOT"
 	rm -rf "$MNT_ROOT"
 }
 
 patch_sh1mmer() {
 	info "Creating SH1MMER partition"
-	local final_sector
-	final_sector=$(fdisk -l "${loopdev}" | grep "${loopdev}p3[[:space:]]" | awk '{print $3}')
-	"$SFDISK" -N 1 -a "${loopdev}" <<<"$((final_sector + 1)),32M"
-	# label partition "SH1MMER"
+	local final_sector=$(fdisk -l "${loopdev}" | grep "${loopdev}p3[[:space:]]" | awk '{print $3}')
+	"$SFDISK" -N 1 -a "${loopdev}" <<<"$((final_sector + 1)),${SH1MMER_PART_SIZE}"
+	# label partition "SH1MMER" (required for payloads)
 	"$CGPT" add -i 1 -l SH1MMER "${loopdev}"
-	mkfs.ext4 -L SH1MMER "${loopdev}p1" # maybe ext2?
+	# don't use ext2
+	mkfs.ext4 -L SH1MMER "${loopdev}p1"
 
 	sync
 	sleep 0.2
@@ -73,35 +78,28 @@ patch_sh1mmer() {
 	cp -r "$PAYLOAD_DIR/root" "$MNT_SH1MMER"
 	chmod -R +x "$MNT_SH1MMER/root"
 
-	umount "${loopdev}p1"
+	umount "$MNT_SH1MMER"
 	rm -rf "$MNT_SH1MMER"
 }
 
 shrink_table() {
-	local buffer=$((1024 * 1024)) # 1 MiB buffer. keeps things from breaking too much
-
-	info "Shrinking RootFS"
+	info "Shrinking rootfs"
 	e2fsck -fy "${loopdev}p3"
 	resize2fs -M "${loopdev}p3"
-	local block_size
-	block_size=$(tune2fs -l "${loopdev}p3" | grep -i "block size" | awk '{print $3}')
-	local sector_size
-	sector_size=$(fdisk -l "${loopdev}" | grep "Sector size" | awk '{print $4}')
 
-	local block_count
-	block_count=$(tune2fs -l "${loopdev}p3" | grep -i "block count" | awk '{print $3}')
-	block_count=${block_count%%[[:space:]]*}
+	local sector_size=$(fdisk -l "${loopdev}" | grep "Sector size" | awk '{print $4}')
+	local block_size=$(tune2fs -l "${loopdev}p3" | grep "Block size" | awk '{print $3}')
+	local block_count=$(tune2fs -l "${loopdev}p3" | grep "Block count" | awk '{print $3}')
 
-	debug "bs: $block_size, blocks: $block_count"
+	debug "sector size: ${sector_size}, block size: ${block_size}, block count: ${block_count}"
 
 	local original_sectors=$("$CGPT" show -i 3 -s "${loopdev}")
 	local original_bytes=$((original_sectors * sector_size))
 
-	local raw_bytes=$((block_count * block_size))
-	local resized_size=$((raw_bytes + buffer))
-	local resized_sectors=$((resized_size / sector_size))
+	local resized_bytes=$((block_count * block_size))
+	local resized_sectors=$((resized_bytes / sector_size))
 
-	info "Resizing ROOT from $(numfmt --to=iec-i --suffix=B ${original_bytes}) to $(numfmt --to=iec-i --suffix=B ${resized_size})"
+	info "Resizing rootfs from $(format_bytes ${original_bytes}) to $(format_bytes ${resized_bytes})"
 	"$CGPT" add -i 3 -s "${resized_sectors}" "${loopdev}"
 
 	info "Squashing partitions"
@@ -109,8 +107,9 @@ shrink_table() {
 	local numparts=3
 	local numtries=1
 
+	# todo: get real order of partitions
 	i=0
-	while [ $i -le $numtries ]; do
+	while [ $i -lt $numtries ]; do
 		j=2
 		while [ $j -le $numparts ]; do
 			debug "$SFDISK" -N $j --move-data "${loopdev}" '<<<"+,-"'
@@ -123,20 +122,17 @@ shrink_table() {
 
 truncate_image() {
 	local buffer=35 # magic number to ward off evil gpt corruption spirits
+	local lastpart=1
 	local img=$1
-	local sector_size
-	sector_size=$(fdisk -l "$img" | grep "Sector size" | awk '{print $4}')
-	local final_sector
-	final_sector=$(fdisk -l "$img" | grep "${img}1[[:space:]]" | awk '{print $3}')
+	local sector_size=$(fdisk -l "$img" | grep "Sector size" | awk '{print $4}')
+	local final_sector=$(fdisk -l "$img" | grep "${img}${lastpart}[[:space:]]" | awk '{print $3}')
 	local end_bytes=$(((final_sector + buffer) * sector_size))
 
-	info "Truncating image to $(numfmt --to=iec-i --suffix=B ${end_bytes})"
-
+	info "Truncating image to $(format_bytes ${end_bytes})"
 	truncate -s "$end_bytes" "$img"
-	gdisk "$img" << EOF
-w
-y
-EOF
+
+	# recreate backup gpt table/header
+	sgdisk -e "$img" 2>&1 | sed 's/\a//g'
 }
 
 info "Deleting useless partitions"

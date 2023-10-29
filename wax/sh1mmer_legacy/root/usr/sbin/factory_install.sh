@@ -33,7 +33,7 @@ enable_usb_boot() {
 	echo "Done"
 }
 
-reset_gbb() {
+reset_gbb_flags() {
 	echo "Resetting GBB flags... This will only work if WP is disabled"
 	/usr/share/vboot/bin/set_gbb_flags.sh 0x0
 	echo "Done"
@@ -124,7 +124,7 @@ while true; do
 	r | R) reprovision ;;
 	m | M) unblock_devmode ;;
 	u | U) enable_usb_boot ;;
-	g | G) reset_gbb ;;
+	g | G) reset_gbb_flags ;;
 	v | V) disable_verity ;;
 	t | T) chromeos-tpm-recovery ;;
 	f | F) factory ;;
