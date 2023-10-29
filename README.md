@@ -25,10 +25,9 @@ If you aren't willing to take apart your Chromebook to unenroll, you can use an 
 ## What is SH1MMER?
 
 **SH1MMER** is an exploit found in the ChromeOS shim kernel that utilitzes modified RMA factory shims to gain code execution at recovery.<br>
+For more info on how it works, check out the blog post/writeup [here](https://blog.coolelectronics.me/breaking-cros-2/)
 
-For more info, check out the blog post/writeup [here](https://blog.coolelectronics.me/breaking-cros-2/)
-
-## How does it work?
+#### How does it work?
 
 RMA shims are a factory tool allowing certain authorization functions to be signed, but only
 the KERNEL partitions are checked for signatures by the firmware. We can edit the other partitions to our will as long as we remove the forced readonly bit on them.
