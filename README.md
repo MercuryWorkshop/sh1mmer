@@ -77,6 +77,8 @@ When this finishes, the bin file in the path you provided will have been convert
 > *If you want to build a devshim, replace `chromebrew.tar.gz` with `chromebrew-dev.tar.gz` and add `--dev` to the end of `sudo sh wax.sh /path/to/the/shim/you/downloaded.bin`
 Devshim builds will mount a much larger Chromebrew partition over `/usr/local`, allowing you to access a desktop environment and even FireFox from within SH1MMER. It's what allowed us to [run doom on a shim](https://blog.coolelectronics.me/_astro/doom.82b5613a_Z1LR94C.webp).*
 
+After injecting, you may continue to the "[Booting Into A Shim](#booting-into-a-shim)" section.
+
 ***
 
 ### Building A Legacy Shim
@@ -93,6 +95,8 @@ cd sh1mmer/wax
 chmod +x lib/sfdisk
 sudo bash wax_legacy.sh /path/to/the/shim/you/downloaded.bin
 ```
+
+After injecting, you may continue to the "[Booting Into A Shim](#booting-into-a-shim)" section.
 
 ***
 
