@@ -18,9 +18,15 @@ Downgrading and unenrollment has been patched by Google:tm:. If your Chromebook 
 
 If your Chromebook is on version 112 or 113, unenrollment is still possible if you're willing to [disable hardware write protection](https://mrchromebox.tech/#devices). On most devices, this will require you to take off the back of the Chromebook and unplug the battery, or jump two pins. Further instructions are on [the website](https://sh1mmer.me/#fog).
 
-### "Unenrollment" Without Disabling Hardware Write Protection
+### The Tsunami
 
-If you aren't willing to take apart your Chromebook to unenroll, you can use an affiliated project, [E-Halcyon](https://fog.gay) to boot into a deprovisioned environment temporarily.
+Disabling write protection has also been patched by Google:tm:. If your Chromebook has never updated to 114 (or newer) before (check in `chrome://version`), then you can ignore this and proceed with disabling write protection to continue using SH1MMER. If not, unenrolling through disabling write protection will not work as normal.
+
+If your Chromebook is on version 114 or newer, unerollment is still possible by [briding two pins on the SOIC-8 chip](https://blog.coolelectronics.me/breaking-cros-6/#:~:text=the%20pencil%20bypass). On most devices, this will require you to take off the back of the Chromebook and then use a piece of tinfoil or wire to bridge the two pins. Instructions are not listed and this solution is **not recommended** as you risk damaging the Chromebook.
+
+#### "Unenrollment" Without Disabling Hardware Write Protection
+
+If you aren't willing to take apart your Chromebook to unenroll, you can use an affiliated project, [E-Halcyon](https://fog.gay) to boot into a deprovisioned environment temporarily. This will bypass both issues of The Fog and The Tsunami, however further caveats are listed on the website.
 
 ## What is SH1MMER?
 
