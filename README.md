@@ -45,7 +45,7 @@ The prebuilt binaries have been taken off of the official mirror ([dl.sh1mmer.me
 Here's how you do that.
 First, you need to know your Chromebook's board. Go to `chrome://version` on your Chromebook and copy the word after `stable-channel`. If `chrome://version` is blocked, you can search up your Chromebook's model name on [chrome100](https://chrome100.dev) and see what board it corresponds to. **DO NOT DOWNLOAD ANYTHING FROM [chrome100](https://chrome100.dev) AND USE IT WITH THE BUILDER, IT WILL NOT WORK.**
 
-If your board name is in the list below, great! Download the RAW shim corresponding to your board from [here](https://dl.sh1mmer.me).
+If your board name is in the list below, great! Find the RAW RMA shim corresponding to your board online. We can no longer provide raw RMA shims due to legal reasons. **[More information](https://discord.gg/egWXwEDWKP)**
 
 - (**B**) brask, brya
 - (**C**) clapper, coral, corsola
