@@ -113,10 +113,6 @@ On the Chromebook, press `ESC + Refresh (↻) + Power (⏻)` at the same time to
 
 Press `ESC + Refresh (↻) + Power (⏻)` at the same time again, then plug in your USB with SH1MMER and you should be booting into the Beautiful World GUI or a CLI screen. From here, you can play around with the options and do what you want.
 
-## CrBug Link
-
-[crbug.com/1394226](https://crbug.com/1394226)
-
 ## Credits
 
 - [CoolElectronics](https://discord.com/users/696392247205298207) - Pioneering this wild exploit
