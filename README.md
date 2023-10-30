@@ -130,7 +130,7 @@ After injecting, you may continue to the "[Booting Into A Shim](#booting-into-a-
 
 Once you have injected your raw shim with SH1MMER, go into the Chromebook Recovery Utility, select the settings icon (⚙️), select `Use local image`, and then select your injected shim.
 Alternatively, you can also use other flashers such as BalenaEtcher, Rufus, UNetbootin, and etc.
-*This may take up to 10 minutes, depending on the size of your shim.*
+*This may take up to 10 minutes, depending on the size of your shim and speed of your USB drive.*
 
 On the Chromebook, press `ESC + Refresh (↻) + Power (⏻)` at the same time to enter the recovery screen, then press `CTRL + D` at the same time and press Enter.
 This should enable Developer Mode or turn off OS Verification.
