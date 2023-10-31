@@ -61,6 +61,7 @@ echo "Making arch partition"
 mkfs.ext2 -L arch "${loopdev}p13" # ext2 so we can use skid protection features (todo: why????)
 echo "Making ROOT mountable"
 enable_rw_mount "${loopdev}p3"
+safesync
 
 echo "Mounting ROOT"
 MNT_ROOT=$(mktemp -d)
@@ -92,14 +93,12 @@ rm -rf "$MNT_ARCH"
 
 # if you're reading this, you may not be a skid. run sh lib/ssd_util.sh --no_resign_kernel --remove_rootfs_verification --unlock_root -i /dev/sdX on the flashed usb to undo this
 if [[ $* == *--antiskid* ]]; then
-	sync
-	sleep 0.2
+	safesync
 	echo "relocking rootfs..."
 	disable_rw_mount "${loopdev}p3"
 fi
 
-sync
-sleep 0.2
+safesync
 losetup -d "$loopdev"
 
 echo "Done. Have fun!"

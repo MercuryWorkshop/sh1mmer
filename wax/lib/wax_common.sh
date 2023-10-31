@@ -23,8 +23,23 @@ format_bytes() {
 	numfmt --to=iec-i --suffix=B "$@"
 }
 
+safesync() {
+	sync
+	sleep 0.2
+}
+
 get_final_sector() {
-	local part_table=$("$SFDISK" -l "$1" | grep "^$1")
-	part_table="${part_table//$1/}"
-	awk '{print $3}' <<<"$part_table" | sort -nr | head -n 1
+	"$SFDISK" -l -o end "$1" | grep "^\s*[0-9]" | awk '{print $1}' | sort -nr | head -n 1
+}
+
+get_parts() {
+	"$CGPT" show -q "$1" | awk '{print $3}'
+}
+
+get_parts_physical_order() {
+	local part_table=$("$CGPT" show -q "$1")
+	local physical_parts=$(awk '{print $1}' <<<"${part_table}" | sort -n)
+	for part in $physical_parts; do
+		grep "^\s*${part}\s" <<<"${part_table}" | awk '{print $3}'
+	done
 }

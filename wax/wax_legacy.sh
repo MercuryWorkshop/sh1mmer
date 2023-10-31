@@ -23,8 +23,7 @@ patch_root() {
 	log_info "Making ROOT mountable"
 	enable_rw_mount "${loopdev}p3"
 
-	sync
-	sleep 0.2
+	safesync
 
 	log_info "Mounting ROOT"
 	MNT_ROOT=$(mktemp -d)
@@ -48,8 +47,7 @@ patch_sh1mmer() {
 	"$SFDISK" --part-label "$loopdev" 1 SH1MMER
 	mkfs.ext4 -F -L SH1MMER "${loopdev}p1"
 
-	sync
-	sleep 0.2
+	safesync
 
 	log_info "Mounting SH1MMER"
 	MNT_SH1MMER=$(mktemp -d)
@@ -63,6 +61,21 @@ patch_sh1mmer() {
 
 	umount "$MNT_SH1MMER"
 	rm -rf "$MNT_SH1MMER"
+}
+
+delete_partitions_except() {
+	log_info "Deleting partitions"
+	local img="$1"
+	local to_delete=()
+	shift
+
+	for part in $(get_parts "$img"); do
+		if [ -z "$(grep -w "$part" <<<"$@")" ]; then
+			to_delete+=("$part")
+		fi
+	done
+
+	"$SFDISK" --delete "$img" "${to_delete[@]}"
 }
 
 shrink_root() {
@@ -89,21 +102,15 @@ shrink_root() {
 squash_partitions() {
 	log_info "Squashing partitions"
 
-	local part_table=$("$CGPT" show -q "$loopdev")
-	local physical_parts=$(awk '{print $1}' <<<"$part_table" | sort -n)
-
-	local partnum
-	for part in $physical_parts; do
-		partnum=$(grep "^\s*${part}\s" <<<"$part_table" | awk '{print $3}')
-		log_debug "part: ${part}, num: ${partnum}"
-		log_debug "$SFDISK" -N "$partnum" --move-data "$loopdev" '<<<"+,-"'
-		"$SFDISK" -N "$partnum" --move-data "$loopdev" <<<"+,-" || :
+	for part in $(get_parts_physical_order "$loopdev"); do
+		log_debug "$SFDISK" -N "$part" --move-data "$loopdev" '<<<"+,-"'
+		"$SFDISK" -N "$part" --move-data "$loopdev" <<<"+,-" || :
 	done
 }
 
 truncate_image() {
-	local buffer=35 # magic number to ward off evil gpt corruption spirits
 	local img="$1"
+	local buffer=35 # magic number to ward off evil gpt corruption spirits
 	local sector_size=$("$SFDISK" -l "$img" | grep "Sector size" | awk '{print $4}')
 	local final_sector=$(get_final_sector "$img")
 	local end_bytes=$(((final_sector + buffer) * sector_size))
@@ -116,8 +123,9 @@ truncate_image() {
 	# todo: this (sometimes) works: "$SFDISK" --relocate gpt-bak-std "$img"
 }
 
-log_info "Deleting useless partitions"
-"$SFDISK" --delete "$1" 1 4 5 6 7 8 9 10 11 12
+# todo: add option to use kern/root other than p2/p3 using sgdisk -r 2:X
+
+delete_partitions_except "$1" 2 3
 
 log_info "Creating loop device"
 loopdev=$(losetup -f)
@@ -125,22 +133,18 @@ losetup -P "$loopdev" "$1"
 
 patch_root
 
-sync
-sleep 0.2
+safesync
 
 shrink_root
 squash_partitions
 
-sync
-sleep 0.2
+safesync
 
 patch_sh1mmer
 
 losetup -d "$loopdev"
-sync
-sleep 0.2
+safesync
 truncate_image "$1"
-sync
-sleep 0.2
+safesync
 
 log_info "Done. Have fun!"

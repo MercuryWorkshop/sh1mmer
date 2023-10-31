@@ -23,8 +23,7 @@ recreate_stateful() {
 	"$SFDISK" --part-label "$loopdev" 1 STATE
 	mkfs.ext4 -F -L STATE "${loopdev}p1"
 
-	sync
-	sleep 0.2
+	safesync
 
 	MNT_STATE=$(mktemp -d)
 	mount "${loopdev}p1" "$MNT_STATE"
@@ -39,21 +38,15 @@ recreate_stateful() {
 squash_partitions() {
 	log_info "Squashing partitions"
 
-	local part_table=$("$CGPT" show -q "$loopdev")
-	local physical_parts=$(awk '{print $1}' <<<"$part_table" | sort -n)
-
-	local partnum
-	for part in $physical_parts; do
-		partnum=$(grep "^\s*${part}\s" <<<"$part_table" | awk '{print $3}')
-		log_debug "part: ${part}, num: ${partnum}"
-		log_debug "$SFDISK" -N "$partnum" --move-data "$loopdev" '<<<"+,-"'
-		"$SFDISK" -N "$partnum" --move-data "$loopdev" <<<"+,-" || :
+	for part in $(get_parts_physical_order "$loopdev"); do
+		log_debug "$SFDISK" -N "$part" --move-data "$loopdev" '<<<"+,-"'
+		"$SFDISK" -N "$part" --move-data "$loopdev" <<<"+,-" || :
 	done
 }
 
 truncate_image() {
-	local buffer=35 # magic number to ward off evil gpt corruption spirits
 	local img="$1"
+	local buffer=35 # magic number to ward off evil gpt corruption spirits
 	local sector_size=$("$SFDISK" -l "$img" | grep "Sector size" | awk '{print $4}')
 	local final_sector=$(get_final_sector "$img")
 	local end_bytes=$(((final_sector + buffer) * sector_size))
@@ -72,16 +65,13 @@ losetup -P "$loopdev" "$1"
 
 recreate_stateful
 
-sync
-sleep 0.2
+safesync
 
 squash_partitions
 
 losetup -d "$loopdev"
-sync
-sleep 0.2
+safesync
 truncate_image "$1"
-sync
-sleep 0.2
+safesync
 
 log_info "Done. Have fun!"
