@@ -6,7 +6,7 @@ SCRIPT_DIR=${SCRIPT_DIR:-"."}
 set -e
 if [ "$EUID" -ne 0 ]; then
 	echo "Please run as root"
-	exit
+	exit 1
 fi
 
 echo "-------------------------------------------------------------------------------------------------------------"
@@ -45,18 +45,17 @@ squash_partitions() {
 }
 
 truncate_image() {
-	local img="$1"
 	local buffer=35 # magic number to ward off evil gpt corruption spirits
-	local sector_size=$("$SFDISK" -l "$img" | grep "Sector size" | awk '{print $4}')
-	local final_sector=$(get_final_sector "$img")
+	local sector_size=$("$SFDISK" -l "$1" | grep "Sector size" | awk '{print $4}')
+	local final_sector=$(get_final_sector "$1")
 	local end_bytes=$(((final_sector + buffer) * sector_size))
 
-	log_info "Truncating image to $(format_bytes ${end_bytes})"
-	truncate -s "$end_bytes" "$img"
+	log_info "Truncating image to $(format_bytes "$end_bytes")"
+	truncate -s "$end_bytes" "$1"
 
 	# recreate backup gpt table/header
-	sgdisk -e "$img" 2>&1 | sed 's/\a//g'
-	# todo: this (sometimes) works: "$SFDISK" --relocate gpt-bak-std "$img"
+	sgdisk -e "$1" 2>&1 | sed 's/\a//g'
+	# todo: this (sometimes) works: "$SFDISK" --relocate gpt-bak-std "$1"
 }
 
 log_info "Creating loop device"

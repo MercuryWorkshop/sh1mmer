@@ -1,6 +1,19 @@
 #!/usr/bin/env bash
 # wax common file, this should be sourced
 
+fail() {
+	echo -e "$@" >&2
+	exit 1
+}
+
+readlink /proc/$$/exe | grep -q bash || fail "Please run with bash"
+
+check_deps() {
+	for dep in "$@"; do
+		command -v "$dep" &>/dev/null || echo "$dep"
+	done
+}
+
 SCRIPT_DIR=$(dirname "$0")
 SCRIPT_DIR=${SCRIPT_DIR:-"."}
 
@@ -21,6 +34,14 @@ log_info() {
 
 format_bytes() {
 	numfmt --to=iec-i --suffix=B "$@"
+}
+
+check_file_rw() {
+	[ -f "$1" -a -r "$1" -a -w "$1" ]
+}
+
+check_gpt_image() {
+	"$SFDISK" -l "$1" 2>/dev/null | grep -q "Disklabel type: gpt"
 }
 
 safesync() {

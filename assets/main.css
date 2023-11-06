@@ -9,11 +9,16 @@
   --dark2:#59498a;
   --dark1:#946adc;
 }
+
 * {
   box-sizing: border-box;
   margin: 0px;
   padding: 0px;
   font-family: "Exo", sans-serif;
+}
+
+html {
+  scroll-behavior: smooth;
 }
 
 @keyframes scroll {
@@ -27,7 +32,7 @@
 
 .header {
   background-repeat: no-repeat;
-  background-image: url("/assets/background_min.png");
+  background-image: url("background_min.png");
   background-size: 540px 100%;
   background-repeat: repeat-x;
   text-align: center;
@@ -103,7 +108,6 @@ img {
   max-width: 100%;
   border: 3px solid var(--white);
   vertical-align: top;
-  border-radius: 10px;
 }
 
 spc {
@@ -128,4 +132,14 @@ button {
 a:hover,
 button:hover {
   filter: brightness(80%);
+}
+
+ul {
+  list-style-position: inside;
+}
+
+.note {
+  padding-left: 50px;
+  margin: 20px 0px;
+  border-left: 3px solid var(--light);
 }

@@ -4,17 +4,19 @@ SCRIPT_DIR=${SCRIPT_DIR:-"."}
 . "$SCRIPT_DIR/lib/wax_common.sh"
 
 set -e
-if [ "$EUID" -ne 0 ]; then
-	echo "Please run as root"
-	exit
-fi
 
 echo "-------------------------------------------------------------------------------------------------------------"
 echo "Welcome to wax, a shim modifying automation tool"
 echo "Credits: CoolElectronics, Sharp_Jack, r58playz, Rafflesia, OlyB"
-echo "Prerequisites: e2fsprogs must be installed, program must be ran as root"
-echo "Warning: this is a legacy version of wax. There may be unresolved issues"
+echo "Prerequisites: gdisk, e2fsprogs must be installed, program must be ran as root"
 echo "-------------------------------------------------------------------------------------------------------------"
+
+[ -z "$1" ] && fail "Usage: wax_legacy.sh <image.bin>"
+[ "$EUID" -ne 0 ] && fail "Please run as root"
+missing_deps=$(check_deps sgdisk mkfs.ext4 e2fsck resize2fs)
+[ "$missing_deps" ] && fail "The following required commands weren't found in PATH:\n${missing_deps}"
+check_file_rw "$1" || fail "$1 doesn't exist, isn't a file, or isn't RW"
+check_gpt_image "$1" || fail "$1 is not GPT, or is corrupted"
 
 SH1MMER_PART_SIZE="32M"
 PAYLOAD_DIR="${SCRIPT_DIR}/sh1mmer_legacy"
@@ -109,18 +111,17 @@ squash_partitions() {
 }
 
 truncate_image() {
-	local img="$1"
 	local buffer=35 # magic number to ward off evil gpt corruption spirits
-	local sector_size=$("$SFDISK" -l "$img" | grep "Sector size" | awk '{print $4}')
-	local final_sector=$(get_final_sector "$img")
+	local sector_size=$("$SFDISK" -l "$1" | grep "Sector size" | awk '{print $4}')
+	local final_sector=$(get_final_sector "$1")
 	local end_bytes=$(((final_sector + buffer) * sector_size))
 
-	log_info "Truncating image to $(format_bytes ${end_bytes})"
-	truncate -s "$end_bytes" "$img"
+	log_info "Truncating image to $(format_bytes "$end_bytes")"
+	truncate -s "$end_bytes" "$1"
 
 	# recreate backup gpt table/header
-	sgdisk -e "$img" 2>&1 | sed 's/\a//g'
-	# todo: this (sometimes) works: "$SFDISK" --relocate gpt-bak-std "$img"
+	sgdisk -e "$1" 2>&1 | sed 's/\a//g'
+	# todo: this (sometimes) works: "$SFDISK" --relocate gpt-bak-std "$1"
 }
 
 # todo: add option to use kern/root other than p2/p3 using sgdisk -r 2:X
