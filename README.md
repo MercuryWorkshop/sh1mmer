@@ -33,7 +33,10 @@ If not, unenrolling through disabling write protection will not work as normal.
 If your Chromebook is on version 114 or newer,
 unenrollment is still possible by [bridging two pins on the firmware chip](https://blog.coolelectronics.me/breaking-cros-6/#:~:text=the%20pencil%20bypass).
 On most devices, this will require you to take off the back of the Chromebook and then use a piece of tinfoil, wire, or other conductive material to bridge the two pins.
-Instructions are not listed and this solution is **not recommended** as you risk damaging the Chromebook.
+Instructions are not listed and this solution is **not recommended** as you risk damaging the Chromebook.  
+If you are aware of the risk and are still willing to perform this, be aware that you must bridge the WP
+and VCC pins, **NOT** WP and GND, despite what the blog post says. Look up the model of your chip online,
+most will be 8/16/32 MB (64/128/256 Mb). Find the pinout for WP and VCC. Most will use pins 3 and 8 respectively.
 
 #### "Unenrollment" Without Disabling Hardware Write Protection
 
