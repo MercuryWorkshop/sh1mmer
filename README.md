@@ -4,7 +4,7 @@
 </h1>
     
 <h3>
-    Shady Hacking 1nstrument Makes Machine Enrollment Retreat
+    Shady Hardware 1nstrument Makes Machine Enrollment Retreat
 </h3>
 
 <i>
