@@ -31,8 +31,8 @@ then you can ignore this and proceed with disabling write protection to continue
 If not, unenrolling through disabling write protection will not work as normal.
 
 If your Chromebook is on version 114 or newer,
-unerollment is still possible by [bridging two pins on the firmware chip](https://blog.coolelectronics.me/breaking-cros-6/#:~:text=the%20pencil%20bypass).
-On most devices, this will require you to take off the back of the Chromebook and then use a piece of tinfoil or wire to bridge the two pins.
+unenrollment is still possible by [bridging two pins on the firmware chip](https://blog.coolelectronics.me/breaking-cros-6/#:~:text=the%20pencil%20bypass).
+On most devices, this will require you to take off the back of the Chromebook and then use a piece of tinfoil, wire, or other conductive material to bridge the two pins.
 Instructions are not listed and this solution is **not recommended** as you risk damaging the Chromebook.
 
 #### "Unenrollment" Without Disabling Hardware Write Protection
@@ -59,7 +59,7 @@ The prebuilt binaries have been taken off of the official mirror ([dl.sh1mmer.me
 Here's how you do that.
 First, you need to know your Chromebook's board. Go to `chrome://version` on your Chromebook and copy the word after `stable-channel`.
 If `chrome://version` is blocked, you can search up your Chromebook's model name on [chrome100](https://chrome100.dev)
-and see what board it corresponds to. **DO NOT DOWNLOAD ANYTHING FROM [chrome100](https://chrome100.dev) AND USE IT WITH THE BUILDER, IT WILL NOT WORK.**
+and see what board it corresponds to. **DO NOT DOWNLOAD A RECOVERY IMAGE FROM [chrome100](https://chrome100.dev), IT WILL NOT WORK.**
 
 If your board name is in the list below, great! Find the RAW RMA shim corresponding to your board online.
 We can no longer provide raw RMA shims due to legal reasons. **[More information](https://discord.gg/egWXwEDWKP)**
