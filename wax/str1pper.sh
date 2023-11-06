@@ -4,16 +4,19 @@ SCRIPT_DIR=${SCRIPT_DIR:-"."}
 . "$SCRIPT_DIR/lib/wax_common.sh"
 
 set -e
-if [ "$EUID" -ne 0 ]; then
-	echo "Please run as root"
-	exit 1
-fi
 
 echo "-------------------------------------------------------------------------------------------------------------"
 echo "str1pper spash text"
 echo "delete any and all payloads from p1 (stateful) on a rma image,"
 echo "squash partitions"
 echo "-------------------------------------------------------------------------------------------------------------"
+
+[ -z "$1" ] && fail "Usage: str1pper.sh <image.bin>"
+[ "$EUID" -ne 0 ] && fail "Please run as root"
+missing_deps=$(check_deps sgdisk mkfs.ext4)
+[ "$missing_deps" ] && fail "The following required commands weren't found in PATH:\n${missing_deps}"
+check_file_rw "$1" || fail "$1 doesn't exist, isn't a file, or isn't RW"
+check_gpt_image "$1" || fail "$1 is not GPT, or is corrupted"
 
 recreate_stateful() {
 	log_info "Recreating STATE"
