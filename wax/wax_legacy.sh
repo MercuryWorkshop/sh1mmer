@@ -55,9 +55,11 @@ patch_sh1mmer() {
 	MNT_SH1MMER=$(mktemp -d)
 	mount "${loopdev}p1" "$MNT_SH1MMER"
 
-	log_info "Injecting payload (2/2)"
-	mkdir -p "$MNT_SH1MMER/dev_image/etc"
+	mkdir -p "$MNT_SH1MMER/dev_image/etc" "$MNT_SH1MMER/dev_image/factory"
 	touch "$MNT_SH1MMER/dev_image/etc/lsb-factory"
+	touch "$MNT_SH1MMER/dev_image/factory/sh"
+
+	log_info "Injecting payload (2/2)"
 	cp -r "$PAYLOAD_DIR/root" "$MNT_SH1MMER"
 	chmod -R +x "$MNT_SH1MMER/root"
 

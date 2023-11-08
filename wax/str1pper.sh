@@ -31,8 +31,9 @@ recreate_stateful() {
 	MNT_STATE=$(mktemp -d)
 	mount "${loopdev}p1" "$MNT_STATE"
 
-	mkdir -p "$MNT_STATE/dev_image/etc"
+	mkdir -p "$MNT_STATE/dev_image/etc" "$MNT_STATE/dev_image/factory"
 	touch "$MNT_STATE/dev_image/etc/lsb-factory"
+	touch "$MNT_STATE/dev_image/factory/sh"
 
 	umount "$MNT_STATE"
 	rm -rf "$MNT_STATE"
