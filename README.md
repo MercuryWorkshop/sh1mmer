@@ -11,17 +11,25 @@
     Website, source tree, and write-up for a ChromeOS:tm: enrollment jailbreak
 </i>
 </div>
+<hr>
 
-## The Fog....
+### The Fog....
 
 Downgrading and unenrollment has been patched by Google:tm:.
 If your Chromebook has never updated to version 112 (or newer) before (check in `chrome://version`),
 then you can ignore this and follow the normal instructions. If not, unenrollment will not work as normal.
 
-If your Chromebook is on version 112 or 113, unenrollment is still possible if you're willing to
-[disable hardware write protection](https://mrchromebox.tech/#devices).
-On most devices, this will require you to take off the back of the Chromebook and unplug the battery, or jump two pins.
-Further instructions are on [the website](https://sh1mmer.me/#fog).
+<details>
+    <summary>Fog Bypass Details</b></summary>
+        If your Chromebook is on version 112 or 113, unenrollment is still possible if you're willing to
+        <a href="https://mrchromebox.tech/#devices">disable hardware write protection</a>.
+        On most devices, this will require you to take off the back of the Chromebook and unplug the battery, or jump two pins.
+        Further instructions are on <a href="https://sh1mmer.me/#fog">the website</a>
+    <h4>"Unenrollment" Without Disabling Hardware Write Protection</h4>
+        If you aren't willing to take apart your Chromebook to unenroll, you can use an affiliated project,
+        <a href="https://fog.gay">E-Halcyon</a> to boot into a deprovisioned environment temporarily.
+        This will bypass both issues of The Fog and The Tsunami, however further caveats are listed on the website.
+</details>
 
 ### The Tsunami
 
@@ -30,19 +38,18 @@ If your Chromebook has never updated to 114 (or newer) before (check in `chrome:
 then you can ignore this and proceed with disabling write protection to continue using SH1MMER.
 If not, unenrolling through disabling write protection will not work as normal.
 
-If your Chromebook is on version 114 or newer,
-unenrollment is still possible by [bridging two pins on the firmware chip](https://blog.coolelectronics.me/breaking-cros-6/#:~:text=the%20pencil%20bypass).
-On most devices, this will require you to take off the back of the Chromebook and then use a piece of tinfoil, wire, or other conductive material to bridge the two pins.
-Instructions are not listed and this solution is **not recommended** as you risk damaging the Chromebook.  
-If you are aware of the risk and are still willing to perform this, be aware that you must bridge the WP
-and VCC pins, **NOT** WP and GND, despite what the blog post says. Look up the model of your chip online,
-most will be 8/16/32 MB (64/128/256 Mb). Find the pinout for WP and VCC. Most will use pins 3 and 8 respectively.
-
-#### "Unenrollment" Without Disabling Hardware Write Protection
-
-If you aren't willing to take apart your Chromebook to unenroll, you can use an affiliated project,
-[E-Halcyon](https://fog.gay) to boot into a deprovisioned environment temporarily.
-This will bypass both issues of The Fog and The Tsunami, however further caveats are listed on the website.
+<details>
+    <summary>Tsunami Bypass Details</b></summary>
+    If your Chromebook is on version 114 or newer,
+    unenrollment is still possible by <a href="https://blog.coolelectronics.me/breaking-cros-6/#:~:text=the%20pencil%20bypass">bridging two pins on the firmware chip</a>
+    On most devices, this will require you to take off the back of the Chromebook and then use a piece of tinfoil, wire, or other conductive material to bridge the two pins.
+    Instructions are not listed and this solution is <b>not recommended</b> as you risk damaging the Chromebook.
+    <br>
+    <br>
+    If you are aware of the risk and are still willing to perform this, be aware that you must bridge the WP
+    and VCC pins, <b>NOT</b> WP and GND, despite what the blog post says. Look up the model of your chip online,
+    most will be 8/16/32 MB (64/128/256 Mb). Find the pinout for WP and VCC. Most will use pins 3 and 8 respectively.
+</details>
 
 ## What is SH1MMER?
 
