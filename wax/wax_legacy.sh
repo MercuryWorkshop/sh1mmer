@@ -65,19 +65,6 @@ patch_sh1mmer() {
 	rm -rf "$MNT_SH1MMER"
 }
 
-delete_partitions_except() {
-	log_info "Deleting partitions"
-	local img="$1"
-	local to_delete=()
-	shift
-
-	for part in $(get_parts "$img"); do
-		grep -qw "$part" <<<"$@" || to_delete+=("$part")
-	done
-
-	"$SFDISK" --delete "$img" "${to_delete[@]}"
-}
-
 shrink_root() {
 	log_info "Shrinking ROOT"
 	e2fsck -fy "${loopdev}p3"
@@ -99,29 +86,6 @@ shrink_root() {
 	"$CGPT" add -i 3 -s "$resized_sectors" "$loopdev"
 }
 
-squash_partitions() {
-	log_info "Squashing partitions"
-
-	for part in $(get_parts_physical_order "$loopdev"); do
-		log_debug "$SFDISK" -N "$part" --move-data "$loopdev" '<<<"+,-"'
-		"$SFDISK" -N "$part" --move-data "$loopdev" <<<"+,-" || :
-	done
-}
-
-truncate_image() {
-	local buffer=35 # magic number to ward off evil gpt corruption spirits
-	local sector_size=$("$SFDISK" -l "$1" | grep "Sector size" | awk '{print $4}')
-	local final_sector=$(get_final_sector "$1")
-	local end_bytes=$(((final_sector + buffer) * sector_size))
-
-	log_info "Truncating image to $(format_bytes "$end_bytes")"
-	truncate -s "$end_bytes" "$1"
-
-	# recreate backup gpt table/header
-	sgdisk -e "$1" 2>&1 | sed 's/\a//g'
-	# todo: this (sometimes) works: "$SFDISK" --relocate gpt-bak-std "$1"
-}
-
 if uname -r | grep -qi microsoft && realpath "$1" | grep -q "^/mnt"; then
 	echo "You are attempting to run wax on a file in your windows filesystem."
 	echo "Performance would suffer, so please move your file into your linux filesystem (e.g. ~/file.bin)"
@@ -141,7 +105,7 @@ patch_root
 safesync
 
 shrink_root
-squash_partitions
+squash_partitions "$loopdev"
 
 safesync
 

@@ -38,29 +38,6 @@ recreate_stateful() {
 	rm -rf "$MNT_STATE"
 }
 
-squash_partitions() {
-	log_info "Squashing partitions"
-
-	for part in $(get_parts_physical_order "$loopdev"); do
-		log_debug "$SFDISK" -N "$part" --move-data "$loopdev" '<<<"+,-"'
-		"$SFDISK" -N "$part" --move-data "$loopdev" <<<"+,-" || :
-	done
-}
-
-truncate_image() {
-	local buffer=35 # magic number to ward off evil gpt corruption spirits
-	local sector_size=$("$SFDISK" -l "$1" | grep "Sector size" | awk '{print $4}')
-	local final_sector=$(get_final_sector "$1")
-	local end_bytes=$(((final_sector + buffer) * sector_size))
-
-	log_info "Truncating image to $(format_bytes "$end_bytes")"
-	truncate -s "$end_bytes" "$1"
-
-	# recreate backup gpt table/header
-	sgdisk -e "$1" 2>&1 | sed 's/\a//g'
-	# todo: this (sometimes) works: "$SFDISK" --relocate gpt-bak-std "$1"
-}
-
 log_info "Creating loop device"
 loopdev=$(losetup -f)
 losetup -P "$loopdev" "$1"
@@ -69,7 +46,7 @@ recreate_stateful
 
 safesync
 
-squash_partitions
+squash_partitions "$loopdev"
 
 losetup -d "$loopdev"
 safesync
