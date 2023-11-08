@@ -5,11 +5,11 @@ SCRIPT_DIR=${SCRIPT_DIR:-"."}
 
 set -e
 
-echo "-------------------------------------------------------------------------------------------------------------"
+echo "----------------------------------------------------------------------------------------------------"
 echo "Welcome to wax, a shim modifying automation tool"
 echo "Credits: CoolElectronics, Sharp_Jack, r58playz, Rafflesia, OlyB"
 echo "Prerequisites: gdisk, e2fsprogs must be installed, program must be ran as root"
-echo "-------------------------------------------------------------------------------------------------------------"
+echo "----------------------------------------------------------------------------------------------------"
 
 [ -z "$1" ] && fail "Usage: wax_legacy.sh <image.bin>"
 [ "$EUID" -ne 0 ] && fail "Please run as root"
@@ -72,9 +72,7 @@ delete_partitions_except() {
 	shift
 
 	for part in $(get_parts "$img"); do
-		if [ -z "$(grep -w "$part" <<<"$@")" ]; then
-			to_delete+=("$part")
-		fi
+		grep -qw "$part" <<<"$@" || to_delete+=("$part")
 	done
 
 	"$SFDISK" --delete "$img" "${to_delete[@]}"
@@ -123,6 +121,12 @@ truncate_image() {
 	sgdisk -e "$1" 2>&1 | sed 's/\a//g'
 	# todo: this (sometimes) works: "$SFDISK" --relocate gpt-bak-std "$1"
 }
+
+if uname -r | grep -qi microsoft && realpath "$1" | grep -q "^/mnt"; then
+	echo "You are attempting to run wax on a file in your windows filesystem."
+	echo "Performance would suffer, so please move your file into your linux filesystem (e.g. ~/file.bin)"
+	exit 1
+fi
 
 # todo: add option to use kern/root other than p2/p3 using sgdisk -r 2:X
 
