@@ -122,7 +122,7 @@ After injecting, you may continue to the "[Booting Into A Shim](#booting-into-a-
 The raw shim files for boards such as `HANA` or `CORAL` were built before graphics support was added into the tty.
 This makes it impossible for the Beautiful World GUI to work and thus a legacy CLI-only shim must be built.
 
-Type out all of these commands in the terminal. You need to be on linux and have the following packages installed: `git`, `wget`.
+Type out all of these commands in the terminal. You need to be on linux and have the following packages installed: `git`, `wget`, `gdisk`, `e2fsprogs`.
 
 Note that the legacy shim **will work on all boards**. The legacy version of wax now supports nano (shrunken) shims!
 
