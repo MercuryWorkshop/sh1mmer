@@ -11,7 +11,7 @@
 STATEFUL_MNT=/stateful
 
 get_stateful_dev() {
-	cgpt find -1 -l SH1MMER
+	cgpt find -l SH1MMER | head -n 1
 }
 
 mount_stateful() {
