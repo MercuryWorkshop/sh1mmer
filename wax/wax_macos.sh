@@ -1,8 +1,12 @@
-#!/bin/bash
+#!/usr/bin/env bash
+SCRIPT_DIR=$(dirname "$0")
+SCRIPT_DIR=${SCRIPT_DIR:-"."}
+. "$SCRIPT_DIR/lib/wax_common.sh"
+
 set -e
 if [ "$EUID" -ne 0 ]; then
-    echo "Please run as root"
-    exit
+	echo "Please run as root"
+	exit 1
 fi
 
 echo "-------------------------------------------------------------------------------------------------------------"
@@ -47,7 +51,7 @@ echo "Making arch partition"
 mkfs.ext2 -L arch ${loop}s13 # ext2 so we can use skid protection features
 
 echo "Making ROOT mountable"
-sh lib/ssd_util.sh --no_resign_kernel --remove_rootfs_verification -i ${loop}
+enable_rw_mount "${loop}s3"
 
 echo "Creating Mountpoint"
 mkdir mnt || :
@@ -85,7 +89,7 @@ sleep 4
 # if you're reading this, you aren't a skid. run sh lib/ssd_util.sh --no_resign_kernel --remove_rootfs_verification --unlock_arch -i /dev/sdX on the flashed usb to undo this
 if [[ $* == *--antiskid* ]]; then
     echo "relocking rootfs..."
-    sh lib/ssd_util.sh --no_resign_kernel --lock_root -i ${loop}
+    enable_rw_mount "${loop}s3"
 fi
 
 sleep 2

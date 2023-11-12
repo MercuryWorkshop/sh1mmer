@@ -1,0 +1,145 @@
+@import url("https://fonts.googleapis.com/css2?family=Space+Grotesk&family=Sofia+Sans&family=Exo:wght@500&display=swap");
+
+/* use vars bypassi! */
+:root {
+  --white: #e6d8ff;
+  --font: #e6d8ff;
+
+  --light:#a791e8;
+  --dark2:#59498a;
+  --dark1:#946adc;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0px;
+  padding: 0px;
+  font-family: "Exo", sans-serif;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+@keyframes scroll {
+  0% {
+    background-position: 0px 0px;
+  }
+  100% {
+    background-position: -1359px 0px;
+  }
+}
+
+.header {
+  background-repeat: no-repeat;
+  background-image: url("background_min.png");
+  background-size: 540px 100%;
+  background-repeat: repeat-x;
+  text-align: center;
+  padding: 50px 5vw;
+  color: var(--font);
+  animation: scroll 60s linear infinite;
+}
+
+.header h1 {
+  font-size: 15vw;
+  font-family: "Sofia Sans", sans-serif;
+}
+
+.header .acronym {
+  font-size: 35px;
+}
+
+.section {
+  padding: 50px 5vw;
+  color: var(--font);
+}
+
+.section.blue {
+  background-color: var(--light);
+}
+.section.green {
+  background-color: var(--dark1);
+}
+*::selection {
+  background-color: var(--dark2);
+}
+
+h3 {
+  font-family: "Space Grotesk", monospace;
+  font-size: 50px;
+}
+
+p,
+li,
+img {
+  margin-top: 30px;
+  font-size: 25px;
+
+}
+
+u {
+  cursor: pointer;
+}
+
+kbd {
+  font-family: "Space Grotesk", monospace;
+  background-color: var(--dark2);
+  color: var(--white);
+  white-space: nowrap;
+  font-size: 90%;
+  border-radius: 10px;
+  padding: 3px;
+  vertical-align: middle;
+}
+kbd::selection{
+  background-color: var(--light);
+}
+
+hr {
+  width: 500px;
+  max-width: 100%;
+  border: 3px solid var(--white);
+  margin: 40px 0px;
+}
+
+img {
+  width: 500px;
+  max-width: 100%;
+  border: 3px solid var(--white);
+  vertical-align: top;
+}
+
+spc {
+  margin-right: 10px;
+}
+
+a,
+button {
+  background-color: var(--white);
+  color: black;
+  border: none;
+  font-size: 90%;
+  text-decoration: none;
+  white-space: nowrap;
+  border-radius: 10px;
+  font-family: "Sofia Sans", sans-serif;
+  padding: 5px 10px;
+  max-width: 100%;
+  transition: filter 250ms;
+}
+
+a:hover,
+button:hover {
+  filter: brightness(80%);
+}
+
+ul {
+  list-style-position: inside;
+}
+
+.note {
+  padding-left: 50px;
+  margin: 20px 0px;
+  border-left: 3px solid var(--light);
+}

@@ -16,10 +16,10 @@ unblock_devmode() {
 	echo "Unblocking devmode..."
 	vpd -i RW_VPD -s block_devmode=0
 	crossystem block_devmode=0
+	local res
 	res=$(cryptohome --action=get_firmware_management_parameters 2>&1)
-	if [ $? -eq 0 ] && [[ ! $(echo $res | grep "Unknown action") ]]; then
+	if [ $? -eq 0 ] && ! echo "$res" | grep -q "Unknown action"; then
 		tpm_manager_client take_ownership
-		# sleeps no longer needed
 		cryptohome --action=remove_firmware_management_parameters
 	fi
 	echo "Done"
@@ -46,7 +46,8 @@ get_largest_nvme_namespace() {
 
 	for nvme in /sys/block/"${dev%n*}"*; do
 		tmp_size=$(cat "${nvme}"/size)
-		if [ "${tmp_size}" -gt "${size}" ]; then
+		remo=$(cat "${nvme}"/removable)
+		if [ "${tmp_size}" -gt "${size}" ] && [ "${remo:-0}" -eq 0 ]; then
 			largest="${nvme##*/}"
 			size="${tmp_size}"
 		fi
@@ -55,14 +56,13 @@ get_largest_nvme_namespace() {
 }
 
 disable_verity() {
-	DST=$(get_largest_nvme_namespace)
 	echo "READ THIS!!!!!! DON'T BE STUPID"
 	echo "This script will disable rootfs verification. What does this mean? You'll be able to edit any file on the chromebook, useful for development, messing around, etc"
 	echo "IF YOU DO THIS AND GO BACK INTO VERIFIED MODE (press the space key when it asks you to on the boot screen) YOUR CHROMEBOOK WILL STOP WORKING AND YOU WILL HAVE TO RECOVER"
 	sleep 4
 	read -p "Do you still want to do this? [Y/N]" confirm
 	case "$confirm" in
-	Y | y) /usr/share/vboot/bin/make_dev_ssd.sh -i "$DST" --remove_rootfs_verification ;;
+	Y | y) /usr/share/vboot/bin/make_dev_ssd.sh -i "/dev/$(get_largest_nvme_namespace)" --remove_rootfs_verification ;;
 	*) return ;;
 	esac
 }

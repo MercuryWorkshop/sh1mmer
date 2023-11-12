@@ -1,8 +1,12 @@
-#!/bin/sh
+#!/usr/bin/env bash
+SCRIPT_DIR=$(dirname "$0")
+SCRIPT_DIR=${SCRIPT_DIR:-"."}
+. "$SCRIPT_DIR/lib/wax_common.sh"
+
 set -e
 if [ "$EUID" -ne 0 ]; then
-    echo "Please run as root"
-    exit
+	echo "Please run as root"
+	exit 1
 fi
 
 echo "-------------------------------------------------------------------------------------------------------------"
@@ -29,7 +33,7 @@ loop=$(losetup -f)
 losetup -P ${loop} ${bin}
 
 echo "Making ROOT mountable"
-sh lib/ssd_util.sh --no_resign_kernel --remove_rootfs_verification -i ${loop}
+enable_rw_mount "${loop}p3"
 
 echo "Creating Mountpoint"
 mkdir mnt || :
