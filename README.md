@@ -14,7 +14,9 @@
 <hr>
 
 ### Wax4Web status
-Wax4Web has been taken down from Google's request. You must build using the `wax/wax.sh` or whichever your OS uses.
+Wax4Web has been taken down from Google's request. You must build it via wax, this can be different depending on your board and OS, Linux is recommended.<br>
+([Beautiful World "Full" Shim](#building-a-beautiful-world-shim) for Linux)<br>
+([Legacy Shim](#building-a-legacy-shim) for Linux but legacy shims)<br>
 
 ### The Fog....
 
