@@ -7,6 +7,7 @@ echo 'git clone -n https://chromium.googlesource.com/chromiumos/platform/vboot_r
 echo 'cd vboot_reference'
 echo 'git checkout 3401d16c98c514cc2f81f585d2ebd72f57d82e41'
 echo 'make cgpt STATIC=1 USE_FLASHROM=0'
+echo 'strip -s build/cgpt/cgpt'
 echo '---'
 echo 'built binary at vboot_reference/build/cgpt/cgpt'
 printf '\a'
