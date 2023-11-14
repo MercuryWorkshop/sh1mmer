@@ -3,7 +3,7 @@
 set -e
 
 fail() {
-	echo -e "$@" >&2
+	printf "%s\n" "$*" >&2
 	exit 1
 }
 

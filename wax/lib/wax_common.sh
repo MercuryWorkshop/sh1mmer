@@ -2,7 +2,7 @@
 # wax common file, this should be sourced
 
 fail() {
-	echo -e "$@" >&2
+	printf "%s\n" "$*" >&2
 	exit 1
 }
 

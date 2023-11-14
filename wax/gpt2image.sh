@@ -5,7 +5,7 @@ set -e
 BLOCK_SIZE=$((4 * 1024 * 1024)) # 4 MiB
 
 fail() {
-	echo -e "$@" >&2
+	printf "%s\n" "$*" >&2
 	exit 1
 }
 
