@@ -34,9 +34,9 @@ then you can ignore this and follow the normal instructions. If not, unenrollmen
 ### The Tsunami
 
 Disabling write protection has also been patched by Google:tm:.
-If your Chromebook has never updated to 114 (or newer) before (check in `chrome://version`),
-then you can ignore this and proceed with disabling write protection to continue using SH1MMER.
-If not, unenrolling through disabling write protection will not work as normal.
+If your Chromebook has never updated to version 114 (or newer) before (check in `chrome://version`),
+then you can ignore this and follow the [Unpatch](https://sh1mmer.me/#fog:~:text=v111) instructions. If not, disabling 
+write protection will not work as normal.
 
 <details>
     <summary>Tsunami Bypass Details</b></summary>
@@ -74,12 +74,12 @@ and see what board it corresponds to. **DO NOT DOWNLOAD A RECOVERY IMAGE FROM [c
 If your board name is in the list below, great! Find the RAW RMA shim corresponding to your board online.
 We can no longer provide raw RMA shims due to legal reasons. **[More information](https://discord.gg/egWXwEDWKP)**
 
-- (**B**) brask, brya
+- (**A-B**) ambassador, brask, brya
 - (**C**) clapper, coral, corsola
 - (**D-E**) dedede, enguarde
 - (**G**) glimmer, grunt
 - (**H**) hana, hatch
-- (**J-N**) jacuzzi, kukui, nami
+- (**J-N**) jacuzzi, kukui, lulu, nami
 - (**O**) octopus, orco
 - (**P-R**) pyro, reks
 - (**S**) sentry, stout, strongbad
