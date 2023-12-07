@@ -50,7 +50,7 @@ cp -rv payloads/mrchromebox-supporting mnt/usr/local/payloads/
 cp -v payloads/mrchromebox.sh mnt/usr/local/payloads/
 cp -v payloads/stopupdates.sh mnt/usr/local/payloads/
 cp -v payloads/troll.sh mnt/usr/local/payloads/
-cp -v factory_install.sh mnt/usr/sbin/
+cp -v sh1mmer-scripts/factory_install.sh mnt/usr/sbin/
 
 sync # this sync should hopefully stop make_dev_ssd from messing up, as it does raw byte manip stuff
 sleep 4
