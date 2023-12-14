@@ -39,31 +39,56 @@ reset_gbb_flags() {
 	echo "Done"
 }
 
-get_largest_nvme_namespace() {
-	local largest size tmp_size dev
+get_largest_blockdev() {
+	local largest size dev_name tmp_size remo
 	size=0
-	dev=$(basename "$1")
-
-	for nvme in /sys/block/"${dev%n*}"*; do
-		tmp_size=$(cat "${nvme}"/size)
-		remo=$(cat "${nvme}"/removable)
-		if [ "${tmp_size}" -gt "${size}" ] && [ "${remo:-0}" -eq 0 ]; then
-			largest="${nvme##*/}"
-			size="${tmp_size}"
+	for blockdev in /sys/block/*; do
+		dev_name="${blockdev##*/}"
+		echo "$dev_name" | grep -q '^\(loop\|ram\)' && continue
+		tmp_size=$(cat "$blockdev"/size)
+		remo=$(cat "$blockdev"/removable)
+		if [ "$tmp_size" -gt "$size" ] && [ "${remo:-0}" -eq 0 ]; then
+			largest="/dev/$dev_name"
+			size="$tmp_size"
 		fi
 	done
-	echo "${largest}"
+	echo "$largest"
+}
+
+get_largest_cros_blockdev() {
+	local largest size dev_name tmp_size remo
+	size=0
+	for blockdev in /sys/block/*; do
+		dev_name="${blockdev##*/}"
+		echo "$dev_name" | grep -q '^\(loop\|ram\)' && continue
+		tmp_size=$(cat "$blockdev"/size)
+		remo=$(cat "$blockdev"/removable)
+		if [ "$tmp_size" -gt "$size" ] && [ "${remo:-0}" -eq 0 ]; then
+			case "$(sfdisk -l -o name "/dev/$dev_name" 2>/dev/null)" in
+				*STATE*KERN-A*ROOT-A*KERN-B*ROOT-B*)
+					largest="/dev/$dev_name"
+					size="$tmp_size"
+					;;
+			esac
+		fi
+	done
+	echo "$largest"
 }
 
 disable_verity() {
+	local cros_dev="$(get_largest_cros_blockdev)"
+	if [ -z "$cros_dev" ]; then
+		echo "No CrOS SSD found on device!"
+		return
+	fi
 	echo "READ THIS!!!!!! DON'T BE STUPID"
 	echo "This script will disable rootfs verification. What does this mean? You'll be able to edit any file on the chromebook, useful for development, messing around, etc"
 	echo "IF YOU DO THIS AND GO BACK INTO VERIFIED MODE (press the space key when it asks you to on the boot screen) YOUR CHROMEBOOK WILL STOP WORKING AND YOU WILL HAVE TO RECOVER"
 	sleep 4
-	read -p "Do you still want to do this? [Y/N]" confirm
+	read -p "Do you still want to do this? (y/N) " confirm
 	case "$confirm" in
-	Y | y) /usr/share/vboot/bin/make_dev_ssd.sh -i "/dev/$(get_largest_nvme_namespace)" --remove_rootfs_verification ;;
-	*) return ;;
+		[yY]) /usr/share/vboot/bin/make_dev_ssd.sh -i "$cros_dev" --remove_rootfs_verification ;;
+		*) return ;;
 	esac
 }
 
