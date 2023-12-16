@@ -13,6 +13,11 @@
 </div>
 <hr>
 
+### Wax4Web status
+Wax4Web has been taken down from Google's request. You must build it via wax, this can be different depending on your board and OS, Linux is recommended.<br>
+([Beautiful World "Full" Shim](#building-a-beautiful-world-shim) for Linux)<br>
+([Legacy Shim](#building-a-legacy-shim) for Linux but legacy shims)<br>
+
 ### The Fog....
 
 Downgrading and unenrollment has been patched by Google:tm:.
@@ -64,7 +69,7 @@ We can edit the other partitions to our will as long as we remove the forced rea
 
 ## How do I use it?
 
-The prebuilt binaries have been taken off of the official mirror ([dl.sh1mmer.me](https://dl.sh1mmer.me)), so you'll have to build it from source.
+The prebuilt binaries have been taken off of the official mirror ([dl.sh1mmer.me](https://dl.sh1mmer.me)), so you'll have to build it from source. 
 
 Here's how you do that.
 First, you need to know your Chromebook's board. Go to `chrome://version` on your Chromebook and copy the word after `stable-channel`.
