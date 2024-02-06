@@ -1,0 +1,37 @@
+#!/bootstrap/busybox sh
+
+set -eE
+
+STATEFUL_MNT="$1"
+
+fail() {
+	printf "%b\nAborting.\n" "$*" >&2
+	cleanup || :
+	tail -f /dev/null
+	exit 1
+}
+
+cleanup() {
+	umount "$STATEFUL_MNT" || :
+}
+
+trap 'fail "An unhandled error occured."' ERR
+
+ARCHITECTURE="$(uname -m)"
+case "$ARCHITECTURE" in
+	*x86_64* | *x86-64*) ARCHITECTURE=x86_64 ;;
+	*aarch64* | *armv8*) ARCHITECTURE=aarch64 ;;
+	*) fail "Unsupported architecture $ARCHITECTURE" ;;
+esac
+
+rm -rf /bin || :
+mkdir -p /bin
+[ -d "$STATEFUL_MNT/bootstrap/noarch" ] && cp -R "$STATEFUL_MNT/bootstrap/noarch/"* /bin
+[ -d "$STATEFUL_MNT/bootstrap/$ARCHITECTURE" ] && cp -R "$STATEFUL_MNT/bootstrap/$ARCHITECTURE/"* /bin
+export PATH=/bin
+busybox --install /bin
+
+exec /bin/init_sh1mmer.sh "$@" "$ARCHITECTURE" || :
+
+# should never reach here
+fail "Failed to exec secondary init script."

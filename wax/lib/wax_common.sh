@@ -2,7 +2,7 @@
 # wax common file, this should be sourced
 
 fail() {
-	printf "%s\n" "$*" >&2
+	printf "%b\n" "$*" >&2
 	exit 1
 }
 
@@ -14,16 +14,6 @@ check_deps() {
 	done
 }
 
-SCRIPT_DIR=$(dirname "$0")
-SCRIPT_DIR=${SCRIPT_DIR:-"."}
-
-# todo: remove this, move load_shflags, enable_rw_mount, disable_rw_mount here
-. "$SCRIPT_DIR/lib/common_minimal.sh"
-
-SFDISK="${SCRIPT_DIR}/lib/sfdisk"
-CGPT="${SCRIPT_DIR}/lib/cgpt"
-chmod +x "$SFDISK" "$CGPT"
-
 log_debug() {
 	echo -e "\x1B[33mDebug: $*\x1b[39;49m" >&2
 }
@@ -31,6 +21,114 @@ log_debug() {
 log_info() {
 	echo -e "\x1B[32mInfo: $*\x1b[39;49m"
 }
+
+SCRIPT_DIR=$(dirname "$0")
+SCRIPT_DIR=${SCRIPT_DIR:-"."}
+
+load_shflags() {
+	if [ -f "${SCRIPT_DIR}/lib/shflags" ]; then
+		. "${SCRIPT_DIR}/lib/shflags"
+	elif [ -f "${SCRIPT_DIR}/shflags" ]; then
+		. "${SCRIPT_DIR}/shflags"
+	else
+		echo "ERROR: Cannot find the required shflags library."
+		return 1
+	fi
+}
+
+is_ext2() {
+	local rootfs="$1"
+	local offset="${2-0}"
+
+	local sb_magic_offset=$((0x438))
+	local sb_value=$(dd if="$rootfs" skip=$((offset + sb_magic_offset)) \
+		count=2 bs=1 2>/dev/null)
+	local expected_sb_value=$(printf '\123\357')
+	if [ "$sb_value" = "$expected_sb_value" ]; then
+		return 0
+	fi
+	return 1
+}
+
+enable_rw_mount() {
+	local rootfs="$1"
+	local offset="${2-0}"
+
+	if ! is_ext2 "$rootfs" $offset; then
+		echo "enable_rw_mount called on non-ext2 filesystem: $rootfs $offset" 1>&2
+		return 1
+	fi
+
+	local ro_compat_offset=$((0x464 + 3))
+	printf '\000' |
+		dd of="$rootfs" seek=$((offset + ro_compat_offset)) \
+			conv=notrunc count=1 bs=1 2>/dev/null
+}
+
+disable_rw_mount() {
+	local rootfs="$1"
+	local offset="${2-0}"
+
+	if ! is_ext2 "$rootfs" $offset; then
+		echo "disable_rw_mount called on non-ext2 filesystem: $rootfs $offset" 1>&2
+		return 1
+	fi
+
+	local ro_compat_offset=$((0x464 + 3))
+	printf '\377' |
+		dd of="$rootfs" seek=$((offset + ro_compat_offset)) \
+			conv=notrunc count=1 bs=1 2>/dev/null
+}
+
+rw_mount_disabled() {
+	local rootfs="$1"
+	local offset="${2-0}"
+
+	if ! is_ext2 "$rootfs" $offset; then
+		return 2
+	fi
+
+	local ro_compat_offset=$((0x464 + 3))
+	local ro_value=$(dd if="$rootfs" skip=$((offset + ro_compat_offset)) \
+		count=1 bs=1 2>/dev/null)
+	local expected_ro_value=$(printf '\377')
+	if [ "$ro_value" = "$expected_ro_value" ]; then
+		return 0
+	fi
+	return 1
+}
+
+check_semver_ge() {
+	local major="$(echo "$1" | cut -d. -f1)"
+	local minor="$(echo "$1" | cut -d. -f2)"
+	local patch="$(echo "$1" | cut -d. -f3)"
+	[ "$major" -lt "$2" ] && return 1
+	[ "$major" -gt "$2" ] && return 0
+	[ "$minor" -lt "$3" ] && return 1
+	[ "$minor" -gt "$3" ] && return 0
+	[ "${patch:-0}" -lt "$4" ] && return 1
+	return 0
+}
+
+ARCHITECTURE="$(uname -m)"
+case "$ARCHITECTURE" in
+	*x86_64* | *x86-64*) ARCHITECTURE=x86_64 ;;
+	*aarch64* | *armv8*) ARCHITECTURE=aarch64 ;;
+	*) fail "Unsupported architecture $ARCHITECTURE" ;;
+esac
+
+if command -v sfdisk &>/dev/null && check_semver_ge "$(sfdisk --version | awk '{print $NF}')" 2 38 0; then
+	log_debug "using machine's sfdisk"
+	SFDISK=sfdisk
+else
+	log_debug "using bundled sfdisk"
+	SFDISK="${SCRIPT_DIR}/lib/sfdisk.$ARCHITECTURE"
+	chmod +x "$SFDISK"
+fi
+
+# no way to check cgpt version, so we always use the bundled build
+CGPT="${SCRIPT_DIR}/lib/cgpt.$ARCHITECTURE"
+chmod +x "$CGPT"
 
 format_bytes() {
 	numfmt --to=iec-i --suffix=B "$@"
@@ -49,6 +147,10 @@ safesync() {
 	sleep 0.2
 }
 
+get_sector_size() {
+	"$SFDISK" -l "$1" | grep "Sector size" | awk '{print $4}'
+}
+
 get_final_sector() {
 	"$SFDISK" -l -o end "$1" | grep "^\s*[0-9]" | awk '{print $1}' | sort -nr | head -n 1
 }
@@ -59,9 +161,9 @@ get_parts() {
 
 get_parts_physical_order() {
 	local part_table=$("$CGPT" show -q "$1")
-	local physical_parts=$(awk '{print $1}' <<<"${part_table}" | sort -n)
+	local physical_parts=$(awk '{print $1}' <<<"$part_table" | sort -n)
 	for part in $physical_parts; do
-		grep "^\s*${part}\s" <<<"${part_table}" | awk '{print $3}'
+		grep "^\s*${part}\s" <<<"$part_table" | awk '{print $3}'
 	done
 }
 

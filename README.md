@@ -129,7 +129,7 @@ Note that the legacy shim **will work on all boards**. The legacy version of wax
 ```
 git clone https://github.com/MercuryWorkshop/sh1mmer
 cd sh1mmer/wax
-sudo bash wax_legacy.sh path/to/the/shim/you/downloaded.bin
+sudo bash wax_legacy.sh -i path/to/the/shim/you/downloaded.bin
 ```
 
 After injecting, you may continue to the "[Booting Into A Shim](#booting-into-a-shim)" section.

@@ -24,19 +24,21 @@ missing_deps=$(check_deps sfdisk sgdisk tar)
 sfdisk -l "$1" 2>/dev/null | grep -q "Disklabel type: gpt" || fail "$1 is not GPT, or is corrupted"
 
 sector_size=$(sfdisk -l "$1" 2>/dev/null | grep "Sector size" | awk '{print $4}')
-table=$(sfdisk -l -o start,sectors,name,device "$1" 2>/dev/null | grep "^\s*[0-9]")
+table=$(sfdisk -d "$1" 2>/dev/null | grep "^$1")
 
 out=$(mktemp -d)
-[ ! -z "$SUDO_USER" ] && USER="$SUDO_USER"
+[ -z "$SUDO_USER" ] || USER="$SUDO_USER"
 
 for part in $(echo "$table" | awk '{print $1}'); do
-	entry=$(echo "$table" | grep "^\s*${part}\s")
-	sectors=$(echo "$entry" | awk '{print $2}')
-	name=$(echo "$entry" | awk '{print $3}')
-	if echo "$name" | grep -q "^KERN-" && [ "$sectors" -gt 1 ]; then
-		start=$(echo "$entry" | awk '{print $1}')
-		partnum=$(echo "$entry" | grep -o "[0-9]*$")
-		filename="${out}/${partnum}.${name}.bin"
+	entry=$(echo "$table" | grep "^${part}\s")
+	sectors=$(echo "$entry" | grep -o "size=[^,]*" | awk -F '[ =]' '{print $NF}')
+	type=$(echo "$entry" | grep -o "type=[^,]*" | awk -F '[ =]' '{print $NF}' | tr '[:lower:]' '[:upper:]')
+	if [ "$type" = "FE3A2A5D-4F32-41A7-B725-ACCC3285A309" ] && [ "$sectors" -gt 1 ]; then
+		start=$(echo "$entry" | grep -o "start=[^,]*" | awk -F '[ =]' '{print $NF}')
+		partnum=$(echo "$entry" | awk '{print $1}' | grep -o "[0-9]*$")
+		name=$(echo "$entry" | grep -o "name=[^,]*" | awk -F '"' '{print $2}')
+		[ -z "$name" ] || name+=.
+		filename="${out}/${partnum}.${name}bin"
 		touch "$filename"
 		chown "$USER:$USER" "$filename"
 		dd if="$1" of="$filename" bs="$sector_size" skip="$start" count="$sectors" status=progress

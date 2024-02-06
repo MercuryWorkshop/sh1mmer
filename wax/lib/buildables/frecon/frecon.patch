@@ -1,0 +1,47 @@
+diff --git a/Makefile b/Makefile
+index 3fef7e9..b5a5d16 100644
+--- a/Makefile
++++ b/Makefile
+@@ -4,9 +4,9 @@
+ 
+ include common.mk
+ 
+-FRECON_LITE ?= 0
++FRECON_LITE ?= 1
+ 
+-PC_DEPS = libdrm libpng libtsm
++PC_DEPS = libdrm libpng libtsm zlib
+ ifeq ($(FRECON_LITE),1)
+ FRECON_OBJECTS = $(filter-out %_full.o,$(C_OBJECTS))
+ CPPFLAGS += -DFRECON_LITE=1
+@@ -25,7 +25,7 @@ CPPFLAGS += -std=c99 -D_GNU_SOURCE=1
+ CFLAGS += -Wall -Wsign-compare -Wpointer-arith -Wcast-qual -Wcast-align
+ 
+ CPPFLAGS += $(PC_CFLAGS) -I$(OUT)
+-LDLIBS += $(PC_LIBS)
++LDLIBS += $(PC_LIBS) -static -lm
+ 
+ $(OUT)glyphs.h: $(SRC)/font_to_c.py $(SRC)/ter-u16n.bdf
+ 	$(SRC)/font_to_c $(SRC)/ter-u16n.bdf $(OUT)glyphs.h
+diff --git a/common.mk b/common.mk
+index 0f4458e..ae62d8a 100644
+--- a/common.mk
++++ b/common.mk
+@@ -95,7 +95,7 @@
+ 
+ # Behavior configuration variables
+ SPLITDEBUG ?= 0
+-NOSTRIP ?= 1
++NOSTRIP ?= 0
+ VALGRIND ?= 0
+ COLOR ?= 1
+ VERBOSE ?= 0
+@@ -311,7 +311,7 @@ endif
+ # The same goes for CFLAGS.
+ COMMON_CFLAGS-gcc := -fvisibility=internal -ggdb3 -Wa,--noexecstack
+ COMMON_CFLAGS-clang := -fvisibility=hidden -ggdb
+-COMMON_CFLAGS := -Wall -Werror -fno-strict-aliasing $(SSP_CFLAGS) -O1 -Wformat=2
++COMMON_CFLAGS := -Wall -fno-strict-aliasing $(SSP_CFLAGS) -O2 -Wformat=2
+ CXXFLAGS += $(COMMON_CFLAGS) $(COMMON_CFLAGS-$(CXXDRIVER))
+ CFLAGS += $(COMMON_CFLAGS) $(COMMON_CFLAGS-$(CDRIVER))
+ CPPFLAGS += -U_FORTIFY_SOURCE -D_FORTIFY_SOURCE=3

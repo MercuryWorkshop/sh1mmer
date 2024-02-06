@@ -1,0 +1,47 @@
+diff --git a/Makefile b/Makefile
+index 164e69e..dfea5ad 100644
+--- a/Makefile
++++ b/Makefile
+@@ -1,6 +1,10 @@
+ include config.mk
+ 
+-PROGNAME = tetris$(EXE)
++PROGNAME = vitetris$(EXE)
++
++CROSS ?=
++CC=$(CROSS)gcc
++STRIP=$(CROSS)strip
+ 
+ # Uncomment to change the default.  (Only used in Unix-like systems.)
+ #HISCORE_FILENAME = /var/games/vitetris-hiscores
+@@ -18,7 +22,7 @@ build: src/src-conf.mk
+ 	cd src; $(MAKE) tetris
+ 	mv -f src/tetris$(EXE) $(PROGNAME)
+ 	@echo stripping symbols to reduce program size:
+-	-strip --strip-all $(PROGNAME)
++	$(STRIP) --strip-all $(PROGNAME)
+ 
+ gameserver: src/netw/gameserver.c
+ 	cd src/netw; $(MAKE) gameserver
+@@ -90,7 +94,7 @@ uninstall:
+ 	-rmdir "$(desktopdir)"
+ 	-rm -f $(datadir)/pc8x16.fnt
+ 	-rmdir $(datadir)
+-clean:
++clean: src/src-conf.mk
+ 	rm -f systest systest.exe
+ 	cd src; $(MAKE) clean
+ 
+diff --git a/config.mk b/config.mk
+index 489070b..b40819d 100644
+--- a/config.mk
++++ b/config.mk
+@@ -28,7 +28,7 @@ INPUT_SYS = unixterm
+ #ALLEGRO = y
+ #XLIB = y
+ #XLIB_INC =
+-LDFLAGS =
++LDFLAGS = -static
+ LDLIBS  = $(LIBS)
+ 
+ # DOS millisecond granularity

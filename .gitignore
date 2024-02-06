@@ -6,3 +6,15 @@ __pycache__
 ./log
 movie_payload.tar
 shimbin
+wax/test.sh
+busybox-1.36.1.tar.bz2
+busybox-1.36.1
+wax/lib/buildables/frecon/frecon-repo
+wax/lib/buildables/pv/pv-repo
+wax/lib/buildables/vitetris/vitetris-repo
+wax/lib/buildables/cryptsetup/cryptsetup-repo
+wax/lib/buildables/cryptsetup/lvm2
+wax/lib/buildables/cryptsetup/libdevmapper
+wax/lib/buildables/openssl/openssl-repo
+wax/lib/buildables/cgpt/vboot_reference
+wax/lib/buildables/sfdisk/util-linux

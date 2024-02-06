@@ -1,0 +1,40 @@
+#!/bootstrap/busybox sh
+
+STATEFUL_MNT=/stateful_init
+
+fail() {
+	printf "%b\nAborting.\n" "$*" >&2
+	cleanup || :
+	tail -f /dev/null
+	exit 1
+}
+
+cleanup() {
+	umount "$STATEFUL_MNT" || :
+}
+
+trap 'fail "An unhandled error occured."' ERR
+
+# ensure stdin works
+exec </proc/self/fd/1
+
+LSB_FACTORY=/mnt/stateful_partition/dev_image/etc/lsb-factory
+export PATH=/bootstrap
+busybox --install /bootstrap
+
+[ -f "$LSB_FACTORY" ] || fail "Could not find lsb-factory file."
+. "$LSB_FACTORY"
+STATEFUL_DEV="$(echo "$REAL_USB_DEV" | sed 's/[0-9]*$//')"1
+[ -b "$STATEFUL_DEV" ] || fail "Could not determine stateful partition of USB device."
+
+mkdir -p "$STATEFUL_MNT"
+mount "$STATEFUL_DEV" "$STATEFUL_MNT" || fail "Failed to mount $STATEFUL_DEV"
+
+rm -rf /init || :
+# cp complains if I dont pass a whole variable
+INIT_SRC="$STATEFUL_MNT"/init
+cp "$INIT_SRC" /init
+exec /init "$STATEFUL_MNT" "$STATEFUL_DEV" "$REAL_USB_DEV" || :
+
+# should never reach here
+fail "Failed to exec init script."
