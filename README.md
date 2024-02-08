@@ -91,12 +91,15 @@ If it's not, good luck. You'll have to try and call up your OEM and demand the f
 
 ### Building A Beautiful World Shim
 
-**IMPORTANT!!!!** IF YOU HAVE EITHER THE `coral` OR `hana` BOARDS, OR SOME OTHER OLDER BOARDS (which?),
-DO NOT FOLLOW THESE INSTRUCTIONS, INSTEAD SKIP TO THE "[Building A Legacy Shim](#building-a-legacy-shim)" SECTION
+> [!IMPORTANT]
+> IF YOU HAVE EITHER THE `coral` OR `hana` BOARDS, OR SOME OTHER OLDER BOARDS (which?),
+> DO NOT FOLLOW THESE INSTRUCTIONS, INSTEAD SKIP TO THE "[Building A Legacy Shim](#building-a-legacy-shim)" SECTION
 
 Now we can start building. Type out all of these commands in the terminal. You need to be on Linux or WSL2 and have the following packages installed: `git`, `wget`.
 Note that WSL doesn't work for some people, and if you have trouble building it it's recommended to just use a VM or the [web builder](https://sh1mmer.me/builder.html).
-**THE WEB BUILDER DOES NOT INCLUDE PAYLOADS!! YOU MUST BUILD IT MANUALLY FROM SOURCE FOR PAYLOADS**
+
+> [!IMPORTANT]
+> **THE WEB BUILDER DOES NOT INCLUDE PAYLOADS!! YOU MUST BUILD IT MANUALLY FROM SOURCE FOR PAYLOADS**
 
 ```
 git clone https://github.com/MercuryWorkshop/sh1mmer
@@ -108,10 +111,11 @@ sudo bash wax.sh path/to/the/shim/you/downloaded.bin
 When this finishes, the bin file in the path you provided will have been converted into a **SH1MMER** image.
 Note that this is a destructive operation, you will need to redownload a fresh shim to try again if it fails.
 
-> *If you want to build a devshim, replace `chromebrew.tar.gz` with `chromebrew-dev.tar.gz` and add `--dev` to the end of `sudo sh wax.sh /path/to/the/shim/you/downloaded.bin`
+> [!NOTE]
+> If you want to build a devshim, replace `chromebrew.tar.gz` with `chromebrew-dev.tar.gz` and add `--dev` to the end of `sudo sh wax.sh /path/to/the/shim/you/downloaded.bin`
 Devshim builds will mount a much larger Chromebrew partition over `/usr/local`,
 allowing you to access a desktop environment and even FireFox from within SH1MMER.
-It's what allowed us to [run doom on a shim](https://blog.coolelectronics.me/_astro/doom.82b5613a_Z1LR94C.webp).*
+It's what allowed us to [run doom on a shim](https://blog.coolelectronics.me/_astro/doom.82b5613a_Z1LR94C.webp).
 
 After injecting, you may continue to the "[Booting Into A Shim](#booting-into-a-shim)" section.
 
