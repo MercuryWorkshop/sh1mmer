@@ -1,0 +1,194 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Unpatch | SH1MMER.me</title>
+    <link rel="icon" href="assets/icon.png" />
+    <link rel="stylesheet" href="assets/main.css" />
+    <script src="assets/script.js" defer></script>
+    <base target="_blank" />
+
+    <link rel="preload" href="assets/main.css" as="style">
+    <link rel="preload" href="assets/unpatch_battery.webp" as="image" />
+    <link rel="preload" href="assets/unpatch_battery_connector.webp" as="image" />
+    <link rel="preload" href="assets/unpatch_jumper.webp" as="image" />
+    <link rel="preload" href="assets/unpatch_jumper_pins.webp" as="image" />
+    <link rel="preload" href="assets/unpatch_bash_results.webp" as="image" />
+    <link rel="preload" href="assets/unpatch_shell.webp" as="image" />
+    <link rel="preload" href="assets/unpatch_shell_results.webp" as="image" />
+    
+    <link rel="icon" href="assets/icon.png" />
+    <link rel="stylesheet" href="assets/main.css" />
+    <script is:inline>
+      var messages = {
+        chromebook:
+          "The Chromebook needs to be on ChromeOS v113 or lower in order to disable WP while enrolled. If you're on v114 or later, you'll need to do the 'Pencil Method' on coolelectronics's blog in order to disable WP.",
+        screw:
+          "The most common screw types on Chromebooks are: Phillips #0, #000, #1, etc.",
+        usb: 
+          "You'll only need a USB drive so then you can boot into SH1MMER. Make sure it's 16GB or even 8GB.",
+      };
+    </script>
+    <base target="_blank" />
+  </head>
+
+  <body>
+    <div class="header">
+      <h1>Unpatch</h1>
+      <a href="/" target="_self">Back to home</a>
+    </div>
+    <div class="section blue">
+      <h3>What is Unpatch?</h3>
+      <p>
+        Unpatch is a guide that explains how to use SH1MMER even after it has
+        been <i>completely</i> patched. It was found by a user on Discord named
+        <a href="https://discord.com/users/476169716998733834">@olyb</a>
+        and was released on April 26th, 2023.
+      </p>
+      <br />
+      <h4>
+        If this isn't working for you, use:
+        <a href="https://fog.gay">E-Halcyon</a>
+        instead.
+      </h4>
+    </div>
+    <div class="section green">
+      <h3>What you'll need</h3>
+      <li>
+        <u onclick="alert(messages.chromebook); ">A Chromebook</u>; it has to be
+        on v113 or lower.
+      </li>
+      <li>
+        <u onclick="alert(messages.screw); ">A screwdriver</u>; this is needed
+        to open up the Chromebook.
+      </li>
+      <li>
+        <u onclick="alert(messages.usb); ">A USB</u>; you need this to boot into
+        SH1MMER.
+      </li>
+      <hr />
+      <h3>Disabling WP</h3>
+      <p>
+        First, you'll need to unplug everything in the Chromebook, such as the
+        charger, any USB devices, etc.
+      </p>
+      <p>
+        Take your <u onclick="alert(messages.screw);">screwdriver</u> and open
+        the back panel of your Chromebook.
+      </p>
+      <p>
+        Find the battery cable and unplug it from the Chromebook, this should
+        disable the Write Protection on the majority of supported Chromebooks w/
+        SH1MMER.
+      </p>
+      <p>An <b>example</b> of the battery connector location is shown below:</p>
+        <img src="assets/unpatch_battery.webp" alt="Unpatch Battery" />
+        <img src="assets/unpatch_battery_connector.webp" alt="Unpatch Battery Connector" />
+      <br />
+      <i> The Chromebook shown here is the Acer Chromebook 311 (C733).</i>
+      <p>
+        Plug in the charger, and turn on the Chromebook. Yes, this will work as
+        the Chromebook will run from the power of the charger.
+      </p>
+      <p>
+        On some Chromebooks such as <kbd>DEDEDE</kbd>, you will need to jump
+        two pins to disable WP. You can easily do this by taking out the 
+        motherboard and using a paperclip to jump the two.
+      </p>
+        <i>
+          This is the case for you if WP doesn't disable after unplugging the battery.
+        </i>
+      <br />
+        <img src="assets/unpatch_jumper.webp" alt="Unpatch Jumper" />
+        <img src="assets/unpatch_jumper_pins.webp" alt="Unpatch Jumper Pins" />
+      <br />
+        <i>
+          The Chromebook shown here is the Acer Chromebook Spin 511 (R753T).
+        </i>
+      <p>
+        If the Chromebook fails to boot from the charger because it bootloops at
+        the developer mode screen, hold <kbd>Power (⏻) + Reload (↻) + ESC</kbd>
+        till you're at the recovery screen to continue to the next step.
+      </p>
+      <hr />
+      <h3>Using SH1MMER</h3>
+      <p>
+        Enable developer mode and boot into SH1MMER using your external drive
+        (USB, SD, etc) then use "Un-Enroll / Deprovision". This
+        <b>WILL ERROR</b> but we'll ignore that for now.
+      </p>
+      <i>
+        If you're using an old & legacy version, you'll need to run
+        <kbd>Disable block_devmode</kbd> alongside everything else.
+      </i>
+      <p>
+        Go into the Bash Shell by using "Open Bash". In the Bash Shell, execute
+        the following command below: <br />
+        <kbd>/usr/share/vboot/bin/set_gbb_flags.sh 0x8090</kbd>
+      </p>
+      <i> This lets you enter ChromeOS in dev mode, which is required later.</i>
+      <p>The command should report "success" at the end like this image:</p>
+      <img src="assets/unpatch_bash_results.webp" alt="Unpatch Bash Results" />
+      <br />
+      <i>
+        If it fails, you've been on <kbd>v114</kbd> or newer before and cannot
+        disable WP until you're un-enrolled, somehow.
+      </i>
+      <p>
+        After using this command, <b>DO NOT USE "Reset GBB Flags"</b>, as you'll
+        fuck things up if you do so.
+      </p>
+      <p>
+        Exit SH1MMER and turn off your Chromebook. Unplug everything including
+        the charger, reconnect the battery, and then reconnect the charger.
+      </p>
+      <hr />
+      <h3>ChromeOS Commands</h3>
+      <p>
+        Boot up your Chromebook and press <kbd>CTRL + D</kbd> to enter ChromeOS
+        in a developer mode state.
+      </p>
+      <p>
+        Once it completes and boots into ChromeOS, press
+        <kbd>CTRL + ALT + SHIFT + R</kbd> to powerwash the Chromebook.
+      </p>
+      <p>
+        After powerwashing, immediately go into the ChromeOS shell by pressing
+        <kbd>CTRL + ALT + F2 (→)</kbd>. The shell should look like the image
+        below:
+      </p>
+      <img src="assets/unpatch_shell.webp" alt="Unpatch Shell" />
+      <p>
+        Log into the user as: <kbd>root</kbd>, then run the following commands:
+        <br />
+        <kbd>tpm_manager_client take_ownership</kbd>
+        <br />
+        <kbd>cryptohome --action=remove_firmware_management_parameters</kbd>
+      </p>
+      <p>The screen should report "success" like the image below:</p>
+      <img src="assets/unpatch_shell_results.webp" alt="Unpatch Shell Results" />
+      <br />
+      <i>
+        If it fails, try downgrading to <kbd>v110</kbd> if possible. If you
+        can't, use E-Halycon instead.
+      </i>
+      <p>
+        Press <kbd>CTRL + ALT + F1 (←)</kbd> to exit out of the shell, then
+        press <kbd>CTRL + ALT + Shift + R</kbd> to powerwash the Chromebook
+        again.
+      </p>
+      <hr />
+      <h3>Aftermath</h3>
+      <p>
+        After powerwashing the Chromebook again and going through the setup, the
+        Chromebook <i>should</i> no longer re-enroll and you may use it as a
+        normal laptop.
+      </p>
+      <p>
+        You will only ever have to do this once, and this will let you use
+        SH1MMER even after it has been <b>completely patched.</b>
+      </p>
+    </div>
+  </body>
+</html>
