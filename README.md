@@ -83,7 +83,7 @@ sudo bash wax_legacy.sh -i path/to/the/shim/you/downloaded.bin
 
 > [!NOTE]
 > Building a legacy shim will work on **ALL BOARDS.** The legacy version of wax now also supports nano (shrunken) shims!
-> In other words, after the file has been converted into a legacy shim the size can be up to 90% smaller than the original shim.
+> After the file has been converted into a legacy shim the size can be up to 90% smaller than the original shim.
 
 When this finishes, the bin file in the path you provided will have been converted into a **SH1MMER** image.
 *Note that this is a destructive operation, you will need to redownload a fresh shim to try again if it fails.*
