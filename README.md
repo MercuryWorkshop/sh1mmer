@@ -72,7 +72,7 @@ If `chrome://version` is blocked, you can search up your Chromebook's model name
 and see what board it corresponds to. **DO NOT DOWNLOAD A RECOVERY IMAGE FROM [chrome100](https://chrome100.dev), IT WILL NOT WORK.**
 
 If your board name is in the list below, great! Find the RAW RMA shim corresponding to your board online.
-We can no longer provide raw RMA shims due to legal reasons. **[More information](https://discord.gg/egWXwEDWKP)**
+We can no longer provide raw RMA shims due to legal reasons. [**More information here**](https://discord.gg/egWXwEDWKP).
 
 - (**A-B**) ambassador, brask, brya
 - (**C-D**) clapper, coral, corsola, dedede
