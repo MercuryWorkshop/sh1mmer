@@ -1,60 +1,13 @@
-<div align="center">
-<h1>
-    SH1MMER
-</h1>
-    
-<h3>
-    Shady Hardware 1nstrument Makes Machine Enrollment Retreat
-</h3>
+![AnuraOS but SH1MMER](https://github.com/NotDarkn/sh1mmer/assets/73033672/0dc0b34c-6850-4618-bf13-b38d1c6b74ec)
 
-<i>
-    Website, source tree, and write-up for a ChromeOS™️ enrollment jailbreak
-</i>
-</div>
-<hr>
-
-### The Fog....
-
-Downgrading and unenrollment has been patched by Google™️.
-If your Chromebook has never updated to version 112 (or newer) before (check in `chrome://version`),
-then you can ignore this and follow the normal instructions. If not, unenrollment will not work as normal.
-
-<details>
-    <summary>Fog Bypass Details</b></summary>
-
-If your Chromebook is on version 112 or 113, unenrollment is still possible if you're willing to [disable hardware write protection]("https://mrchromebox.tech/#devices).
-On most devices, this will require you to take off the back of the Chromebook and unplug the battery, or jump two pins.
-Further instructions are on [the website](https://sh1mmer.me/#fog).
-
-#### "Unenrollment" Without Disabling Hardware Write Protection
-
-If you aren't willing to take apart your Chromebook to unenroll, you can use an affiliated project,
-[E-Halcyon](https://fog.gay) to boot into an unenrolled environment temporarily.
-This will bypass both issues of The Fog and The Tsunami, however further caveats are listed on the website.
-
-</details>
-
-### The Tsunami
-
-Disabling write protection has also been patched by Google™️.
-If your Chromebook has never updated to version 114 (or newer) before (check in `chrome://version`),
-then you can ignore this and follow the [Unpatch](https://sh1mmer.me/#fog:~:text=v111) instructions. If not, disabling 
-write protection will not work as normal.
-
-<details>
-    <summary>Tsunami Bypass Details</b></summary>
-
-If your Chromebook is on version 114 or newer,
-unenrollment is still possible by [bridging two pins on the firmware chip](https://blog.osu.bio/blog/the-tsunami#bypassing-instructions).
-On most devices, this will require you to take off the back of the Chromebook and then use a piece of tinfoil, wire, or other conductive material to bridge the two pins.
-Instructions are not listed and this solution is **not recommended** as you risk permanently bricking the Chromebook.
-
-</details>
+### Shady Hardware 1nstrument Makes Machine Enrollment Retreat
+_Website, source tree, and write-up for a ChromeOS™️ enrollment jailbreak_
+***
 
 ## What is SH1MMER?
 
-**SH1MMER** is an exploit found in the ChromeOS shim kernel that utilitzes modified RMA factory shims to gain code execution at recovery.  
-For more info, check out the blog post/writeup [here](https://blog.coolelectronics.me/breaking-cros-2/)
+**SH1MMER** is an exploit found in the ChromeOS shim kernel that utilitzes modified RMA factory shims to gain code execution at recovery.
+_For more info, check out the blog post/writeup [here](https://blog.coolelectronics.me/breaking-cros-2/)_
 
 #### How does it work?
 
@@ -63,6 +16,7 @@ but only the KERNEL partitions are checked for signatures by the firmware.
 We can edit the other partitions to our will as long as we remove the forced readonly bit on them.
 
 ## How do I use it?
+
 > [!NOTE]
 > [dl.sh1mmer.me](https://dl.sh1mmer.me) has been taken down, so you'll need to find a site rehosting the RMA shims alongside Chromebrew.
 
@@ -150,6 +104,46 @@ This should enable Developer Mode or turn off OS Verification.
 
 Press `ESC + Refresh (↻) + Power (⏻)` at the same time again, then plug in your USB with SH1MMER and you should be booting into the Beautiful World GUI or a CLI screen.
 From here, you can play around with the options and do what you want.
+
+***
+
+### The Fog....
+
+Downgrading and unenrollment has been patched by Google™️.
+If your Chromebook has never updated to version 112 (or newer) before (check in `chrome://version`),
+then you can ignore this and follow the normal instructions. If not, unenrollment will not work as normal.
+
+<details>
+    <summary>Fog Bypass Details</b></summary>
+
+If your Chromebook is on version 112 or 113, unenrollment is still possible if you're willing to [disable hardware write protection]("https://mrchromebox.tech/#devices).
+On most devices, this will require you to take off the back of the Chromebook and unplug the battery, or jump two pins.
+Further instructions are on [the website](https://sh1mmer.me/#fog).
+
+#### "Unenrollment" Without Disabling Hardware Write Protection
+
+If you aren't willing to take apart your Chromebook to unenroll, you can use an affiliated project,
+[E-Halcyon](https://fog.gay) to boot into an unenrolled environment temporarily.
+This will bypass both issues of The Fog and The Tsunami, however further caveats are listed on the website.
+
+</details>
+
+### The Tsunami
+
+Disabling write protection has also been patched by Google™️.
+If your Chromebook has never updated to version 114 (or newer) before (check in `chrome://version`),
+then you can ignore this and follow the [Unpatch](https://sh1mmer.me/#fog:~:text=v111) instructions. If not, disabling 
+write protection will not work as normal.
+
+<details>
+    <summary>Tsunami Bypass Details</b></summary>
+
+If your Chromebook is on version 114 or newer,
+unenrollment is still possible by [bridging two pins on the firmware chip](https://blog.osu.bio/blog/the-tsunami#bypassing-instructions).
+On most devices, this will require you to take off the back of the Chromebook and then use a piece of tinfoil, wire, or other conductive material to bridge the two pins.
+Instructions are not listed and this solution is **not recommended** as you risk permanently bricking the Chromebook.
+
+</details>
 
 ## Credits
 
