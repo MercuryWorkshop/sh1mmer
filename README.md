@@ -141,7 +141,7 @@ write protection will not work as normal.
 If your Chromebook is on version 114 or newer,
 unenrollment is still possible by [bridging two pins on the firmware chip](https://blog.osu.bio/blog/the-tsunami#bypassing-instructions).
 On most devices, this will require you to take off the back of the Chromebook and then use a piece of tinfoil, wire, or other conductive material to bridge the two pins.
-Instructions are not listed and this solution is **not recommended** as you risk permanently bricking the Chromebook.
+This bypass is **not recommended** as you risk permanently bricking the Chromebook, please use [E-Halcyon](https://fog.gay) instead.
 
 </details>
 
