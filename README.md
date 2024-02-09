@@ -73,7 +73,7 @@ After injecting, you may continue to the "[Booting Into A Shim](#booting-into-a-
 The raw shim files for boards such as `hana` or `coral` were built before graphics support was added into the tty.
 This makes it impossible for the Beautiful World GUI to work and thus a legacy CLI-only shim must be built.
 
-Type out all of these commands in the terminal. You need to be on Linux and have the following packages installed: `git`, `wget`, `gdisk`, `e2fsprogs`.
+Type out all of these commands in the terminal. You need to be on Linux and have the following packages installed: `gdisk`, `e2fsprogs`.
 
 ```
 git clone https://github.com/MercuryWorkshop/sh1mmer
