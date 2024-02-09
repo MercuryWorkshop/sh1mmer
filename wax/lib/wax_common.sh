@@ -1,8 +1,20 @@
 #!/usr/bin/env bash
-# wax common file, this should be sourced
+# wax common file, this should probably be sourced
+
+# internal variables
+COLOR_RESET="\033[0m"
+COLOR_BLACK_B="\033[1;30m"
+COLOR_RED_B="\033[1;31m"
+COLOR_GREEN="\033[0;32m"
+COLOR_GREEN_B="\033[1;32m"
+COLOR_YELLOW="\033[0;33m"
+COLOR_YELLOW_B="\033[1;33m"
+COLOR_BLUE_B="\033[1;34m"
+COLOR_MAGENTA_B="\033[1;35m"
+COLOR_CYAN_B="\033[1;36m"
 
 fail() {
-	printf "%b\n" "$*" >&2
+	printf "${COLOR_RED_B}%b${COLOR_RESET}\n" "$*" >&2 || :
 	exit 1
 }
 
@@ -15,11 +27,27 @@ check_deps() {
 }
 
 log_debug() {
-	echo -e "\x1B[33mDebug: $*\x1b[39;49m" >&2
+	[ "${FLAGS_debug:-0}" = "${FLAGS_TRUE:-1}" ] && printf "${COLOR_YELLOW}Debug: %b${COLOR_RESET}\n" "$*" >&2 || :
 }
 
 log_info() {
-	echo -e "\x1B[32mInfo: $*\x1b[39;49m"
+	printf "${COLOR_GREEN}Info: %b${COLOR_RESET}\n" "$*" || :
+}
+
+suppress() {
+	if [ "${FLAGS_debug:-0}" = "${FLAGS_TRUE:-1}" ]; then
+		"$@"
+	else
+		"$@" &>/dev/null
+	fi
+}
+
+suppress_out() {
+	if [ "${FLAGS_debug:-0}" = "${FLAGS_TRUE:-1}" ]; then
+		"$@"
+	else
+		"$@" >/dev/null
+	fi
 }
 
 SCRIPT_DIR=$(dirname "$0")
@@ -142,6 +170,14 @@ check_gpt_image() {
 	"$SFDISK" -l "$1" 2>/dev/null | grep -q "Disklabel type: gpt"
 }
 
+check_slow_fs() {
+	if uname -r | grep -qi microsoft && realpath "$1" | grep -q "^/mnt"; then
+		echo "You are attempting to run wax on a file in your windows filesystem."
+		echo "Performance would suffer, so please move your file into your linux filesystem (e.g. ~/file.bin)"
+		exit 1
+	fi
+}
+
 safesync() {
 	sync
 	sleep 0.2
@@ -168,7 +204,6 @@ get_parts_physical_order() {
 }
 
 delete_partitions_except() {
-	log_info "Deleting partitions"
 	local img="$1"
 	local to_delete=()
 	shift
@@ -177,15 +212,16 @@ delete_partitions_except() {
 		grep -qw "$part" <<<"$@" || to_delete+=("$part")
 	done
 
-	"$SFDISK" --delete "$img" "${to_delete[@]}"
+	log_info "Deleting partitions: ${to_delete[@]}"
+	suppress "$SFDISK" --delete "$img" "${to_delete[@]}"
 }
 
 squash_partitions() {
 	log_info "Squashing partitions"
 
 	for part in $(get_parts_physical_order "$1"); do
-		log_debug "$SFDISK" -N "$part" --move-data "$1" '<<<"+,-"'
-		"$SFDISK" -N "$part" --move-data "$1" <<<"+,-" || :
+		log_info "Squashing ${1}p${part}"
+		suppress "$SFDISK" -N "$part" --move-data "$1" <<<"+,-" || :
 	done
 }
 
@@ -199,6 +235,6 @@ truncate_image() {
 	truncate -s "$end_bytes" "$1"
 
 	# recreate backup gpt table/header
-	sgdisk -e "$1" 2>&1 | sed 's/\a//g'
+	suppress sgdisk -e "$1" 2>&1 | sed 's/\a//g'
 	# todo: this (sometimes) works: "$SFDISK" --relocate gpt-bak-std "$1"
 }
