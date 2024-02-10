@@ -55,14 +55,14 @@ wget https://dl.osu.bio/api/raw/?path=/SH1mmer/Chromebrew/chromebrew.tar.gz
 sudo bash wax.sh path/to/the/shim/you/downloaded.bin
 ```
 
-When this finishes, the bin file in the path you provided will have been converted into a **SH1MMER** image.
-*Note that this is a destructive operation, you will need to redownload a fresh shim to try again if it fails.*
-
 > [!NOTE]
 > If you want to build a devshim, replace `chromebrew.tar.gz` with `chromebrew-dev.tar.gz` and add `--dev` to the end of `sudo sh wax.sh /path/to/the/shim/you/downloaded.bin`.
 > Devshim builds will mount a much larger Chromebrew partition over `/usr/local`,
 > allowing you to access a desktop environment and even Firefox from within SH1MMER.
 > It's what allowed us to [run DOOM on a shim](https://github.com/CoolElectronics/blog/blob/master/src/content/blog/breaking/doom.jpg?raw=true).
+
+When this finishes, the bin file in the path you provided will have been converted into a **SH1MMER** image.
+*Note that this is a destructive operation, you will need to redownload a fresh shim to try again if it fails.*
 
 After injecting, you may continue to the "[Booting Into A Shim](#booting-into-a-shim)" section.
 
