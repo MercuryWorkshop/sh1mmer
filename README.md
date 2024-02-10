@@ -120,7 +120,7 @@ If your Chromebook is on version 112 or 113, unenrollment is still possible if y
 On most devices, this will require you to take off the back of the Chromebook and unplug the battery, or jump two pins.
 Further instructions are on [the website](https://sh1mmer.me/#fog).
 
-#### "Unenrollment" Without Disabling Hardware Write Protection
+#### "Unenrolling" with Write Protection
 
 If you aren't willing to take apart your Chromebook to unenroll, you can use an affiliated project,
 [E-Halcyon](https://fog.gay) to boot into an unenrolled environment temporarily.
