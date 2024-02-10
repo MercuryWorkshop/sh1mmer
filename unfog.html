@@ -1,0 +1,151 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Unfog | SH1MMER.me</title>
+    <link rel="icon" href="assets/icon.png" />
+    <link rel="stylesheet" href="assets/main.css" />
+    <script src="assets/script.js" defer></script>
+    <base target="_blank" />
+
+    <link rel="preload" href="assets/main.css" as="style" />
+    <link rel="preload" href="assets/unpatch_battery.webp" as="image" />
+    <link rel="preload" href="assets/unpatch_battery_connector.webp" as="image" />
+    <link rel="preload" href="assets/unpatch_jumper.webp" as="image" />
+    <link rel="preload" href="assets/unpatch_jumper_pins.webp" as="image" />
+    <link rel="preload" href="assets/unfog_bash_shell.webp" as="image" />
+
+    <link rel="icon" href="assets/icon.png" />
+    <link rel="stylesheet" href="files/main.css" />
+    <script is:inline>
+      var messages = {
+        chromebook:
+          "The Chromebook has to be un-enrolled so then the FWMP (Firmware Management Parameters) won't block the last command.",
+        screw:
+          "The most common screw types on Chromebooks are: Phillips #0, #000, #1, etc.",
+        usb: 
+          "A 16GB (or 8GB) USB Drive is needed to boot into SH1MMER or RecoMod.",
+      };
+    </script>
+    <base target="_blank" />
+  </head>
+
+  <body>
+    <div class="header">
+      <h1>Unfog</h1>
+      <a href="/" target="_self">Back to home</a>
+    </div>
+    <div class="section blue">
+      <h3>What is Unfog?</h3>
+      <p>
+        Unfog is a guide that explains how to downgrade Chromebooks even after if
+        it was affected by <i>The Fog</i>. It was found by a user on Discord named
+        <a href="https://discord.com/users/476169716998733834">@olyb</a>
+        and was released on October 1st, 2023.
+      </p>
+      <br />
+      <h4>
+        If this isn't working for you, use:
+        <a href="https://fog.gay">E-Halcyon</a>
+        instead.
+      </h4>
+    </div>
+    <div class="section green">
+      <h3>What you'll need</h3>
+      <li>
+        <u onclick="alert(messages.chromebook); ">A Chromebook</u>; it has to be
+        un-enrolled.
+      </li>
+      <li>
+        <u onclick="alert(messages.screw); ">A screwdriver</u>; this is needed
+        to open up the Chromebook.
+      </li>
+      <li>
+        <u onclick="alert(messages.usb); ">A USB</u>; you need this to boot into
+        a bash shell.
+      </li>
+      <hr />
+      <h3>Disabling WP</h3>
+      <p>
+        First, you'll need to unplug everything in the Chromebook, such as the
+        charger, any USB devices, etc.
+      </p>
+      <p>
+        Take your <u onclick="alert(messages.screw);">screwdriver</u> and open
+        the back panel of your Chromebook.
+      </p>
+      <p>
+        Find the battery cable and unplug it from the Chromebook, this should
+        disable the Write Protection on the majority of Chromebooks. If not,
+        search up what your WP method for your Chromebook is online.
+      </p>
+      <p>An <b>example</b> of the battery connector location is shown below:</p>
+      <img src="assets/unpatch_battery.webp" alt="Unpatch Battery" />
+      <img src="assets/unpatch_battery_connector.webp" alt="Unpatch Battery Connector" />
+      <br />
+        <i>The Chromebook shown here is the Acer Chromebook 311 (C733).</i>
+      <p>
+        Plug in the charger, and turn on the Chromebook. Yes, this will work as
+        the Chromebook will run from the power of the charger.
+      </p>
+      <p>
+        On some Chromebooks such as <kbd>DEDEDE</kbd>, you will need to jump
+        two pins to disable WP. You can easily do this by taking out the 
+        motherboard and using a paperclip to jump the two.
+      </p>
+        <i>
+          This is the case for you if WP doesn't disable after unplugging the battery.
+        </i>
+      <br />
+      <img src="assets/unpatch_jumper.webp" alt="Unpatch Jumper" />
+      <img src="assets/unpatch_jumper_pins.webp" alt="Unpatch Jumper Pins" />
+      <br />
+        <i>
+          The Chromebook shown here is the Acer Chromebook Spin 511 (R753T).
+        </i>
+      <p>
+        If the Chromebook fails to boot from the charger because it bootloops at
+        the developer mode screen, hold <kbd>Power (⏻) + Reload (↻) + ESC</kbd>
+        till you're at the recovery screen to continue to the next step.
+      </p>
+      <hr />
+      <h3>Executing Commands</h3>
+      <p>
+        Boot into SH1MMER or RecoMod and then enter the "Bash Shell". 
+        You cannot do this in ChromeOS due to the last command.
+      </p>
+      <p>
+        In the Bash Shell, execute the following commands below: <br />
+        <kbd>/usr/share/vboot/bin/set_gbb_flags.sh 0x8090</kbd><br />
+        <kbd>tpm_manager_client take_ownership</kbd><br />
+        <kbd>chromeos-tpm-recovery</kbd>
+      </p>
+      <i>The first command isn't necessary, but is highly recommended.</i>
+      <p>The commands should report "success" at the end like this image:</p>
+      <img src="assets/unfog_bash_shell.webp" alt="Unfog Bash Shell" />
+      <br />
+      <i>If this doesn't work, run <kbd>flashrom --wp-disable</kbd> then try again.</i>
+      <p>
+        Exit SH1MMER (or RecoMod) and turn off your Chromebook. Unplug everything 
+        including the charger, reconnect the battery, and then reconnect the charger.
+      </p>
+      <hr />
+      <h3>Aftermath</h3>
+      <p>
+        After the Chromebook is powerwashed (as it disables devmode when doing this), 
+        the Chromebook <i>should</i> now be able to install any ChromeOS version without
+        showing the "out-of-date" error.
+      </p>
+      <p>
+        Typically you will only need to do this once and then be able to downgrade to
+        out-of-date ChromeOS versions at any time, however:
+      </p>
+      <p>
+        There is a slight chance that when you update to a version past 111 (such as 112
+        and later), you may receive the out-of-date error again. To fix this, simply repeat
+        the steps you did again in this guide.
+      </p>
+    </div>
+  </body>
+</html>

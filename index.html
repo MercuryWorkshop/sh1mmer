@@ -52,14 +52,14 @@
   <div class="section green">
     <h3>What you will need</h3>
     <ul>
-      <li>A USB drive with at least 1 GB of storage</li>
+      <li>A USB drive with at least 8 GB of storage</li>
       <li>
-        <u onclick="alert(messages.pc)">A personal computer or chromebook;</u> note that you
+        <u onclick="alert(messages.pc)">A personal computer or Chromebook;</u> note that you
         need admin perms on Windows/MacOS
       </li>
     </ul>
     <hr />
-    <h3>Writing to a USB Drive</h3>
+    <h3>Flashing a USB</h3>
     <p>
       First, you'll need to find your managed Chromebook's board name. This can
       be done by going to <kbd>chrome://version</kbd> on your Chromebook and
@@ -75,9 +75,11 @@
     grunt, hana, hatch, jacuzzi, kukui, lulu, nami, octopus, orco, pyro, reks,
     sentry, stout, strongbad, tidus, ultima, volteer, zork
     <p>
-      First you need to download a SH1MMER bin. Download a shim at <a href="https://dl.sh1mmer.me/">dl.sh1mmer.me</a>,
-      and build (modify) it with the <a href="builder.html" target="_self">SH1MMER web builder</a>.<br>
-      Once you've obtained a MODIFIED SHIM (NOT A RAW SHIM), you can continue.
+      First you need to download a SH1MMER bin at
+      <a href="https://dl.sh1mmer.me">dl.sh1mmer.me</a><br />
+      Then build an injected shim using your bin at the
+      <a href="/builder" target="_self">SH1MMER Web Builder</a><br />
+      Once you've obtained a INJECTED SHIM (NOT A RAW SHIM), you can continue.
     </p>
     <p>
       Download the
@@ -100,11 +102,10 @@
       This can take anywhere between 30 seconds and 20 minutes, depending on the
       speed of your USB drive.
     </p>
-    <p class="note">
-      Note: you can also use a tool such as Rufus, BalenaEtcher, or Win32DiskImager
-      to flash on windows, as these often work better than the Chromebook recovery
-      extension. If you're on linux, <kbd>dd</kbd> is recommended.
-    </p>
+    <i>
+      You can also use tools such as Rufus, BalenaEtcher, etc, to flash
+      on Windows. If you're on Linux, <kbd>dd</kbd> is recommended.
+    </i>
     <hr />
     <h3>Executing on Chromebook</h3>
     <p>
@@ -135,46 +136,6 @@
     <img src="assets/utils-select01.png" style="width: auto; height: 350px" alt="SH1MMER Beautiful World UI" />
     <p>Play around with the UI, exit, and reboot.</p>
     <hr />
-    <div id="fog">
-    <h3>The Fog...</h3>
-    <h4>(Google's response, and why this might not be working for you)</h4>
-    <p>
-
-      Downgrading and unenrollment has been patched* by google. If your chromebook has never updated to version 112
-      before (check in <kbd>chrome://version</kbd>), then you can ignore this and follow the normal instructions. If not,
-      unenrollment will not work as normal.
-
-      If you aren't willing to take apart your chromebook to unenroll, you can use an affiliated project,
-      <a href="https://fog.gay">E-HALCYON</a> to boot into a deprovisioned environment temporarily.
-    </p>
-    </div>
-    <hr />
-    <h3>How to use SH1MMER on v111 → v113 </h3>
-    <h4>(if you're willing to take the back cover off your Chromebook)</h4>
-      <pre class="note">
-you'll only need to do this once, and it will let you use SH1MMER even after it's been completely patched
-
-1. Unplug everything, open the back panel, disconnect the battery to disable WP, plug in the charger
-2. boot into SH1MMER and use "Un-Enroll / Deprovision" (yes I know it will show an error, but that doesn't
-matter)
-(you will also need to run "Disable block_devmode" if you're using the old legacy version)
-3. go to the bash shell and run this command:
-<kbd>/usr/share/vboot/bin/set_gbb_flags.sh 0x8090</kbd>
-<i>do not use "Reset GBB Flags" after this</i>
-
-4. exit SH1MMER, unplug everything, reconnect the battery, reconnect the charger
-5. boot up, press <kbd>CTRL + D</kbd> to enter developer mode
-6. once it completes, use <kbd>CTRL + ALT + SHIFT + R</kbd> to powerwash
-7. after powerwash, immediately go into VT2 by pressing <kbd>CTRL + ALT + F2 (→)</kbd>, login as "root" and run these commands:
-<kbd>tpm_manager_client take_ownership</kbd>
-<kbd>cryptohome --action=remove_firmware_management_parameters</kbd>
-<i>if it fails, try downgrading to v110 if possible. if you can't, use E-Halycon instead.</i>
-8. press <kbd>CTRL + ALT + F1 (←)</kbd>, use <kbd>CTRL + ALT + SHIFT + R</kbd> to powerwash again
-9. profit
-
-NOTE: if you're on dedede, your WP method is probably different. look your model up online to find the WP
-method.</pre>
-      <hr />
       <h3>What now?</h3>
       <p>
         You will now be able to, among other things, unenroll your Chromebook.
@@ -217,20 +178,40 @@ method.</pre>
         over policies and extensions. You may need to use this to get WiFi passwords
         if <kbd>chrome://net-export</kbd> is blocked.
       </p>
+    <hr />
+    <div id="fog">
+    <h3>The Fog...</h3>
+    <h4>(Google's response, and why this might not be working for you)</h4>
+    <p>
+      Downgrading and unenrollment has been patched* by google. If your chromebook has never updated to version 112
+      before (check in <kbd>chrome://version</kbd>), then you can ignore this and follow the normal instructions. If not,
+      unenrollment will not work as normal.
+    </p>
+    <p>
+      If you aren't willing to take apart your chromebook to unenroll, you can use an affiliated project,
+      <a href="https://fog.gay">E-HALCYON</a> to boot into a deprovisioned environment temporarily.
+    </p>
+    <p>
+      If you are willing to take apart your Chromebook to unenroll, then go to the guides 
+      here: <a href="/unpatch" target="_self" >Unpatch</a> & <a href="/unfog" target="_self" >Unfog</a> 
+    </p>
+    </div>
   </div>
   <div class="section blue">
     <h3>
-      <a href="faq.html" target="_self">FAQ</a>
-      <a href="scam.html" target="_self">Scams</a>
-      <a href="credits.html" target="_self">Credits</a>
-      <a href="https://github.com/MercuryWorkshop/sh1mmer">GitHub</a>
+      <a href="/faq" target="_self">FAQ</a>
+      <a href="/credits" target="_self">Credits</a>
     </h3>
-    <p>We have a
-      <a href="https://akkoma.mercurywork.shop">Fediverse server!</a>
-      Join if you're interested or want a chill instance.
-      <br>
+    <p>
+      We have a
+      <a href="https://akkoma.mercurywork.shop">Fediverse server!</a> Join if
+      you're interested or want a chill instance.<br />
+
       For actual support, there is (begrudgingly) a
-      <a href="https://discord.gg/bAgNyGpXSx">Discord</a> as well.
+      <a href="https://discord.gg/bAgNyGpXSx">Discord Server</a> as well.<br />
+
+      For the source code of SH1MMER, go to the
+      <a href="https://github.com/MercuryWorkshop/sh1mmer">GitHub</a>.<br />
     </p>
   </div>
 </body>
