@@ -5,7 +5,6 @@ wax4web
 __pycache__
 ./log
 movie_payload.tar
-movie_payload_pngquant.tar.gz
 shimbin
 wax/test.sh
 busybox-1.36.1.tar.bz2
