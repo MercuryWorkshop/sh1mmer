@@ -7,7 +7,7 @@ _Website, source tree, and write-up for a ChromeOS™️ enrollment jailbreak_
 ## What is SH1MMER?
 
 **SH1MMER** is an exploit found in the ChromeOS shim kernel that utilitzes modified RMA factory shims to gain code execution at recovery.
-_For more info, check out the blog post/writeup [here](https://blog.coolelectronics.me/breaking-cros-2/)_
+_For more info, check out the blog post/writeup [here](https://blog.coolelectronics.me/breaking-cros-2/)_.
 
 #### How does it work?
 
