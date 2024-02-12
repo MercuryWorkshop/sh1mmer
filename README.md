@@ -1,4 +1,5 @@
-![AnuraOS but SH1MMER](https://github.com/NotDarkn/sh1mmer/assets/73033672/8fdc6cbd-3ff5-4f23-bc80-e4318ba8da41)
+![SH1MMER (light)](https://github.com/NotDarkn/sh1mmer/assets/73033672/8fdc6cbd-3ff5-4f23-bc80-e4318ba8da41#gh-light-mode-only)
+![SH1MMER (dark)](https://github.com/NotDarkn/sh1mmer/assets/73033672/8a2ebcd2-7e5c-4e6b-a881-f36b59a28050gh-light-mode-only)
 
 ### Shady Hardware 1nstrument Makes Machine Enrollment Retreat
 _Website, source tree, and write-up for a ChromeOS™️ enrollment jailbreak_
