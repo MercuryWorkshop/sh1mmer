@@ -180,16 +180,17 @@ splash() {
 }
 
 credits() {
+	# figured i should pomelo migrate these while i was here, feel free to change back -b0vik
 	echo "CREDITS:"
-	echo "CoolElectronics#4683 - Pioneering this wild exploit"
+	echo "@coolelectronics - Pioneering this wild exploit"
 	echo "ULTRA BLUE#1850 - Testing & discovering how to disable shim rootfs verification"
-	echo "Unciaur#1408 - Found the inital RMA shim"
-	echo "TheMemeSniper#6065 - Testing"
-	echo "Rafflesia#8396 - Hosting files"
+	echo "@unciaur - Found the inital RMA shim"
+	echo "@thememesniper - Testing"
+	echo "@aliceindisarray - Hosting files"
 	echo "Bypassi#7037 - Helped with the website"
-	echo "r58Playz#3467 - Helped us set parts of the shim & made the initial GUI script"
-	echo "OlyB#9420 - Scraped additional shims + this legacy script"
-	echo "Sharp_Jack#4374 - Created wax & compiled the first shims"
+	echo "@r58playz - Helped us set parts of the shim & made the initial GUI script"
+	echo "@olyb - Scraped additional shims + this legacy script"
+	echo "@sh4rp.tech - Created wax & compiled the first shims"
 	echo "ember#0377 - Helped with the website"
 	echo "Mark - Technical Understanding and Advisory into the ChromeOS ecosystem"
 }
@@ -204,7 +205,10 @@ run_task() {
 	read -res
 }
 
-printf "\033[?25h"
+# PRESEED_LOC (see wax/inject_preseed.sh)
+# preseed file gets sourced here, if injected. above comment should be after any function definitions but before anything that requires user input gets called
+
+printf "\033[?25h" 
 
 while true; do
 	clear
