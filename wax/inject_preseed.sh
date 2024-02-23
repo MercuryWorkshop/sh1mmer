@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+# TODO: properly error out/notify when run on a modern or raw shim
+
 SCRIPT_DIR=$(dirname "$0")
 SCRIPT_DIR=${SCRIPT_DIR:-"."}
 . "$SCRIPT_DIR/lib/wax_common.sh"

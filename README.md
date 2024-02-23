@@ -91,6 +91,15 @@ When this finishes, the bin file in the path you provided will have been convert
 
 After injecting, you may continue to the "[Booting Into A Shim](#booting-into-a-shim)" section.
 
+#### Preseeding
+
+Once you've built a legacy shim, you can also 'preseed' it to run a shell script on boot rather than opening the menu:
+```shell
+sudo ./wax/inject_preseed.sh -s <path/to/legacy_shim.bin> -p <path/to/preseed/file.sh>
+```
+Preseed files can call any function defined in [factory_install.sh](https://github.com/MercuryWorkshop/sh1mmer/blob/beautifulworld/wax/sh1mmer_legacy/root/noarch/usr/sbin/factory_install.sh). See [here](https://github.com/MercuryWorkshop/sh1mmer/tree/beautifulworld/wax/preseed/examples) for examples.
+
+
 ***
 
 ### Booting Into A Shim
@@ -107,6 +116,7 @@ Press `ESC + Refresh (↻) + Power (⏻)` at the same time again, then plug in y
 From here, you can play around with the options and do what you want.
 
 ***
+
 
 ### The Fog....
 
