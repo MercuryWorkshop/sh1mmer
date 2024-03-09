@@ -139,8 +139,7 @@ write protection will not work as normal.
 <details>
     <summary>Tsunami Bypass Details</b></summary>
 
-If your Chromebook is on version 114 or newer,
-unenrollment is still possible by using cryptosmite. This is bundled and enabled by default in all sh1mmer legacy shims now. Please update your rma shim to include this. If you need a decryption password, try `Info-58-immense!NickName_Arabia-710`.
+If your Chromebook is between versions 114 and 120, unenrollment is still possible by using cryptosmite. This is bundled and enabled by default in all sh1mmer legacy shims now. Please update your rma shim to include this. If you need a decryption password, try `Info-58-immense!NickName_Arabia-710`.
 </details>
 
 ## Credits
