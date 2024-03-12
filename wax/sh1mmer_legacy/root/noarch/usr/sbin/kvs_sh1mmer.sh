@@ -95,4 +95,8 @@ main(){
 }
 
 
+style_text "NOTICE: KVS is for UNENROLLED CHROMEBOOKS ONLY!"
+echo "-=-=-=-=-=-=-=-=-=-=-=-=-=-"
+echo "Press ENTER to continue to KVS"
+read -res
 main
