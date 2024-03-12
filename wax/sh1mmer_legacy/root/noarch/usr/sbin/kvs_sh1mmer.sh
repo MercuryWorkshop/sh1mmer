@@ -33,6 +33,12 @@ case "$(crossystem tpm_kernver)" in
     ;;
 esac
 
+if [ -f /tmp/current-kernver ]; then
+  echo "kernver file exists.."
+  kernver="$(cat /tmp/current-kernver)"
+fi
+
+
 # detect if booted from usb boot or from recovery boot
 if [ "$(crossystem mainfw_type)" == "recovery" ]; then
   source /usr/share/kvs/tpmutil.sh
@@ -51,7 +57,7 @@ elif [ "$(crossystem mainfw_type)" == "developer" ]; then
 fi
 
 credits(){
-  echo "KVS: Kernel Version Switcher v$version"
+  echo "KVS: Kernel Version Switcher v$version (SH1mmer Edition)"
   echo "Current kernver: $kernver"
   echo "TPM Version: $tpmver"
   echo "TPMD: $tpmdaemon"
@@ -64,6 +70,7 @@ credits(){
 }
 
 endkvs(){
+  clear
   echo "KVS: Kernel Version Switcher v$version (SH1mmer Edition)"
   echo "Current kernver: $kernver"
   echo "TPM Version: $tpmver"
@@ -71,15 +78,15 @@ endkvs(){
   echo "-=-=-=-=-=-=-=-=-=-=-"
   credits | tail -n 5
   echo "-=-=-=-=-=-=-=-=-=-=-"
-  echo "Exiting KVS in 5 seconds..."
-  sleep 5
+  echo "Exiting KVS in 3 seconds..."
+  sleep 3
   exit 0
 }
 
 
 main(){
   clear
-  echo "KVS: Kernel Version Switcher v$version"
+  echo "KVS: Kernel Version Switcher v$version (SH1mmer Edition)"
   echo "Current kernver: $kernver"
   echo "TPM Version: $tpmver"
   echo "TPMD: $tpmdaemon"

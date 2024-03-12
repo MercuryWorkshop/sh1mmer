@@ -101,6 +101,7 @@ selection(){
         "0")
           echo "Setting kernver 0"
           write_kernver $(cat /mnt/state/kernver0)
+          echo $kernver > /tmp/current-kernver
           sleep 2
           echo "Finished writing kernver $kernver!"
           echo "Press ENTER to return to main menu.."
@@ -109,6 +110,7 @@ selection(){
         "1")
           echo "Setting kernver 1"
           write_kernver $(cat /mnt/state/kernver1)
+          echo $kernver > /tmp/current-kernver
           sleep 2
           echo "Finished writing kernver $kernver!"
           echo "Press ENTER to return to main menu.."
@@ -117,6 +119,7 @@ selection(){
         "2")
           echo "Setting kernver 2"
           write_kernver $(cat /mnt/state/kernver2)
+          echo $kernver > /tmp/current-kernver
           sleep 2
           echo "Finished writing kernver $kernver!"
           echo "Press ENTER to return to main menu.."
@@ -125,6 +128,7 @@ selection(){
         "3")
           echo "Setting kernver 3"
           write_kernver $(cat /mnt/state/kernver3)
+          echo $kernver > /tmp/current-kernver
           sleep 2
           echo "Finished writing kernver $kernver!"
           echo "Press ENTER to return to main menu.."
