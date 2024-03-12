@@ -160,7 +160,7 @@ disable_verity() {
 }
 
 kvs(){
-  /usr/sbin/kvs_sh1mmer.sh
+	/usr/sbin/kvs_sh1mmer.sh
 }
 
 cryptosmite() {
