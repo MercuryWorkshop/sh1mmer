@@ -69,7 +69,7 @@ endkvs(){
   echo "TPM Version: $tpmver"
   echo "TPMD: $tpmdaemon"
   echo "-=-=-=-=-=-=-=-=-=-=-"
-  credits
+  credits | tail -n 5
   echo "-=-=-=-=-=-=-=-=-=-=-"
   echo "Exiting KVS in 5 seconds..."
   sleep 5
