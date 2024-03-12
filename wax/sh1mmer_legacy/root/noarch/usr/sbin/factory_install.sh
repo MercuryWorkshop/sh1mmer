@@ -2,7 +2,7 @@
 
 set -eE
 
-SCRIPT_DATE="[2024-01-28]"
+SCRIPT_DATE="[2024-03-11]"
 
 COLOR_RESET="\033[0m"
 COLOR_BLACK_B="\033[1;30m"
@@ -159,6 +159,10 @@ disable_verity() {
 	/usr/share/vboot/bin/make_dev_ssd.sh -i "$cros_dev" --remove_rootfs_verification
 }
 
+kvs(){
+  /usr/sbin/kvs_sh1mmer.sh
+}
+
 cryptosmite() {
 	/usr/sbin/cryptosmite_sh1mmer.sh
 }
@@ -223,7 +227,8 @@ while true; do
 	echo "(w) WP disable loop (for pencil method)"
 	echo "(h) Touch .developer_mode (skip 5 minute delay)"
 	echo "(v) Remove rootfs verification"
-	echo "(s) Cryptosmite"
+	echo "(k) KVS"
+	echo "(s) CryptoSmite"
 	echo "(t) Call chromeos-tpm-recovery"
 	echo "(f) Continue to factory installer"
 	echo "(i) Tetris"
@@ -240,6 +245,7 @@ while true; do
 	[wW]) run_task wp_disable ;;
 	[hH]) run_task touch_developer_mode ;;
 	[vV]) run_task disable_verity ;;
+	[kK]) run_task kvs ;;
 	[sS]) run_task cryptosmite ;;
 	[tT]) run_task chromeos-tpm-recovery ;;
 	[fF]) run_task factory ;;
