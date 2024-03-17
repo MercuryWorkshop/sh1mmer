@@ -45,7 +45,7 @@ n
 w
 EOF
 echo "Creating loop device"
-loop=$(hdiutil attach -nomount $bin | awk '{print $1;}' | head -n 1)
+loop=$(hdiutil attach -nomount -noverify -imagekey diskimage-class=CRawDiskImage $bin | awk '{print $1;}' | head -n 1) # found in https://en.wikipedia.org/wiki/Loop_device#Availability of all places
 
 echo "Making arch partition"
 mkfs.ext2 -L arch ${loop}s13 # ext2 so we can use skid protection features
