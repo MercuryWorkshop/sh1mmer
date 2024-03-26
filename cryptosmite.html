@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en"> 
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+        <title>Cryptosmite | SH1mmer</title>
+        <link rel="preload" href="/assets/main.css" as="style">
+        <link rel="icon" href="/sh1mmer/assets/icon.png">
+        <link rel="stylesheet" href="/assets/main.css">
+    </head>
+    <body>
+        <script src="/assets/script.js"></script>
+        <div class="header">
+        <h1>Cryptosmite</h1> 
+        <a href="/sh1mmer" target="_self">Back to home</a>
+        </div>
+        <div class="section blue">
+            <h3>What is Cryptosmite?</h3>
+            <p>Cryptosmite is an exploit found by @electronis on discord and was released on 9th March 2024. It allows you to unenroll your Chromebook if you are on v119 or earlier (and in most cases later versions).</p>
+            <br>
+        </div>
+        <div class="section green">
+            <h3>Downgrading</h3>
+            <p>If you are on version 120 or later, you will need to downgrade to run cryptosmite.</p>
+            <p>To find out whether you are eligible press power+refresh+esc and then tab. Look for the number after 'kernver'. If it ends in 2 you can downgrade, if it ends in a 3 you cannot without the pencil bypass or other methods not covered here.</p>
+            <p>To downgrade, press power+refresh+esc and plug in a USB stick with a v112 from <a href="https://cros.tech">cros.tech</a>.</p>
+            <p>It should begin the 'recovery' (downgrade). If it says that it's an old version and refuses to downgrade, your kernver number may have changed itself and you cannot do this.</p>
+            <br>
+            <h3>Tutorial</h3>
+            <p>Note: If your board name is <code>grunt</code> there is extra steps. If you are on another board and it doesn't work, this may also fix the problem. The fix is at the bottom of this page.</p>
+            <p>1. Download a SH1MMER Legacy Prebuilt image here: <a href="https://dl.osu.bio">dl.osu.bio</a></p>
+            <p>2. Disable OS verification (blocked or not, doesn't matter), and boot into the Legacy shim. Instructions for how to do this are on the main SH1MMER webpage.</p>
+            <p>3. Press the S key to start CryptoSmite and input this decryption key: <code>Info-58-immense!NickName_Arabia-710</code></p>
+            <p>4. Type in Y then press enter, and it'll automatically reboot upon completion.</p>
+            <p>5. Proceed through the setup partially till you get to the Add Account Screen.</p>
+            <p>If you get an update screen, please reboot (press power+refresh+esc and then turn it off and on again) and then press CTRL + ALT + E on the Wi-Fi screen, which allows skipping or makes the update not appear at all.</p>
+            <p><b>IF YOU ARE ON GRUNT BOARD, MOVE ON TO THE 'extra steps' SECTION.</b></p>
+            <p>6. Powerwash the Chromebook (disable and then re-enable OS verification) after getting to the "Add Account" screen. Once it boots back up, it'll be fully unenrolled.</p>
+            <br>
+            <h3>Those 'extra steps'...</h3>
+            <p>1. Do cryptosmite as normal until step 5. On this screen, press power+refresh+esc and then enable dev mode with ctrl+D and enter. Allow it to fully enter dev mode.</p>
+            <p>2. Once your Chromebook has restarted and is on the 'welcome to your Chromebook' screen, press ctrl+alt+f2 to open the dev terminal and login as 'root'.</p>
+            <p>3. Enter the command 'vpd -i RW_VPD -s check_enrollment=0'. This will stop your Chromebook from checking for enrollment at setup. If nothing comes up, it worked. Move on to the next step.</p>
+            <p>4. Restart your Chromebook, but DISABLE OS verification. Let it reboot, and set up your Chromebook as normal. You are now unenrolled.</p>
+        </div>
+    </body>
+</html>
