@@ -110,7 +110,7 @@ From here, you can play around with the options and do what you want.
 
 ***
 ### Icarus
-SH1MMER and CryptoSmite have been patched by Google since v120, but since then a new unenrollment exploit for v125-v127 has released!  [Icarus](https://github.com/fanqyxl/icarus)
+SH1MMER and CryptoSmite have been patched by Google since v120, but since then a new unenrollment exploit for v125-v127 has released!
 By default, this is bundled inside payloads in all SH1MMER shims; and all you need to do is boot SH1MMER, go to the payloads menu, and run the "Icarus" payload.  
 **NOTE:** YOU WILL NEED TO SETUP A SERVER USING THE [Icarus repo](https://github.com/fanqyxl/icarus), AND FOLLOW THE STEPS TO CONNECT TO THE PROXY AFTER RUNNING THE PAYLOAD.
 ### CryptoSmite
