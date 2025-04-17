@@ -64,6 +64,7 @@ mapname() {
 		'crap.sh') echo -n "CRAP - ChromeOS Automated Partitioning" ;;
 		'cryptosmite.sh') echo -n "Cryptosmite (unenrollment up to r119, by writable)" ;;
 		'defog.sh') echo -n "Set GBB flags to allow devmode and unenrollment on r112-113. WRITE PROTECTION MUST BE DISABLED" ;;
+		'icarus.sh') echo -n "Icarus (unenrollment up to r129, by writable)";;
 		'movie.sh') echo -n "HAHA WINDOWS SUX BUT THE MOVIE" ;;
 		'mrchromebox.sh') echo -n "MrChromebox firmware-util.sh" ;;
 		'reset-kern-rollback.sh') echo -n "Reset kernel rollback version" ;;
