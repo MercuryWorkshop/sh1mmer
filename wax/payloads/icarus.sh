@@ -53,7 +53,7 @@ clear
 echo "Welcome to Icarus."
 echo "Script date: ${SCRIPT_DATE}"
 echo ""
-echo "Cert: fanqyxl (README: https://github.com/fanqyxl/icarus)"
+echo "Cert: fanqyxl (README: https://github.com/cosmicdevv/Icarus-Lite)"
 echo ""
 echo "This will destroy all data on ${TARGET_PART}."
 echo "Additional steps are needed to unenroll; see above link."
