@@ -9,7 +9,7 @@
 set -eE
 
 SCRIPT_DATE="[2024-11-11]"
-BACKUP_PAYLOAD=unenroll.tar.gz
+BACKUP_PAYLOAD=cryptosmite.tar.gz
 NEW_ENCSTATEFUL_SIZE=$((1024 * 1024 * 1024)) # 1 GB
 
 fail() {
