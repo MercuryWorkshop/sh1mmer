@@ -1,10 +1,14 @@
 #!/bin/bash
-# icarus by writable, WIP entry rewrite by OlyB
+# icarus by writable, entry script rewrite by OlyB
+# more info at https://github.com/cosmicdevv/Icarus-Lite
 
 set -eE
 
-SCRIPT_DATE="[2025-04-17]"
+SCRIPT_DATE="[2025-04-20]"
 PAYLOAD=icarus.tar.gz
+
+COLOR_RESET="\033[0m"
+COLOR_YELLOW_B="\033[1;33m"
 
 fail() {
 	printf "%b\n" "$*" >&2
@@ -53,7 +57,7 @@ clear
 echo "Welcome to Icarus."
 echo "Script date: ${SCRIPT_DATE}"
 echo ""
-echo "Cert: fanqyxl (README: https://github.com/fanqyxl/icarus)"
+echo -e "${COLOR_YELLOW_B}READ ME: https://github.com/cosmicdevv/Icarus-Lite${COLOR_RESET}"
 echo ""
 echo "This will destroy all data on ${TARGET_PART}."
 echo "Additional steps are needed to unenroll; see above link."
