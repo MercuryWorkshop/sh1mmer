@@ -57,7 +57,7 @@ clear
 echo "Welcome to Icarus."
 echo "Script date: ${SCRIPT_DATE}"
 echo ""
-echo -e "${COLOR_YELLOW_B}READ ME: https://github.com/HarryJarry1/Icarus-Lite${COLOR_RESET}"
+echo -e "${COLOR_YELLOW_B}READ ME: https://github.com/fanqyxl/icarus${COLOR_RESET}"
 echo ""
 echo "This will destroy all data on ${TARGET_PART}."
 echo "Additional steps are needed to unenroll; see above link."
