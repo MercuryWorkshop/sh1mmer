@@ -24,7 +24,7 @@ check_deps() {
 }
 
 missing_deps=$(check_deps curl git python3 protoc gzip)
-[ "$missing_deps" ] && fail "The following required commands weren't found in PATH:\n${missing_deps}"
+[ "$missing_deps" ] && fail "The following required commands weren't found in PATH: ${missing_deps}"
 python3 -c "import google.protobuf" >/dev/null 2>&1 || fail "Please install the python package 'protobuf'"
 python3 -c "import argparse" >/dev/null 2>&1 || fail "Please install the python package 'argparse'"
 python3 -c "from six.moves import zip" >/dev/null 2>&1 || fail "Please install the python package 'six'"
