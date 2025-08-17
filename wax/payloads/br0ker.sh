@@ -1,7 +1,7 @@
 #!/bin/bash
 # HEY YOU! THIS EXPLOIT IS ALREADY PATCHED!!!
 # The vulnerable code was removed in r133 via https://crrev.com/c/6040974
-# A new kernel version (6 for most boards) is expected to release in r138 or r139.
+# A new kernel version (6 for most boards) has released on 138.
 # Made by OlyB :D Enjoy :D
 SCRIPT_DIR=$(dirname "$0")
 SCRIPT_DIR=${SCRIPT_DIR:-"."}
