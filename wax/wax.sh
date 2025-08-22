@@ -150,7 +150,7 @@ get_flags() {
 
 	DEFINE_string payload_dir "" "Custom main payload dir" ""
 
-	DEFINE_string sh1mmer_part_size "64M" "Partition size for payload(s)" "s"
+	DEFINE_string sh1mmer_part_size "128M" "Partition size for payload(s)" "s"
 
 	DEFINE_string extra_payload_dir "${SCRIPT_DIR}/payloads" "Extra payload dir" "e"
 
