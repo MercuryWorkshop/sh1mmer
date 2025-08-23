@@ -20,7 +20,7 @@ run_task() {
 mapname() {
 	case "$(basename "$1")" in
 		'autoupdate.sh') echo -n "Fetch updated payloads. REQUIRES WIFI (not working)" ;;
-		'br0ker.sh') echo -n "Br0ker (unenrollment up to kernver 5)";;
+		'br0ker.sh') echo -n "Br0ker (developer mode unblocking up to kernver 5, leads to unenrollment)";;
 		'caliginosity.sh') echo -n "Revert all changes made by sh1mmer (reenroll + more)" ;;
 		'crap.sh') echo -n "CRAP - ChromeOS Automated Partitioning" ;;
 		'cryptosmite.sh') echo -n "Cryptosmite (unenrollment up to r119, by writable)" ;;
