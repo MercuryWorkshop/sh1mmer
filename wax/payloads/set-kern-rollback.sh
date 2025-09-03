@@ -8,18 +8,18 @@
 tpmc=tpmc
 crossystem=crossystem
 awk=awk
+tr=tr
 initctl=initctl
 daemon_was_running=
 err=0
 secdata_kernel=0x1008
 
 tpm2_target() {
-  # This is not an ideal way to tell if we are running on a tpm2 target, but
-  # it will have to do for now.
-  if [ -f "/etc/init/trunksd.conf" ]; then
-    return 0
+  vercheck=$($tpmc read $secdata_kernel 1 | $tr -d '\r\n[:space:]')
+  if [ "$vercheck" = "10" ]; then
+      return 0
   else
-    return 1
+      return 1
   fi
 }
 
@@ -164,13 +164,13 @@ fi
 raw_kernel_bytes="02  4c 57 52 47  1 0 0 0  0 0 0  37" v1_raw_kernel_bytes="10  28  58  0  1 0 0 0  0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0"
 while true; do
   clear
-  echo "0) Kernver 0"
-  echo "1) Kernver 1"
-  echo "2) Kernver 2"
-  echo "3) Kernver 3"
-  echo "4) Kernver 4"
-  echo "5) Kernver 5"
-  echo "6) Kernver 6"
+  echo "0) Kernver 0 (All versions)"
+  echo "1) Kernver 1 (All versions)"
+  echo "2) Kernver 2 (112+)"
+  echo "3) Kernver 3 (120+)"
+  echo "4) Kernver 4 (125+)"
+  echo "5) Kernver 5 (133+)"
+  echo "6) Kernver 6 (138+)"
   read -p "Please select what kernel version you want to set: " kernver
   case $kernver in
     0) raw_kernel_bytes="02  4c 57 52 47  0 0 0 0  0 0 0  e8" v1_raw_kernel_bytes="10  28  0  0  0 0 0 0  0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0" ;; #0x00000000
