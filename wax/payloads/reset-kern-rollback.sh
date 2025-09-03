@@ -161,16 +161,39 @@ else
   fi
 fi
 
+raw_kernel_bytes="02  4c 57 52 47  1 0 0 0  0 0 0  37" v1_raw_kernel_bytes="10  28  58  0  1 0 0 0  0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0"
+while true; do
+  clear
+  echo "0) Kernver 0"
+  echo "1) Kernver 1"
+  echo "2) Kernver 2"
+  echo "3) Kernver 3"
+  echo "4) Kernver 4"
+  echo "5) Kernver 5"
+  echo "6) Kernver 6"
+  read -p "Please select what kernel version you want to set: " kernver
+  case $kernver in
+    0) raw_kernel_bytes="02  4c 57 52 47  0 0 0 0  0 0 0  e8" v1_raw_kernel_bytes="10  28  0  0  0 0 0 0  0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0" ;; #0x00000000
+    1) raw_kernel_bytes="02  4c 57 52 47  1 0 0 0  0 0 0  37" v1_raw_kernel_bytes="10  28  58  0  1 0 0 0  0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0"  ;; #0x00000001
+    2) raw_kernel_bytes="02  4c 57 52 47  2 0 0 0  0 0 0  51" v1_raw_kernel_bytes="10  28  b0  0  2 0 0 0  0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0"  ;; #0x00000002
+    3) raw_kernel_bytes="02  4c 57 52 47  3 0 0 0  0 0 0  8e" v1_raw_kernel_bytes="10  28  e8  0  3 0 0 0  0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0"  ;; #0x00000003
+    4) raw_kernel_bytes="02  4c 57 52 47  4 0 0 0  0 0 0  9d" v1_raw_kernel_bytes="10  28  67  0  4 0 0 0  0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0"  ;; #0x00000004
+    5) raw_kernel_bytes="02  4c 57 52 47  5 0 0 0  0 0 0  42" v1_raw_kernel_bytes="10  28  3f  0  5 0 0 0  0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0"  ;; #0x00000005
+    6) raw_kernel_bytes="02  4c 57 52 47  6 0 0 0  0 0 0  24" v1_raw_kernel_bytes="10  28  d7  0  6 0 0 0  0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0"  ;; #0x00000006
+    *) continue ;;
+  esac
+  break
+done
 if use_v0_secdata_kernel; then
-  reset_rw_space $secdata_kernel "02  4c 57 52 47  1 0 1 0  0 0 0  55"
+  reset_rw_space $secdata_kernel "$raw_kernel_bytes"
 else
-  reset_rw_space $secdata_kernel "10  28  0c  0  1 0 1 0  0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0"
+  reset_rw_space $secdata_kernel "$v1_raw_kernel_bytes"
 fi
 
 restart_daemon_if_needed
 
 if [ "$err" -eq 0 ]; then
-  log "Kernel rollback version has successfully been reset to factory defaults"
+  log "Kernel rollback version has successfully been set"
 else
   log_error "An error occured..."
   exit 1
