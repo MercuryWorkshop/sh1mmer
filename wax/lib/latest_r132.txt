@@ -24,7 +24,6 @@ puff,chromeos_16093.92.0_puff_stable-channel_full_PuffMPKeys-v16.bin-gy3wczbumzq
 pyro,chromeos_16093.109.0_pyro_lts-channel_full_mp-v6.bin-gy4dmyzxgnrwexsgtzl54qyh5bm4dnre.signed
 rammus,chromeos_16093.92.0_rammus_stable-channel_full_mp-v7.bin-gy3wczbwgezdhkgn4sb6jhn3jzozrq23.signed
 reef,chromeos_16093.109.0_reef_lts-channel_full_mp-v8.bin-gy4dmyzxgvrwjcpcmy2b2npnngn2l6n2.signed
-reven,chromeos_16093.92.0_reven_stable-channel_full_mp-v7.bin-gy3wczbugvsdthbfntyjwys4gnnf3seu.signed
 rex,chromeos_16093.92.0_rex_stable-channel_full_mp-v5.bin-gy3wczbwgq3wnegnofgmgfxdsndthnvr.signed
 sand,chromeos_16093.109.0_sand_lts-channel_full_mp-v6.bin-gy4dmyzxgzsdaubuinay62hmexnj2wpn.signed
 sarien,chromeos_16093.92.0_sarien_stable-channel_full_SarienMPKeys-v8.bin-gy3wczbumnstpft26mu5p6ymgxjxmua2.signed
