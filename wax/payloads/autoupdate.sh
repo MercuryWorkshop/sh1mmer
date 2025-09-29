@@ -17,7 +17,7 @@ fi
 
 echo "Finding payloads from $content_url"
 
-mkdir -p ./payloads
+mkdir -p /payloads
 
 response=$(curl -s -H "Accept: application/vnd.github.v3+json" "$content_url")
 
@@ -29,28 +29,17 @@ fi
 
 payloads=$(echo "$response" | jq -r '.[] | select(.type == "file") | .name + " " + .download_url')
 
-if [[ -z "$payloads" ]]; then
+if [ -z "$payloads" ]; then
     echo "No payloads found."
 else
     echo "$payloads" | while read -r filename download_url; do
         echo " - Downloading ${filename}..."
-        curl -s -L "$download_url" -o "./payloads/${filename}"
+        curl -s -L "$download_url" -o "/payloads/${filename}"
         if [ $? -ne 0 ]; then
             echo -e "\033[1;31m - Could not download ${filename}.\033[0m" >&2
         fi
     done
-    echo "Downloaded payloads to ./payloads."
-fi
-
-version=sh1mmer_legacy
-if [ -f /usr/sbin/sh1mmer_gui.sh ]; then
-    version=sh1mmer_bw
-fi
-
-date=$(curl -s "${url}/commits?path=wax/${version}/root/noarch/usr/sbin/sh1mmer_main.sh&sha=beautifulworld&per_page=1" | jq -r '.[0].commit.committer.date')
-
-if [[ "$date" == "null" || -z "$date" ]]; then
-    echo "Could not find latest commit date."
+    echo "Downloaded payloads to /payloads."
 fi
 
 formatted_date=$(date -d "$date" +%Y-%m-%d)
