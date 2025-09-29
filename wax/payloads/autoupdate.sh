@@ -41,7 +41,3 @@ else
     done
     echo "Downloaded payloads to /payloads."
 fi
-
-formatted_date=$(date -d "$date" +%Y-%m-%d)
-
-sed -i "s/SCRIPT_DATE=\"\[.*\]\"/SCRIPT_DATE=\"[${formatted_date}]\"/" /usr/sbin/sh1mmer_main.sh
