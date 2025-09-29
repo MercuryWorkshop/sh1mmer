@@ -53,6 +53,6 @@ if [[ "$date" == "null" || -z "$date" ]]; then
     echo "Could not find latest commit date."
 fi
 
-formatted_date=$(date -d "$date" +%Y-%d-%m)
+formatted_date=$(date -d "$date" +%Y-%m-%d)
 
 sed -i "s/SCRIPT_DATE=\"\[.*\]\"/SCRIPT_DATE=\"[${formatted_date}]\"/" /usr/sbin/sh1mmer_main.sh
