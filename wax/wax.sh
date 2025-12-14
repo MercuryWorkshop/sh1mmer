@@ -5,7 +5,7 @@ SCRIPT_DIR=${SCRIPT_DIR:-"."}
 
 set -eE
 
-SCRIPT_DATE="2025-07-22"
+SCRIPT_DATE="2025-12-13"
 
 echo "┌─────────────────────────────────────────────────────────────────┐"
 echo "│ Welcome to wax, a shim modifying automation tool                │"
@@ -150,7 +150,7 @@ get_flags() {
 
 	DEFINE_string payload_dir "" "Custom main payload dir" ""
 
-	DEFINE_string sh1mmer_part_size "64M" "Partition size for payload(s)" "s"
+	DEFINE_string sh1mmer_part_size "72M" "Partition size for payload(s)" "s"
 
 	DEFINE_string extra_payload_dir "${SCRIPT_DIR}/payloads" "Extra payload dir" "e"
 

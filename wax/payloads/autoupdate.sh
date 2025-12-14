@@ -1,5 +1,7 @@
 #!/bin/bash
 
+# TODO: add an option to update the payloads on the USB drive as well
+
 if curl -Is https://example.com | head -n 1 | grep -q "HTTP/"; then
     "$@"
 else

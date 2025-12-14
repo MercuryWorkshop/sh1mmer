@@ -13,19 +13,17 @@ export TTY=""
 export LOG_TTY=""
 export INFO_TTY=""
 export DEBUG_TTY=""
-: ${FRECON_LITE_PATH:=/sbin/frecon-lite}
-: ${FRECON_PATH:=/sbin/frecon}
-: ${FRECON_TTY:=/run/frecon/vt0}
-: ${FRECON_PID:=/run/frecon/pid}
-: ${FRECON_EXTRA_TTY:=/run/frecon/vt1}
-: ${FBDEV:=/sys/class/graphics/fb0}
-: ${FBCON:=/sys/class/graphics/fbcon}
+FRECON_LITE_PATH=/sbin/frecon-lite
+FRECON_PATH=/sbin/frecon
+FRECON_TTY=/run/frecon/vt0
+
 # Prints to kernel message (for debugging before TTY is setup).
-kernel_msg () {
+kernel_msg() {
 	if [ -e "/dev/kmsg" ]; then
 		echo "$0: $*" >>/dev/kmsg || true
 	fi
 }
+
 # Extracts tokens from kernel command line.
 kernel_get_var() {
 	local token="$1="
@@ -38,25 +36,16 @@ kernel_get_var() {
 	done
 	echo "${result}"
 }
+
 # Checks if given parameter is a valid TTY (or PTS) device file.
 tty_is_valid() {
 	[ -c "$1" ] && (echo "" >"$1") 2>/dev/null
 }
-# Kills running frecon sessions.
-kill_frecon() {
-	kill "$(cat "${FRECON_PID}")" || true
-	killall frecon-lite || true
-	killall frecon || true
-}
+
 # Starts the 'frecon' daemon.
 tty_start_frecon() {
-	if [ -e "${FRECON_TTY}" ]; then
-		# There is a limitation about frecon[-lite] (created in initramfs stage)
-		# can't detect new input device by udev monitor after switch_root is called.
-		# The workaround is to re-create frecon[-lite] in new rootfs so udev
-		# monitor can be re-started again. Finally new input device can be detected.
-		kill_frecon
-	fi
+	pkill -9 frecon || :
+	rm -rf /run/frecon
 	kernel_msg "Starting frecon..."
 	if [ "${FRECON_PATH}" != "${FRECON_LITE_PATH}" ]; then
 		udevd --daemon
@@ -65,10 +54,10 @@ tty_start_frecon() {
 	fi
 	"${FRECON_PATH}" --enable-vt1 --daemon --no-login --enable-vts \
 		--pre-create-vts --num-vts=8 --enable-gfx
-	local loop_time=30
+	local loop_time=100
 	while [ ! -e "${FRECON_TTY}" -a ${loop_time} -gt 0 ]; do
-		kernel_msg " ${FRECON_TTY} does not exist. Retry for ${loop_time} seconds."
-		sleep 1s
+		kernel_msg " ${FRECON_TTY} does not exist. Retry for $((loop_time / 10)) seconds."
+		sleep 0.1
 		loop_time=$((loop_time - 1))
 	done
 	if [ ! -e "${FRECON_TTY}" ]; then
@@ -77,6 +66,7 @@ tty_start_frecon() {
 		kernel_msg "Frecon is ready."
 	fi
 }
+
 # Finds if the TTY can be enumerated with given index.
 tty_find_relative() {
 	local tty="$1"
@@ -92,6 +82,7 @@ tty_find_relative() {
 		echo "${new_tty}"
 	fi
 }
+
 #######################################
 # Configure TTY console with options
 # Arguments:
@@ -135,6 +126,7 @@ config_console() {
 		esac
 	done
 }
+
 # Determine and setup (if needed) TTYs (TTY, LOG_TTY, INFO_TTY, DEBUG_TTY).
 # TTY is detected by following order:
 #	- The last non-empty console= from cmdline.
@@ -147,7 +139,6 @@ tty_init() {
 	local ttys="$(kernel_get_var console)"
 	local tty_name="" tty_path=""
 	TTY=""
-	LOG_TTY=""
 	# Always use frecon-lite if possible.
 	if [ -x "${FRECON_LITE_PATH}" ]; then
 		FRECON_PATH="${FRECON_LITE_PATH}"
@@ -173,10 +164,16 @@ tty_init() {
 	done
 	# Devices using tty2 are actually using tty1 as default console.
 	[ "${TTY}" = /dev/tty2 ] && TTY=/dev/tty1
-	LOG_TTY="$(tty_find_relative "${TTY}" 1)"
-	INFO_TTY="$(tty_find_relative "${TTY}" 2)"
-	DEBUG_TTY="$(tty_find_relative "${TTY}" 3)"
-	# Sending escapes to enable input. Frecon is changing it's behavior
+	if [ $HAS_FRECON -eq 1 ]; then
+		LOG_TTY="$(readlink -f "$(tty_find_relative "${FRECON_TTY}" 1)")"
+		INFO_TTY="$(readlink -f "$(tty_find_relative "${FRECON_TTY}" 2)")"
+		DEBUG_TTY="$(readlink -f "$(tty_find_relative "${FRECON_TTY}" 3)")"
+	else
+		LOG_TTY="$(tty_find_relative "${TTY}" 1)"
+		INFO_TTY="$(tty_find_relative "${TTY}" 2)"
+		DEBUG_TTY="$(tty_find_relative "${TTY}" 3)"
+	fi
+	# Sending escapes to enable input. Frecon is changing its behavior
 	# to disable input and cursor by default. See b/271954812.
 	if [ $HAS_FRECON -eq 1 ]; then
 		config_console "${TTY}" --enable_input

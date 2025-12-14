@@ -2,7 +2,7 @@
 #
 # ChromeOS Automated Partitioning (CRAP)
 # https://github.com/chrultrabook/crap
-# Copyright (C) 2023-2024 - BinBashBanana
+# Copyright (C) 2023-2025 - BinBashBanana
 # Contributors add their names here
 #
 # License pending...
@@ -17,7 +17,7 @@
 set -eE
 
 # variable variables
-SCRIPT_DATE="[2024-11-11]"
+SCRIPT_DATE="[2025-12-13]"
 
 # optional variables
 [ -z "$CRAP_TESTING" ] && CRAP_TESTING=0
@@ -55,7 +55,7 @@ check_deps() {
 	done
 }
 
-missing_deps=$(check_deps sfdisk cgpt partx blockdev mkfs.ext4 tune2fs e2fsck resize2fs)
+missing_deps=$(check_deps sfdisk cgpt partx mkfs.ext4 tune2fs e2fsck resize2fs)
 [ -n "$missing_deps" ] && fail "The following required commands weren't found in PATH:\n${missing_deps}"
 
 log_debug() {
@@ -574,8 +574,8 @@ trap 'echo $BASH_COMMAND failed with exit code $?. THIS IS A BUG, PLEASE REPORT!
 trap 'cleanup; exit' EXIT
 trap 'echo Abort.; cleanup; exit' INT
 
-CRAP_DISK_SECTOR_SIZE=$(blockdev --getss "$CRAP_DISK")
-CRAP_DISK_SECTORS=$(blockdev --getsz "$CRAP_DISK")
+CRAP_DISK_SECTOR_SIZE=$(sfdisk -l "$CRAP_DISK" 2>/dev/null | grep -m 1 "^Sector size" | awk '{print $4}')
+CRAP_DISK_SECTORS=$(sfdisk -l "$CRAP_DISK" 2>/dev/null | grep -m 1 " sectors$" | awk '{print $(NF-1)}')
 CRAP_DISK_SIZE=$((CRAP_DISK_SECTOR_SIZE * CRAP_DISK_SECTORS))
 CRAP_DISK_SIZE_HR=$(format_bytes "$CRAP_DISK_SIZE")
 

@@ -197,11 +197,11 @@ safesync() {
 }
 
 get_sectors() {
-	"$SFDISK" -l "$1" 2>/dev/null | grep "sectors$" | awk '{print $(NF-1)}'
+	"$SFDISK" -l "$1" 2>/dev/null | grep -m 1 " sectors$" | awk '{print $(NF-1)}'
 }
 
 get_sector_size() {
-	"$SFDISK" -l "$1" 2>/dev/null | grep "^Sector size" | awk '{print $4}'
+	"$SFDISK" -l "$1" 2>/dev/null | grep -m 1 "^Sector size" | awk '{print $4}'
 }
 
 get_final_sector() {
