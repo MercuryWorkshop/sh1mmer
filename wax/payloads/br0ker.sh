@@ -1,7 +1,6 @@
 #!/bin/bash
-# HEY YOU! THIS EXPLOIT IS ALREADY PATCHED!!!
-# The vulnerable code was removed in r133 via https://crrev.com/c/6040974
-# A new kernel version (6 for most boards) is expected to release in r138 or r139.
+# Br0ker: unenrollment for <=r132 (<=kernver 5 on most devices)
+# Patched in https://crrev.com/c/6040974
 # Made by OlyB :D Enjoy :D
 SCRIPT_DIR=$(dirname "$0")
 SCRIPT_DIR=${SCRIPT_DIR:-"."}
@@ -153,7 +152,6 @@ echo "- Downgrading to r124 or lower"
 echo "- Changing the device's serial number"
 echo "- Changing the device's secret"
 echo "- Other temporary bypasses, check the \"Avoiding accidental re-enrollment\" thread in TN for more info."
-echo "Note that this exploit is expected to be fully patched soon."
 echo "Continue? (y/N)"
 read -r action
 case "$action" in
