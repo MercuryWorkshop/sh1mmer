@@ -100,6 +100,7 @@ main(){
 		intdis_prefix="$intdis"
 	fi
     clear
+	echo "Script by con, exploit and script updates made by emery"
     echo "2icksilver, root file write > unpatch quicksilver > unenrollment"
 	echo "This will unenroll your device"
 	echo "Continue? (y/N)"
