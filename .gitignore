@@ -2,6 +2,7 @@ chromebrew.tar.gz
 chromebrew-dev.tar.gz
 .DS_Store
 __pycache__
+cros_sign_backups
 ./log
 movie_payload.tar
 movie_payload_pngquant.tar.gz

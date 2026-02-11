@@ -82,6 +82,9 @@ BOARDS+=($(jq -r '.builds | keys[]' "$WORKDIR"/recovery_googlemeet.json))
 BOARDS=($(printf "%s\n" "${BOARDS[@]}" | sort))
 echo "Found ${#BOARDS[@]} boards"
 
+# TODO: maybe skip "nirva" and any board that ends with "-cfm", as these are duplicates
+# TODO: also download OnHub firmware
+
 if should_dump_keys developer; then
 	dump_keys developer root 1 "11 RSA8192 SHA512" b11d74edd286c144e1135b49e7f0bc20cf041f10 /usr/share/vboot/devkeys/root_key.vbpubk >>"$OUTFILE"
 	dump_keys developer recovery 1 "11 RSA8192 SHA512" c14bd720b70d97394257e3e826bd8f43de48d4ed /usr/share/vboot/devkeys/recovery_key.vbpubk >>"$OUTFILE"

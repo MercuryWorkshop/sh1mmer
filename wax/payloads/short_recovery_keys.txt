@@ -76,6 +76,7 @@ board:nyan-blaze;recovery;1;11 RSA8192 SHA512;26900310befce802836cca982f819aa724
 board:nyan-kitty;recovery;1;11 RSA8192 SHA512;e02c83f106bd725a276990efd547dfacf8e0424b
 board:octopus;recovery;1;11 RSA8192 SHA512;73548eec796f801be5d62992ac07efc1155779fc
 board:orco;recovery;1;11 RSA8192 SHA512;a31caef8168b0c5c2044ac1509e9c7099adc824b
+board:ovis;recovery;1;8 RSA4096 SHA512;34fd81ce6160c68af04b2a966224ec3847cb4042
 board:panther;recovery;1;11 RSA8192 SHA512;e74e63e14b285700324ffd3acc4b776dc3104b8f
 board:parrot-ivb;recovery;1;11 RSA8192 SHA512;7f03c648d2bb4ab3979cb87633da51ed90267f03
 board:peach-pi;recovery;1;11 RSA8192 SHA512;d254b3b3ddaac32f7b843753de9257ec4f6c67ed
@@ -98,6 +99,7 @@ board:scarlet;recovery;1;8 RSA4096 SHA512;31ef74ad20e25ec06530723c4bd3bdf045fe23
 board:sentry;recovery;1;11 RSA8192 SHA512;1ab2adeeb2522f60722d72893c85e6427a7a885d
 board:setzer;recovery;1;11 RSA8192 SHA512;60740063611474a1105b2326d06890052e215c8e
 board:skyrim;recovery;1;8 RSA4096 SHA512;f9075b8c4197daf1839051b778582b3211181ea3
+board:skywalker;recovery;1;8 RSA4096 SHA512;25848abcfbf60ba03d4860a395d370224fc99652
 board:snappy;recovery;1;11 RSA8192 SHA512;07e52a53cc24e98a21c80d13fe8556e380ff8a31
 board:soraka;recovery;1;11 RSA8192 SHA512;1621ccab254a627dcee227e31ccc79db7a9cad6a
 board:squawks;recovery;1;11 RSA8192 SHA512;cdc2858ca78351dc4b54d5d5d02bc695830f7802
