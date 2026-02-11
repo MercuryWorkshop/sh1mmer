@@ -19,6 +19,7 @@ run_task() {
 
 mapname() {
 	case "$(basename "$1")" in
+		'2icksilver.sh') echo -n "2icksilver (unenrollment on devices with disk layout v3 (2022+), by emerwyi)" ;;
 		'autoupdate.sh') echo -n "Fetch updated payloads. REQUIRES INTERNET CONNECTION" ;;
 		'br0ker.sh') echo -n "Br0ker (unenrollment up to r132/kernver 5)";;
 		'caliginosity.sh') echo -n "Revert all changes made by sh1mmer (reenroll + more)" ;;
