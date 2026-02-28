@@ -78,7 +78,7 @@ part1(){
 part2(){
     mkdir "$metadata"
     mount "$intdis_prefix"11 "$metadata"
-    printf "CoABCiN1bmVuY3J5cHRlZC8uLi8uLi8uLi9ydW4vdnBkL3JvLnR4dBBVGlcSVXJlX2Vucm9sbG1lbnRfa2V5PSIwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwImA=" | tee "$metadata"/preseeder.proto
+    printf "Cn8KI3VuZW5jcnlwdGVkLy4uLy4uLy4uL3J1bi92cGQvcm8udHh0EFQaVhJUcmVfZW5yb2xsbWVudF9rZXk9IjAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAi" | tee "$metadata"/preseeder.proto
     chattr +i "$metadata"/preseeder.proto 
     sync
     umount "$metadata"
