@@ -38,14 +38,12 @@ for part in $(echo "$table" | awk '{print $1}'); do
 		partnum=$(echo "$entry" | awk '{print $1}' | grep -o "[0-9]*$")
 		name=$(echo "$entry" | grep -o "name=[^,]*" | awk -F '"' '{print $2}')
 		[ -z "$name" ] || name+=.
-		filename="${out}/${partnum}.${name}bin"
-		touch "$filename"
-		chown "$USER:$USER" "$filename"
-		dd if="$1" of="$filename" bs="$sector_size" skip="$start" count="$sectors" status=progress
+		dd if="$1" of="${out}/${partnum}.${name}bin" bs="$sector_size" skip="$start" count="$sectors" status=progress
 	fi
 done
 
 tar -cf "$2" -C "$out" .
+chown "$USER:$USER" "$2"
 rm -rf "$out"
 
 echo "Done."

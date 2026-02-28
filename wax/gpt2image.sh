@@ -44,7 +44,7 @@ touch "$2"
 [ ! -z "$SUDO_USER" ] && USER="$SUDO_USER"
 chown "$USER:$USER" "$2"
 
-dd if="$1" of="$2" bs="$BLOCK_SIZE" count="$dd_count" conv=sync status=progress
+dd if="$1" of="$2" bs="$BLOCK_SIZE" count="$dd_count" conv=sync,noerror status=progress
 
 truncate -s "$end_bytes" "$2"
 sgdisk -e "$2" 2>&1 | sed 's/\a//g'
