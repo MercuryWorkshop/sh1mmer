@@ -101,7 +101,7 @@ main(){
 	fi
     clear
 	echo "Script by con, exploit and script updates made by emery"
-    echo "2icksilver, root file write > unpatch quicksilver > unenrollment"
+    echo "Protowrite: root file write > unpatch Quicksilver > unenrollment"
 	echo "This will unenroll your device"
 	echo "Continue? (y/N)"
 	read -r action

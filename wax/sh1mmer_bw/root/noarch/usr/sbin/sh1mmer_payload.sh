@@ -19,7 +19,6 @@ run_task() {
 
 mapname() {
 	case "$(basename "$1")" in
-		'2icksilver.sh') echo -n "2icksilver (unenrollment up to r145 (nissa boards only), by emerwyi)" ;;
 		'autoupdate.sh') echo -n "Fetch updated payloads. REQUIRES INTERNET CONNECTION" ;;
 		'br0ker.sh') echo -n "Br0ker (unenrollment up to r132/kernver 5)";;
 		'caliginosity.sh') echo -n "Revert all changes made by sh1mmer (reenroll + more)" ;;
@@ -29,6 +28,7 @@ mapname() {
 		'icarus.sh') echo -n "Icarus (unenrollment up to r129, by writable)";;
 		'movie.sh') echo -n "HAHA WINDOWS SUX BUT THE MOVIE" ;;
 		'mrchromebox.sh') echo -n "MrChromebox firmware-util.sh" ;;
+		'protowrite.sh') echo -n "Protowrite (unenrollment up to r145 (nissa boards only), by emerwyi)" ;;
 		'quicksilver.sh') echo -n "Quicksilver (unenrollment up to r142, by emerwyi)";;
 		'reset-kern-rollback.sh') echo -n "Reset kernel rollback version" ;;
 		'troll.sh') echo -n "hahah wouldn't it be realllly funny if you ran this payload trust me nothing bad will happen" ;;
