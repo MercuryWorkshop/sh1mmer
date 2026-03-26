@@ -2,6 +2,22 @@
 
 set -e
 
+get_largest_blockdev() {
+    local largest size dev_name tmp_size remo
+    size=0
+    for blockdev in /sys/block/*; do
+        dev_name="${blockdev##*/}"
+        echo "$dev_name" | grep -q '^\(loop\|ram\)' && continue
+        tmp_size=$(cat "$blockdev"/size)
+        remo=$(cat "$blockdev"/removable)
+        if [ "$tmp_size" -gt "$size" ] && [ "${remo:-0}" -eq 0 ]; then
+            largest="/dev/$dev_name"
+            size="$tmp_size"
+        fi
+    done
+    echo "$largest"
+}
+
 get_largest_cros_blockdev() {
     local largest size dev_name tmp_size remo
     size=0
@@ -28,30 +44,28 @@ format_part_number() {
     echo "$2"
 }
 
-echo "Locating ChromeOS disk..."
-cros_dev="$(get_largest_cros_blockdev)"
+# --- Main Script Logic ---
 
+cros_dev="$(get_largest_cros_blockdev)"
 if [ -z "$cros_dev" ]; then
-    echo "No ChromeOS device found!"
-    read -p "Press enter..."
+    echo "No CrOS SSD found on device!"
     exit 1
 fi
 
 stateful="$(format_part_number "$cros_dev" 1)"
 
-echo "WARNING:"
-echo "This will wipe stateful on:"
-echo "$stateful"
-echo "(Make sure this is correct)"
+echo "This will erase all user data on ${stateful}"
+echo "Continue? (y/N)"
+read -r action
 
-read -p "Type Y to continue: " confirm
+case "$action" in
+    [yY]) 
+        :
+        ;;
+    *) 
+        echo "Exiting..."
+        exit 1 
+        ;;
+esac
 
-if [ "$confirm" != "Y" ] && [ "$confirm" != "y" ]; then
-    echo "Cancelled."
-    sleep 1
-    exit 0
-fi
-
-echo "Wiping stateful partition..."
 mkfs.ext4 -F -b 4096 -L H-STATE "$stateful"
-echo "Stateful has been wiped."
