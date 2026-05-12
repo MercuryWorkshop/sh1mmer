@@ -41,24 +41,24 @@ menu() {
 		OPPOSITE_KERN_NAME=""
 		OPPOSITE_ROOT_NAME=""
 		case "${OPPOSITE_KERN_ID}" in
-    	2)
+			2)
         OPPOSITE_KERN_NAME="KERN-A"
         ;;
-    	4)
+			4)
         OPPOSITE_KERN_NAME="KERN-B"
         ;;
-    	*)
+			*)
         OPPOSITE_KERN_NAME="SKID"
         ;;
 		esac
 		case "${OPPOSITE_ROOT_ID}" in
-    	2)
+			2)
         OPPOSITE_ROOT_NAME="ROOT-A"
         ;;
-    	4)
+			4)
         OPPOSITE_ROOT_NAME="ROOT-B"
         ;;
-    	*)
+			*)
         OPPOSITE_ROOT_NAME="SKID"
         ;;
 		esac
