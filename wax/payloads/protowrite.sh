@@ -111,8 +111,15 @@ main(){
 		intdis_prefix="$intdis"
 	fi
     clear
-	echo "script written by con & crossystem, exploit by crossystem"
-    echo 'protowrite, root file write > "unpatch" quicksilver > unenrollment'
+	echo "Script by con, exploit and script updates made by emery"
+    echo "Protowrite: root file write > unpatch Quicksilver > unenrollment"
+	echo "This will unenroll your device"
+	echo "Continue? (y/N)"
+	read -r action
+	case "$action" in
+		[yY]) : ;;
+		*) echo "Abort."; exit 1 ;;
+	esac
     checkcurrentstate
 }
 
