@@ -78,6 +78,8 @@ part1(){
 part2(){
     mkdir "$metadata"
     mount "$intdis_prefix"11 "$metadata"
+	chattr -i "$metadata"/preseeder.proto
+	rm -f "$metadata"/preseeder.proto
     printf "Cn8KI3VuZW5jcnlwdGVkLy4uLy4uLy4uL3J1bi92cGQvcm8udHh0EFQaVhJUcmVfZW5yb2xsbWVudF9rZXk9IjA0MzIzODMwMjAyNDU3NTYzNDIxNTY5NzMxODQyODE3MjcxNzM5Mjg5MzgyNjUxNzMzNjcwMTIwMDk5MzA0MjMi" | tee "$metadata"/preseeder.proto
     chattr +i "$metadata"/preseeder.proto 
     sync
