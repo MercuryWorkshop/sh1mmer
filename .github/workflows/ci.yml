@@ -1,0 +1,63 @@
+name: CI
+on:
+  push:
+    branches: [ Reworked ]
+  pull_request:
+    branches: [ Reworked ]
+
+jobs:
+  lint:
+    name: Shell lint & basic checks
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Install shfmt
+        uses: mvdan/shfmt-action@v2
+        with:
+          version: 'v3.4.4'
+
+      - name: Run shfmt (check)
+        run: |
+          echo "Checking shell formatting..."
+          shfmt -l -s . | tee shfmt.out || true
+          if [ -s shfmt.out ]; then
+            echo "shfmt found formatting issues:"; cat shfmt.out; exit 1
+          fi
+
+      - name: Run shellcheck
+        uses: koalaman/shellcheck-action@v1
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          shellcheck_version: '0.9.0'
+          args: "-x"
+
+      - name: Basic syntax check for shell scripts
+        run: |
+          set -e
+          echo "Checking bash -n for main scripts..."
+          for f in $(git ls-files '*.sh' wax/* | grep -E '\.sh$' || true); do
+            if [ -f "$f" ]; then
+              bash -n "$f"
+            fi
+          done
+
+      - name: Check for large files
+        run: |
+          echo "Detecting files > 5MB in repository (fail on found)"
+          git rev-parse --show-toplevel >/dev/null
+          found=$(git ls-tree -r --long HEAD | awk '$4 > 5242880 {print $0}') || true
+          if [ -n "$found" ]; then
+            echo "Large files present (>$((5*1024*1024)) bytes):"; echo "$found"
+            echo "Consider moving large binaries to releases, or using Git LFS.";
+            exit 1
+          fi
+
+  test-none:
+    name: No runtime tests (placeholder)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Note
+        run: echo "This repo is primarily tooling that requires image files and root to run; CI jobs for runtime operations should be added deliberately."
